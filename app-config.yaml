@@ -1,0 +1,14 @@
+# ref https://raw.githubusercontent.com/nais/naisd/master/nais_example.yaml
+image: docker.adeo.no:5000/fo/veilarbjobbsokerkompetanse
+replicas:
+  min: 1
+  max: 2
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: veilarbjobbsokerkompetanse/internal/isAlive
+    initialDelay: 20
+  readiness:
+    path: veilarbjobbsokerkompetanse/internal/selftest
+    initialDelay: 20
