@@ -18,11 +18,6 @@ public class ApplicationConfig implements ApiApplication {
     }
 
     @Override
-    public boolean brukSTSHelsesjekk() {
-        return false;
-    }
-
-    @Override
     public String getApplicationName() {
         return APPLICATION_NAME;
     }
