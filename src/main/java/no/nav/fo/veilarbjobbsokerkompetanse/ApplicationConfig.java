@@ -4,11 +4,16 @@ import no.nav.apiapp.ApiApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.sql.DataSource;
+
 import static no.nav.apiapp.ApiApplication.Sone.FSS;
 
 @Configuration
 @Import({
-        DemoRessurs.class
+        DemoRessurs.class,
+        DataSourceConfig.class
 })
 public class ApplicationConfig implements ApiApplication {
 
@@ -23,5 +28,13 @@ public class ApplicationConfig implements ApiApplication {
     }
 
     public static final String APPLICATION_NAME = "veilarbjobbsokerkompetanse";
+
+    @Inject
+    DataSource dataSource;
+
+    @Override
+    public void startup(ServletContext servletContext){
+        MigrationUtils.createTables(dataSource);
+    }
 
 }
