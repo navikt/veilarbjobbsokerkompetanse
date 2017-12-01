@@ -16,9 +16,7 @@ fasitResources:
   used:
   - alias: veilarbjobbsokerkompetanseDB
     resourceType: datasource
-#  - alias: srvveilarbjobbsokerkompetanse
-#    resourceType: credential
-  - alias: srvveilarboppfolging
+  - alias: srvveilarbjobbsokerkompetanse
     resourceType: credential
   - alias: securityTokenService
     resourceType: baseUrl
