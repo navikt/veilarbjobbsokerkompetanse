@@ -18,6 +18,7 @@ public class Main {
         setProperty("no.nav.modig.security.systemuser.username", getRequiredProperty(SRVVEILARBJOBBSOKERKOMPETANSE_USERNAME));
         setProperty("no.nav.modig.security.systemuser.password", getRequiredProperty(SRVVEILARBJOBBSOKERKOMPETANSE_PASSWORD));
         setProperty(SUBJECTHANDLER_KEY, JettySubjectHandler.class.getName());
+        setProperty("db.driverClass", "oracle.jdbc.driver.OracleDriver");
 
         ApiApp.startApp(ApplicationConfig.class, args);
     }
