@@ -28,9 +28,9 @@ public class DataSourceConfig {
     public static DataSource getDataSource() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(getProperty("db.driverClass"));
-        config.setJdbcUrl(getProperty("veilarbjobbsokerkompetanseDB.url"));
-        config.setUsername(getProperty("veilarbjobbsokerkompetanseDB.username"));
-        config.setPassword(getProperty("veilarbjobbsokerkompetanseDB.password"));
+        config.setJdbcUrl(getProperty("VEILARBJOBBSOKERKOMPETANSEDB_URL"));
+        config.setUsername(getProperty("VEILARBJOBBSOKERKOMPETANSEDB_USERNAME"));
+        config.setPassword(getProperty("VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD"));
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(2);
 
