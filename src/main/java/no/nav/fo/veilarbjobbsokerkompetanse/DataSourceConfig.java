@@ -21,16 +21,21 @@ import static java.lang.System.getProperty;
 @EnableTransactionManagement
 public class DataSourceConfig {
 
+    public static final String VEILARBJOBBSOKERKOMPETANSEDB_URL = "VEILARBJOBBSOKERKOMPETANSEDB_URL";
+    public static final String VEILARBJOBBSOKERKOMPETANSEDB_USERNAME = "VEILARBJOBBSOKERKOMPETANSEDB_USERNAME";
+    public static final String VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD = "VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD";
+    public static final String DB_DRIVER_CLASS = "db.driverClass";
+
     @Value("${veilarbjobbsokerkompetanseDB.url}")
     private String jdbcUrl;
 
     @Bean
     public static DataSource getDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName(getProperty("db.driverClass"));
-        config.setJdbcUrl(getProperty("VEILARBJOBBSOKERKOMPETANSEDB_URL"));
-        config.setUsername(getProperty("VEILARBJOBBSOKERKOMPETANSEDB_USERNAME"));
-        config.setPassword(getProperty("VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD"));
+        config.setDriverClassName(getProperty(DB_DRIVER_CLASS));
+        config.setJdbcUrl(getProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL));
+        config.setUsername(getProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME));
+        config.setPassword(getProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD));
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(2);
 
