@@ -16,8 +16,12 @@ fasitResources:
   used:
   - alias: veilarbjobbsokerkompetanseDB
     resourceType: datasource
-#  - alias: Aktoer_v2
-#    resourceType: webservice
+  - alias: srvveilarbjobbsokerkompetanse
+    resourceType: credential
+  - alias: securityTokenService
+    resourceType: baseUrl
+  - alias: Aktoer_v2
+    resourceType: webserviceendpoint
   exposed:
   - alias: veilarbjobbsokerkompetanseAPI
     resourceType: restservice

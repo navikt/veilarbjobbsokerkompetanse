@@ -34,12 +34,42 @@
             <artifactId>api-app</artifactId>
         </dependency>
         <dependency>
+            <groupId>no.nav.sbl</groupId>
+            <artifactId>util</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.hk2.external</groupId>
+            <artifactId>javax.inject</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -60,7 +90,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>no.nav.modig</groupId>
+            <artifactId>modig-security-sts</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.dialogarena</groupId>
+            <artifactId>oidc-security</artifactId>
+        </dependency>
 
         <!--Test no.nav.fo.veilarbjobbsokerkompetanse.db-->
         <dependency>
@@ -85,7 +122,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
