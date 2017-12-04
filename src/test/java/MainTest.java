@@ -1,4 +1,3 @@
-import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.DatabaseTestContext;
 
 public class MainTest {
