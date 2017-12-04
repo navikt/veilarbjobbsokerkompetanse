@@ -27,7 +27,7 @@ public class DataSourceConfig {
     @Bean
     public static DataSource getDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName(getProperty("db.driverClass"));
+        config.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         config.setJdbcUrl(getProperty("veilarbjobbsokerkompetanseDB.url"));
         config.setUsername(getProperty("veilarbjobbsokerkompetanseDB.username"));
         config.setPassword(getProperty("veilarbjobbsokerkompetanseDB.password"));
