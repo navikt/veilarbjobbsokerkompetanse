@@ -4,6 +4,7 @@ import no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig;
 
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.context.SubjectHandler.SUBJECTHANDLER_KEY;
+import static no.nav.fo.veilarbjobbsokerkompetanse.DataSourceConfig.DB_DRIVER_CLASS;
 import static no.nav.modig.security.sts.utility.STSConfigurationUtility.STS_URL_KEY;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
