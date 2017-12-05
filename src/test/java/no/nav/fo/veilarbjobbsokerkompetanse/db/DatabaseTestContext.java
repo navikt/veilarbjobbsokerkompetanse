@@ -39,7 +39,7 @@ public class DatabaseTestContext {
                 VEILARBJOBBSOKERKOMPETANSEDB_URL,
                 "jdbc:h2:mem:veilarbjobbsokerkompetanse;DB_CLOSE_DELAY=-1;MODE=Oracle");
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, "sa");
-        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, "");
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, "password");
         System.setProperty(DB_DRIVER_CLASS, "org.h2.Driver");
     }
 
