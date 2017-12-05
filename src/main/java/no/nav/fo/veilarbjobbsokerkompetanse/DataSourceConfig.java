@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
-@Configuration("DataSourceConfig")
+@Configuration
 @EnableTransactionManagement
 public class DataSourceConfig {
 
