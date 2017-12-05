@@ -2,6 +2,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import no.nav.apiapp.ApiApplication;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
         DemoRessurs.class,
         DataSourceConfig.class
 })
+@DependsOn("DataSourceConfig")
 public class ApplicationConfig implements ApiApplication {
 
     @Override

@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 import static java.lang.System.getProperty;
 
-@Configuration
+@Configuration("DataSourceConfig")
 @EnableTransactionManagement
 public class DataSourceConfig {
 
