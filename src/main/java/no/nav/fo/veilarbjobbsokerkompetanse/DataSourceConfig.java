@@ -2,7 +2,6 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,22 +14,22 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static java.lang.System.getProperty;
+import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 @Configuration
 @EnableTransactionManagement
 public class DataSourceConfig {
 
-    @Value("${veilarbjobbsokerkompetanseDB.url}")
-    private String jdbcUrl;
+    public static final String VEILARBJOBBSOKERKOMPETANSEDB_URL = "VEILARBJOBBSOKERKOMPETANSEDB_URL";
+    public static final String VEILARBJOBBSOKERKOMPETANSEDB_USERNAME = "VEILARBJOBBSOKERKOMPETANSEDB_USERNAME";
+    public static final String VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD = "VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD";
 
     @Bean
     public static DataSource getDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName(getProperty("db.driverClass"));
-        config.setJdbcUrl(getProperty("veilarbjobbsokerkompetanseDB.url"));
-        config.setUsername(getProperty("veilarbjobbsokerkompetanseDB.username"));
-        config.setPassword(getProperty("veilarbjobbsokerkompetanseDB.password"));
+        config.setJdbcUrl(getRequiredProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL));
+        config.setUsername(getRequiredProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME));
+        config.setPassword(getRequiredProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD));
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(2);
 

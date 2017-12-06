@@ -30,7 +30,7 @@ public class ApplicationConfig implements ApiApplication {
     public static final String APPLICATION_NAME = "veilarbjobbsokerkompetanse";
 
     @Inject
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Override
     public void startup(ServletContext servletContext){

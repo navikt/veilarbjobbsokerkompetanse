@@ -8,6 +8,7 @@ import no.nav.dialogarena.config.fasit.TestEnvironment;
 import java.util.Optional;
 
 import static no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig.APPLICATION_NAME;
+import static no.nav.fo.veilarbjobbsokerkompetanse.DataSourceConfig.*;
 
 public class DatabaseTestContext {
 
@@ -26,20 +27,18 @@ public class DatabaseTestContext {
 
     private static void setDataSourceProperties(DbCredentials dbCredentials) {
         System.setProperty(
-                "veilarbjobbsokerkompetanseDB.url", dbCredentials.url);
-        System.setProperty("veilarbjobbsokerkompetanseDB.username", dbCredentials.getUsername());
-        System.setProperty("veilarbjobbsokerkompetanseDB.password", dbCredentials.getPassword());
-        System.setProperty("db.driverClass", "oracle.jdbc.driver.OracleDriver");
+            VEILARBJOBBSOKERKOMPETANSEDB_URL, dbCredentials.url);
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, dbCredentials.getUsername());
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, dbCredentials.getPassword());
 
     }
 
     private static void setInMemoryDataSourceProperties() {
         System.setProperty(
-                "veilarbjobbsokerkompetanseDB.url",
+                VEILARBJOBBSOKERKOMPETANSEDB_URL,
                 "jdbc:h2:mem:veilarbjobbsokerkompetanse;DB_CLOSE_DELAY=-1;MODE=Oracle");
-        System.setProperty("veilarbjobbsokerkompetanseDB.username", "sa");
-        System.setProperty("veilarbjobbsokerkompetanseDB.password", "");
-        System.setProperty("db.driverClass", "org.h2.Driver");
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, "sa");
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, "password");
     }
 
 //    public static SingleConnectionDataSource buildDataSourceFor(String miljo) {
