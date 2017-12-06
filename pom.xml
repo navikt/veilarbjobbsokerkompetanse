@@ -20,7 +20,7 @@
             <dependency>
                 <groupId>no.nav.sbl</groupId>
                 <artifactId>bom</artifactId>
-                <version>RELEASE</version>
+                <version>LATEST</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
