@@ -27,6 +27,7 @@ public class Main {
             }
             System.setProperty(TRUSTSTOREPASSWORD, getRequiredProperty(APP_TRUSTSTORE_PASSWORD));
         }
+        setProperty("java.security.egd", "file:/dev/./urandom");
         setProperty(STS_URL_KEY, getRequiredProperty(SECURITYTOKENSERVICE_URL));
         setProperty("no.nav.modig.security.systemuser.username", getRequiredProperty(SRVVEILARBJOBBSOKERKOMPETANSE_USERNAME));
         setProperty("no.nav.modig.security.systemuser.password", getRequiredProperty(SRVVEILARBJOBBSOKERKOMPETANSE_PASSWORD));
