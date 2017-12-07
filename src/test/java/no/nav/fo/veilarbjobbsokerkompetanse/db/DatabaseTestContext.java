@@ -40,44 +40,4 @@ public class DatabaseTestContext {
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, "sa");
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, "password");
     }
-
-//    public static SingleConnectionDataSource buildDataSourceFor(String miljo) {
-//        return of(miljo)
-//                .map(TestEnvironment::valueOf)
-//                .map(testEnvironment -> FasitUtils.getDbCredentials(testEnvironment, APPLICATION_NAME))
-//                .map(DatabaseTestContext::build)
-//                .orElseGet(DatabaseTestContext::buildDataSource);
-//    }
-
-//    public static SingleConnectionDataSource buildDataSource() {
-//        return doBuild(new DbCredentials()
-//                        .setUrl(TestDriver.getURL())
-//                        .setUsername("sa")
-//                        .setPassword(""),
-//                true
-//        );
-//    }
-//
-//    public static SingleConnectionDataSource build(DbCredentials dbCredentials) {
-//        return doBuild(dbCredentials,false);
-//    }
-//
-//    private static SingleConnectionDataSource doBuild(DbCredentials dbCredentials, boolean migrate) {
-//        SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
-//        dataSource.setSuppressClose(true);
-//        dataSource.setUrl(dbCredentials.url);
-//        dataSource.setUsername(dbCredentials.username);
-//        dataSource.setPassword(dbCredentials.password);
-//        if (migrate){
-//            createTables(dataSource);
-//        }
-//        return dataSource;
-//    }
-//
-//    private static void createTables(SingleConnectionDataSource singleConnectionDataSource) {
-//        Flyway flyway = new Flyway();
-//        flyway.setDataSource(singleConnectionDataSource);
-//        int migrate = flyway.migrate();
-////        assertThat(migrate, greaterThan(0));
-//    }
 }
