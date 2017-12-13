@@ -1,8 +1,8 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db.dao;
 
 import lombok.val;
-import no.nav.fo.veilarbjobbsokerkompetanse.BesvarelseData;
-import no.nav.fo.veilarbjobbsokerkompetanse.BesvarelseDAO;
+import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
+import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartleggingDAO;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
@@ -20,10 +20,10 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.Matchers.equalTo;
 
-public class BesvarelseDaoTest extends IntegrasjonsTest {
+public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
 
     private JdbcTemplate database = getBean(JdbcTemplate.class);
-    private BesvarelseDAO besvarelseDAO = getBean(BesvarelseDAO.class);
+    private JobbsokerKartleggingDAO jobbsokerKartleggingDAO = getBean(JobbsokerKartleggingDAO.class);
 
     @After
     public void deleteTestData() {
@@ -31,18 +31,18 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     }
 
     @Test
-    public void opprette_og_hente_besvarelse() {
+    public void opprette_og_hente_jobbsokerKartlegging() {
         val aktorId = RandomStringUtils.randomAlphanumeric(10);
-        val besvarelseData = besvarelseDAO.opprettBesvarelse(nyBesvarelse(aktorId));
+        val jobbsokerKartleggingData = jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId));
 
-        List<BesvarelseData> besvarelser = besvarelseDAO.hentBesvarelserForAktorId(aktorId);
+        List<JobbsokerKartlegging> jobbsokerKartlegginger = jobbsokerKartleggingDAO.hentJobbsokerKartleggingerForAktorId(aktorId);
 
-        assertThat(besvarelser, hasSize(1));
-        assertThat(besvarelseData, equalTo(besvarelser.get(0)));
+        assertThat(jobbsokerKartlegginger, hasSize(1));
+        assertThat(jobbsokerKartleggingData, equalTo(jobbsokerKartlegginger.get(0)));
     }
 
-    private BesvarelseData nyBesvarelse(String aktorId) {
-        return BesvarelseData.builder()
+    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId) {
+        return JobbsokerKartlegging.builder()
             .id(new Random().nextLong())
             .aktorId(aktorId)
             .lagretTidspunkt(Timestamp.valueOf(LocalDateTime.now()))

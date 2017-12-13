@@ -7,41 +7,41 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class BesvarelseDAO {
+public class JobbsokerKartleggingDAO {
 
     private static final String JOBBSOKERKOMPETANSE = "JOBBSOKERKOMPETANSE";
 
     private JdbcTemplate database;
 
     @Inject
-    public BesvarelseDAO(JdbcTemplate database) {
+    public JobbsokerKartleggingDAO(JdbcTemplate database) {
         this.database = database;
     }
 
-    public BesvarelseData opprettBesvarelse(BesvarelseData besvarelseData) {
+    public JobbsokerKartlegging opprettJobbsokerKartlegging(JobbsokerKartlegging jobbsokerKartlegging) {
         long id = getNextUniqueJobbsokerkompetanseId();
         database.update("INSERT INTO " + JOBBSOKERKOMPETANSE + "(ID, AKTOR_ID, LAGRET_TIDSPUNKT, BESVARELSE, RAAD) VALUES(?, ?, ?, ?, ?)",
             id,
-            besvarelseData.getAktorId(),
+            jobbsokerKartlegging.getAktorId(),
             Timestamp.valueOf(LocalDateTime.now()),
-            besvarelseData.getBesvarelse(),
-            besvarelseData.getRaad());
+            jobbsokerKartlegging.getBesvarelse(),
+            jobbsokerKartlegging.getRaad());
 
-        return hentBesvarelse(id);
+        return hentJobbsokerKartlegging(id);
     }
 
-    public BesvarelseData hentBesvarelse(long id) {
+    public JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
         return database.queryForObject(
             "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE ID = ?",
-            (resultSet, i) -> BesvarelseDataRowMapper.mapBesvarelse(resultSet),
+            (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
             id
         );
     }
 
-    public List<BesvarelseData> hentBesvarelserForAktorId(String aktorId) {
+    public List<JobbsokerKartlegging> hentJobbsokerKartleggingerForAktorId(String aktorId) {
         return database.query(
             "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE AKTOR_ID = ?",
-            (resultSet, i) -> BesvarelseDataRowMapper.mapBesvarelse(resultSet),
+            (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
             aktorId
         );
     }

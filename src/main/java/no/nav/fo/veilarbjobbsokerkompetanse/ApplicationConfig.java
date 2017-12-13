@@ -41,8 +41,12 @@ public class ApplicationConfig implements ApiApplication {
 
 
     @Bean
-    public BesvarelseDAO getBesvarelseDAO(JdbcTemplate jdbcTemplate) {
-        return new BesvarelseDAO(jdbcTemplate);
+    public JobbsokerKartleggingDAO getJobbsokerKartleggingDAO(JdbcTemplate jdbcTemplate) {
+        return new JobbsokerKartleggingDAO(jdbcTemplate);
     }
 
+    @Bean
+    public JobbsokerKartleggingRSImpl getJobbsokerKartleggingRSImpl(JobbsokerKartleggingDAO jobbsokerKartleggingDAO) {
+        return new JobbsokerKartleggingRSImpl(jobbsokerKartleggingDAO);
+    }
 }
