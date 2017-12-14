@@ -2,7 +2,6 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import lombok.Builder;
 import lombok.Value;
-import no.nav.fo.veilarbjobbsokerkompetanse.api.JobbsokerKartleggingDTO;
 
 import java.sql.Timestamp;
 

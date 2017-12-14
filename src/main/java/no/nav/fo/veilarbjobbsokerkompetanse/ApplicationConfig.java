@@ -44,9 +44,4 @@ public class ApplicationConfig implements ApiApplication {
     public JobbsokerKartleggingDAO getJobbsokerKartleggingDAO(JdbcTemplate jdbcTemplate) {
         return new JobbsokerKartleggingDAO(jdbcTemplate);
     }
-
-    @Bean
-    public JobbsokerKartleggingRSImpl getJobbsokerKartleggingRSImpl(JobbsokerKartleggingDAO jobbsokerKartleggingDAO) {
-        return new JobbsokerKartleggingRSImpl(jobbsokerKartleggingDAO);
-    }
 }
