@@ -1,4 +1,6 @@
-package no.nav.fo.veilarbjobbsokerkompetanse;
+package no.nav.fo.veilarbjobbsokerkompetanse.db;
+
+import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

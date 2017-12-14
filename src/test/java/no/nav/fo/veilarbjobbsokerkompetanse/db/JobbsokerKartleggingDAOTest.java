@@ -1,8 +1,8 @@
-package no.nav.fo.veilarbjobbsokerkompetanse.db.dao;
+package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import lombok.val;
 import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
-import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartleggingDAO;
+import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;

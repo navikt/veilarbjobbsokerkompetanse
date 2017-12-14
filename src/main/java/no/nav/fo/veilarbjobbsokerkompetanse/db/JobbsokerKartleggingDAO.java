@@ -1,15 +1,12 @@
-package no.nav.fo.veilarbjobbsokerkompetanse;
+package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
+import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Optional.ofNullable;
 
 public class JobbsokerKartleggingDAO {
 
@@ -34,7 +31,7 @@ public class JobbsokerKartleggingDAO {
         return hentJobbsokerKartlegging(id);
     }
 
-    public JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
+    private JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
         return database.queryForObject(
             "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE ID = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
@@ -52,7 +49,7 @@ public class JobbsokerKartleggingDAO {
         });
     }
 
-    public List<JobbsokerKartlegging> hentJobbsokerKartlegginger(String aktorId) {
+    List<JobbsokerKartlegging> hentJobbsokerKartlegginger(String aktorId) {
         return database.query(
             "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE AKTOR_ID = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
