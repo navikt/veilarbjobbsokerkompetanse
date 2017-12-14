@@ -1,6 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import no.nav.apiapp.ApiApplication;
+import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
