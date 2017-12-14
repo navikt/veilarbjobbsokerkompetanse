@@ -5,7 +5,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.inject.Inject;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Optional.ofNullable;
 
 public class JobbsokerKartleggingDAO {
 
@@ -23,7 +27,7 @@ public class JobbsokerKartleggingDAO {
         database.update("INSERT INTO " + JOBBSOKERKOMPETANSE + "(ID, AKTOR_ID, LAGRET_TIDSPUNKT, BESVARELSE, RAAD) VALUES(?, ?, ?, ?, ?)",
             id,
             jobbsokerKartlegging.getAktorId(),
-            Timestamp.valueOf(LocalDateTime.now()),
+            jobbsokerKartlegging.getLagretTidspunkt(),
             jobbsokerKartlegging.getBesvarelse(),
             jobbsokerKartlegging.getRaad());
 
@@ -38,7 +42,17 @@ public class JobbsokerKartleggingDAO {
         );
     }
 
-    public List<JobbsokerKartlegging> hentJobbsokerKartleggingerForAktorId(String aktorId) {
+    public JobbsokerKartlegging hentNyesteJobbsokerKartlegging(String aktorId) {
+        List<JobbsokerKartlegging> jobbsokerKartlegginger = hentJobbsokerKartlegginger(aktorId);
+        return Collections.max(jobbsokerKartlegginger, new Comparator<JobbsokerKartlegging>() {
+            @Override
+            public int compare(JobbsokerKartlegging o1, JobbsokerKartlegging o2) {
+                return o1.getLagretTidspunkt().compareTo(o2.getLagretTidspunkt());
+            }
+        });
+    }
+
+    public List<JobbsokerKartlegging> hentJobbsokerKartlegginger(String aktorId) {
         return database.query(
             "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE AKTOR_ID = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),

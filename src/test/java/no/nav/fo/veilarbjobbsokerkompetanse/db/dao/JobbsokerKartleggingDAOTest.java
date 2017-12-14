@@ -31,24 +31,65 @@ public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
     }
 
     @Test
-    public void opprette_og_hente_jobbsokerKartlegging() {
-        val aktorId = RandomStringUtils.randomAlphanumeric(10);
-        val jobbsokerKartleggingData = jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId));
+    public void lagretTidspunkt_blir_parset_korrekt() {
+        LocalDateTime localDateTimeNow = LocalDateTime.now();
+        Timestamp timestampNow = Timestamp.valueOf(localDateTimeNow);
 
-        List<JobbsokerKartlegging> jobbsokerKartlegginger = jobbsokerKartleggingDAO.hentJobbsokerKartleggingerForAktorId(aktorId);
+        JobbsokerKartlegging jobbsokerKartlegging = opprettJobbsokerKartlegging(aktorId(), timestampNow);
 
-        assertThat(jobbsokerKartlegginger, hasSize(1));
-        assertThat(jobbsokerKartleggingData, equalTo(jobbsokerKartlegginger.get(0)));
+        assertThat(jobbsokerKartlegging.getLagretTidspunkt(), equalTo(timestampNow));
+        assertThat(jobbsokerKartlegging.getLagretTidspunkt().toLocalDateTime(), equalTo(localDateTimeNow));
     }
 
-    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId) {
+    @Test
+    public void opprette_og_hente_flere_jobbsokerKartlegginger() {
+        String aktorId = aktorId();
+        val jobbsokerKartlegging1 = opprettJobbsokerKartlegging(aktorId);
+        val jobbsokerKartlegging2 = opprettJobbsokerKartlegging(aktorId);
+
+        List<JobbsokerKartlegging> jobbsokerKartlegginger = jobbsokerKartleggingDAO.hentJobbsokerKartlegginger(aktorId);
+
+        assertThat(jobbsokerKartlegginger, hasSize(2));
+        assertThat(jobbsokerKartlegging1, equalTo(jobbsokerKartlegginger.get(0)));
+        assertThat(jobbsokerKartlegging2, equalTo(jobbsokerKartlegginger.get(1)));
+    }
+
+    @Test
+    public void opprette_og_hente_nyeste_jobbsokerKartlegging() {
+        String aktorId = aktorId();
+        val jobbsokerKartlegging1 = opprettJobbsokerKartlegging(aktorId, Timestamp.valueOf(LocalDateTime.now()));
+        val jobbsokerKartlegging2 = opprettJobbsokerKartlegging(aktorId, Timestamp.valueOf(LocalDateTime.now().plusDays(10)));
+        val jobbsokerKartlegging3 = opprettJobbsokerKartlegging(aktorId, Timestamp.valueOf(LocalDateTime.now().plusDays(5)));
+
+        JobbsokerKartlegging nyesteJobbsokerKartlegging = jobbsokerKartleggingDAO.hentNyesteJobbsokerKartlegging(aktorId);
+
+        assertThat(nyesteJobbsokerKartlegging, equalTo(jobbsokerKartlegging2));
+    }
+
+    private JobbsokerKartlegging opprettJobbsokerKartlegging(String aktorId) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId));
+    }
+
+    private JobbsokerKartlegging opprettJobbsokerKartlegging(String aktorId, Timestamp lagretTidspunkt) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId, lagretTidspunkt));
+    }
+
+    private String aktorId() {
+        return RandomStringUtils.randomAlphanumeric(10);
+    }
+
+    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId, Timestamp lagretTidspunkt) {
         return JobbsokerKartlegging.builder()
             .id(new Random().nextLong())
             .aktorId(aktorId)
-            .lagretTidspunkt(Timestamp.valueOf(LocalDateTime.now()))
+            .lagretTidspunkt(lagretTidspunkt)
             .besvarelse(nySporsmalOgSvar().toString())
             .raad(nyRaad().toString())
             .build();
+    }
+
+    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId) {
+        return nyJobbsokerKartlegging(aktorId, Timestamp.valueOf(LocalDateTime.now()));
     }
 
     private JSONObject nyRaad() {
