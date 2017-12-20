@@ -11,7 +11,7 @@ import java.util.List;
 
 public class JobbsokerKartleggingDAO {
 
-    private static final String JOBBSOKERKOMPETANSE = "JOBBSOKERKOMPETANSE";
+    public static final String JOBBSOKERKOMPETANSE = "JOBBSOKERKOMPETANSE";
     public static final String ID = "ID";
     public static final String AKTOR_ID = "AKTOR_ID";
     public static final String LAGRET_TIDSPUNKT = "LAGRET_TIDSPUNKT";
