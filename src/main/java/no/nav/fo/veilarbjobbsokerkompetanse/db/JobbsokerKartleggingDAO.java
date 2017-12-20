@@ -64,7 +64,7 @@ public class JobbsokerKartleggingDAO {
         );
     }
 
-    private long getNextUniqueJobbsokerkompetanseId() {
+    long getNextUniqueJobbsokerkompetanseId() {
         return nesteFraSekvens("JOBBSOKERKOMPETANSE_ID_SEQ");
     }
 
