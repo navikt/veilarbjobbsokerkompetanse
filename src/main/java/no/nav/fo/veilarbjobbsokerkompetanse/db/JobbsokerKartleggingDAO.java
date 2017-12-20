@@ -11,6 +11,11 @@ import java.util.List;
 public class JobbsokerKartleggingDAO {
 
     private static final String JOBBSOKERKOMPETANSE = "JOBBSOKERKOMPETANSE";
+    public static final String ID = "ID";
+    public static final String AKTOR_ID = "AKTOR_ID";
+    public static final String LAGRET_TIDSPUNKT = "LAGRET_TIDSPUNKT";
+    public static final String BESVARELSE = "BESVARELSE";
+    public static final String RAAD = "RAAD";
 
     private JdbcTemplate database;
 
@@ -33,7 +38,7 @@ public class JobbsokerKartleggingDAO {
 
     private JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
         return database.queryForObject(
-            "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE ID = ?",
+            "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE " + ID + " = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
             id
         );
@@ -51,7 +56,7 @@ public class JobbsokerKartleggingDAO {
 
     List<JobbsokerKartlegging> hentJobbsokerKartlegginger(String aktorId) {
         return database.query(
-            "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE AKTOR_ID = ?",
+            "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE " + AKTOR_ID + " = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
             aktorId
         );

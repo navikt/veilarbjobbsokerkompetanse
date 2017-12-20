@@ -9,11 +9,11 @@ class JobbsokerKartleggingRowMapper {
     static JobbsokerKartlegging mapJobbsokerKartlegging(ResultSet rs) throws SQLException {
         return JobbsokerKartlegging
             .builder()
-            .id(rs.getLong("id"))
-            .aktorId(rs.getString("aktor_id"))
-            .lagretTidspunkt(rs.getTimestamp("lagret_tidspunkt"))
-            .besvarelse(rs.getString("besvarelse"))
-            .raad(rs.getString("raad"))
+            .id(rs.getLong(ID))
+            .aktorId(rs.getString(AKTOR_ID))
+            .lagretTidspunkt(rs.getTimestamp(LAGRET_TIDSPUNKT))
+            .besvarelse(rs.getString(BESVARELSE))
+            .raad(rs.getString(RAAD))
             .build();
     }
 }
