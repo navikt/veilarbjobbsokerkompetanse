@@ -1,6 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
+import no.nav.sbl.sql.SqlUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
@@ -26,12 +27,13 @@ public class JobbsokerKartleggingDAO {
 
     public JobbsokerKartlegging opprettJobbsokerKartlegging(JobbsokerKartlegging jobbsokerKartlegging) {
         long id = getNextUniqueJobbsokerkompetanseId();
-        database.update("INSERT INTO " + JOBBSOKERKOMPETANSE + "(ID, AKTOR_ID, LAGRET_TIDSPUNKT, BESVARELSE, RAAD) VALUES(?, ?, ?, ?, ?)",
-            id,
-            jobbsokerKartlegging.getAktorId(),
-            jobbsokerKartlegging.getLagretTidspunkt(),
-            jobbsokerKartlegging.getBesvarelse(),
-            jobbsokerKartlegging.getRaad());
+        SqlUtils.insert(database, JOBBSOKERKOMPETANSE)
+            .value(ID, id)
+            .value(AKTOR_ID, jobbsokerKartlegging.getAktorId())
+            .value(LAGRET_TIDSPUNKT, jobbsokerKartlegging.getLagretTidspunkt())
+            .value(BESVARELSE, jobbsokerKartlegging.getBesvarelse())
+            .value(RAAD, jobbsokerKartlegging.getRaad())
+            .execute();
 
         return hentJobbsokerKartlegging(id);
     }

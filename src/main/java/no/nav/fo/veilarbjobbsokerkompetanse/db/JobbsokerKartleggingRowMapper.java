@@ -1,12 +1,16 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
+import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import static no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO.*;
 
 class JobbsokerKartleggingRowMapper {
-    static JobbsokerKartlegging mapJobbsokerKartlegging(ResultSet rs) throws SQLException {
+
+    @SneakyThrows
+    static JobbsokerKartlegging mapJobbsokerKartlegging(ResultSet rs) {
         return JobbsokerKartlegging
             .builder()
             .id(rs.getLong(ID))
