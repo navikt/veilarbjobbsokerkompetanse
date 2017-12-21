@@ -1,13 +1,10 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import no.nav.apiapp.ApiApplication;
-import no.nav.fo.veilarbjobbsokerkompetanse.db.DataSourceConfig;
-import no.nav.fo.veilarbjobbsokerkompetanse.db.DataSourceHelsesjekk;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +16,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
 
 @Configuration
 @ComponentScan("no.nav.fo.veilarbjobbsokerkompetanse.db")
-@Import({
-        DemoRessurs.class
-})
+@ComponentScan("no.nav.fo.veilarbjobbsokerkompetanse.provider")
 public class ApplicationConfig implements ApiApplication {
 
     @Override
