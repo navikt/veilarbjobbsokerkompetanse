@@ -36,10 +36,9 @@ public class ApplicationConfig implements ApiApplication {
 
     @Transactional
     @Override
-    public void startup(ServletContext servletContext){
+    public void startup(ServletContext servletContext) {
         MigrationUtils.createTables(dataSource);
     }
-
 
     @Bean
     public JobbsokerKartleggingDAO getJobbsokerKartleggingDAO(JdbcTemplate jdbcTemplate) {
