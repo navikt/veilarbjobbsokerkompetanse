@@ -8,21 +8,25 @@ import no.nav.dialogarena.config.fasit.TestEnvironment;
 import java.util.Optional;
 
 import static no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig.APPLICATION_NAME;
-import static no.nav.fo.veilarbjobbsokerkompetanse.DataSourceConfig.*;
+import static no.nav.fo.veilarbjobbsokerkompetanse.db.DataSourceConfig.*;
 
 public class DatabaseTestContext {
 
     public static void setupContext(String miljo) {
         val dbCredential = Optional.ofNullable(miljo)
-                .map(TestEnvironment::valueOf)
-                .map(testEnvironment -> FasitUtils.getDbCredentials(testEnvironment, APPLICATION_NAME));
+            .map(TestEnvironment::valueOf)
+            .map(testEnvironment -> FasitUtils.getDbCredentials(testEnvironment, APPLICATION_NAME));
 
-        if (dbCredential.isPresent()){
+        if (dbCredential.isPresent()) {
             setDataSourceProperties(dbCredential.get());
         } else {
             setInMemoryDataSourceProperties();
         }
 
+    }
+
+    public static void setupInMemoryContext() {
+        setupContext(null);
     }
 
     private static void setDataSourceProperties(DbCredentials dbCredentials) {
@@ -35,8 +39,8 @@ public class DatabaseTestContext {
 
     private static void setInMemoryDataSourceProperties() {
         System.setProperty(
-                VEILARBJOBBSOKERKOMPETANSEDB_URL,
-                "jdbc:h2:mem:veilarbjobbsokerkompetanse;DB_CLOSE_DELAY=-1;MODE=Oracle");
+            VEILARBJOBBSOKERKOMPETANSEDB_URL,
+            "jdbc:h2:mem:veilarbjobbsokerkompetanse;DB_CLOSE_DELAY=-1;MODE=Oracle");
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, "sa");
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, "password");
     }

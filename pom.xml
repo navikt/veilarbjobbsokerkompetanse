@@ -15,6 +15,11 @@
     <version>1</version>
     <packaging>war</packaging>
 
+
+    <properties>
+        <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -36,6 +41,10 @@
         <dependency>
             <groupId>no.nav.sbl</groupId>
             <artifactId>util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.sbl</groupId>
+            <artifactId>jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>
@@ -98,6 +107,15 @@
             <groupId>no.nav.dialogarena</groupId>
             <artifactId>oidc-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
 
         <!--Test no.nav.fo.veilarbjobbsokerkompetanse.db-->
         <dependency>
@@ -130,6 +148,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
