@@ -1,9 +1,8 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import lombok.val;
-import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
-import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
+import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,9 +18,9 @@ import java.util.List;
 import java.util.Random;
 
 import static no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO.JOBBSOKERKOMPETANSE;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertThat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
@@ -63,8 +62,8 @@ public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
     @Test
     public void opprette_og_hente_flere_jobbsokerKartlegginger() {
         String aktorId = aktorId();
-        val jobbsokerKartlegging1 = opprettJobbsokerKartlegging(aktorId);
-        val jobbsokerKartlegging2 = opprettJobbsokerKartlegging(aktorId);
+        val jobbsokerKartlegging1 = opprettJobbsokerKartleggingMedAktorId(aktorId);
+        val jobbsokerKartlegging2 = opprettJobbsokerKartleggingMedAktorId(aktorId);
 
         List<JobbsokerKartlegging> jobbsokerKartlegginger = jobbsokerKartleggingDAO.hentJobbsokerKartlegginger(aktorId);
 
@@ -85,30 +84,61 @@ public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
         assertThat(nyesteJobbsokerKartlegging, equalTo(jobbsokerKartlegging2));
     }
 
-    private JobbsokerKartlegging opprettJobbsokerKartlegging(String aktorId) {
-        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId));
+    @Test(expected = NullPointerException.class)
+    public void oppretter_jobbsokerkartlegging_med_aktorId_null() {
+        opprettJobbsokerKartleggingMedAktorId(null);
     }
 
-    private JobbsokerKartlegging opprettJobbsokerKartlegging(String aktorId, Timestamp lagretTidspunkt) {
-        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId, lagretTidspunkt));
+    @Test(expected = NullPointerException.class)
+    public void oppretter_jobbsokerkartlegging_med_lagretTidspunkt_null() {
+        opprettJobbsokerKartleggingMedLagretTidspunkt(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void oppretter_jobbsokerkartlegging_med_besvarelse_null() {
+        opprettJobbsokerKartleggingMedBesvarelse(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void oppretter_jobbsokerkartlegging_med_raad_null() {
+        opprettJobbsokerKartleggingMedRaad(null);
     }
 
     private String aktorId() {
         return RandomStringUtils.randomAlphanumeric(10);
     }
 
-    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId, Timestamp lagretTidspunkt) {
+    private JobbsokerKartlegging opprettJobbsokerKartlegging(String aktorId, Timestamp lagretTidspunkt) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId, lagretTidspunkt, nySporsmalOgSvar().toString(), nyRaad().toString()));
+    }
+
+    private JobbsokerKartlegging opprettJobbsokerKartleggingMedLagretTidspunkt(Timestamp lagretTidspunkt) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId(), lagretTidspunkt, nySporsmalOgSvar().toString(), nyRaad().toString()));
+    }
+
+    private JobbsokerKartlegging opprettJobbsokerKartleggingMedAktorId(String aktorId) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId, Timestamp.valueOf(LocalDateTime.now()), nySporsmalOgSvar().toString(), nyRaad().toString()));
+    }
+
+    private JobbsokerKartlegging opprettJobbsokerKartleggingMedBesvarelse(String besvarelse) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId(), Timestamp.valueOf(LocalDateTime.now()), besvarelse, nyRaad().toString()));
+    }
+
+    private JobbsokerKartlegging opprettJobbsokerKartleggingMedRaad(String raad) {
+        return jobbsokerKartleggingDAO.opprettJobbsokerKartlegging(nyJobbsokerKartlegging(aktorId(), Timestamp.valueOf(LocalDateTime.now()), nySporsmalOgSvar().toString(), raad));
+    }
+
+    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId,
+                                                        Timestamp lagretTidspunkt,
+                                                        String besvarelse,
+                                                        String raad) {
         return JobbsokerKartlegging.builder()
             .id(new Random().nextLong())
             .aktorId(aktorId)
             .lagretTidspunkt(lagretTidspunkt)
-            .besvarelse(nySporsmalOgSvar().toString())
-            .raad(nyRaad().toString())
+            .besvarelse(besvarelse)
+            .raad(raad)
             .build();
-    }
-
-    private JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId) {
-        return nyJobbsokerKartlegging(aktorId, Timestamp.valueOf(LocalDateTime.now()));
     }
 
     private JSONObject nyRaad() {
