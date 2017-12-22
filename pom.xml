@@ -37,7 +37,7 @@
         <dependency>
             <groupId>no.nav.tjenester</groupId>
             <artifactId>brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <classifier>jaxws</classifier>
         </dependency>
         <dependency>
@@ -55,10 +55,6 @@
         <dependency>
             <groupId>no.nav.sbl.dialogarena</groupId>
             <artifactId>aktor-klient</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.glassfish.hk2.external</groupId>
