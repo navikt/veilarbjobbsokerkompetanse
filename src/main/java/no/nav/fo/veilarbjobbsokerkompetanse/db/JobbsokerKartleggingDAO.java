@@ -65,7 +65,7 @@ public class JobbsokerKartleggingDAO {
     }
 
     long getNextUniqueJobbsokerkompetanseId() {
-        return nesteFraSekvens("JOBBSOKERKARTLEGGING_ID_SEQ");
+        return nesteFraSekvens(JOBBSOKERKARTLEGGING + "_ID_SEQ");
     }
 
     private long nesteFraSekvens(String sekvensNavn) {
