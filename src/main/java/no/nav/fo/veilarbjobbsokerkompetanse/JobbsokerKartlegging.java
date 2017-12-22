@@ -21,7 +21,9 @@ public class JobbsokerKartlegging {
     @NonNull
     private String raad;
 
-    public static JobbsokerKartlegging opprettFraWsDto(no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.informasjon.JobbsokerKartlegging jobbsokerKartlegging, String aktorId, Timestamp now) {
+    public static JobbsokerKartlegging opprettFraWsDto(no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.informasjon.JobbsokerKartlegging jobbsokerKartlegging,
+                                                       String aktorId,
+                                                       Timestamp now) {
         return JobbsokerKartlegging
             .builder()
             .aktorId(aktorId)
