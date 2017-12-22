@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@SoapTjeneste("/ws/jobbsokerkompetanse")
+@SoapTjeneste("/jobbsokerkompetanse/ws")
 public class JobbsokerkompetanseWSImpl implements JobbsokerkompetanseV1 {
 
     private final JobbsokerKartleggingDAO jobbsokerKartleggingDAO;
