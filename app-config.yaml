@@ -25,6 +25,13 @@ fasitResources:
   - alias: app_truststore
     resourceType: certificate
   exposed:
-  - alias: veilarbjobbsokerkompetanseAPI
+  - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
-    path: /veilarbjobbsokerkompetanse/api
+    path: /jobbsokerkompetanse/rs
+  - alias: veilarbjobbsokerkompetanseWS
+    resourceType: webserviceendpoint
+    path: /jobbsokerkompetanse/ws
+    wsdlGroupId: no.nav.tjenester
+    wsdlArtifactId: brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon
+    wsdlVersion: 1.0.1
+    securityToken: SAML
