@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
-import static no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO.JOBBSOKERKOMPETANSE;
+import static no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO.JOBBSOKERKARTLEGGING;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
@@ -30,7 +30,7 @@ public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
 
     @After
     public void deleteTestData() {
-        database.update("DELETE FROM " + JOBBSOKERKOMPETANSE);
+        database.update("DELETE FROM " + JOBBSOKERKARTLEGGING);
     }
 
     @Test
