@@ -6,8 +6,8 @@ import no.nav.apiapp.soap.SoapTjeneste;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
 import no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.binding.JobbsokerkompetanseV1;
-import no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.meldinger.HentJobbsokerKartleggingRequest;
 import no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.meldinger.HentJobbsokerKartleggingResponse;
+import no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.meldinger.HentNyesteJobbsokerKartleggingRequest;
 import no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.meldinger.OpprettJobbsokerKartleggingRequest;
 import no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.meldinger.OpprettJobbsokerKartleggingResponse;
 
@@ -47,7 +47,7 @@ public class JobbsokerkompetanseWSImpl implements JobbsokerkompetanseV1 {
     }
 
     @Override
-    public HentJobbsokerKartleggingResponse hentJobbsokerKartlegging(HentJobbsokerKartleggingRequest hentJobbsokerKartleggingRequest) {
+    public HentJobbsokerKartleggingResponse hentJobbsokerKartlegging(HentNyesteJobbsokerKartleggingRequest hentNyesteJobbsokerKartleggingRequest) {
         return Optional.of(jobbsokerKartleggingDAO.hentNyesteJobbsokerKartlegging(aktorId()))
             .map(no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging::hentTilWsDto)
             .map(jobbsokerKartlegging -> {
