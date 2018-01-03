@@ -11,7 +11,7 @@ import java.util.List;
 
 public class JobbsokerKartleggingDAO {
 
-    public static final String JOBBSOKERKOMPETANSE = "JOBBSOKERKOMPETANSE";
+    public static final String JOBBSOKERKARTLEGGING = "JOBBSOKERKARTLEGGING";
     public static final String ID = "ID";
     public static final String AKTOR_ID = "AKTOR_ID";
     public static final String LAGRET_TIDSPUNKT = "LAGRET_TIDSPUNKT";
@@ -27,7 +27,7 @@ public class JobbsokerKartleggingDAO {
 
     public JobbsokerKartlegging opprettJobbsokerKartlegging(JobbsokerKartlegging jobbsokerKartlegging) {
         long id = getNextUniqueJobbsokerkompetanseId();
-        SqlUtils.insert(database, JOBBSOKERKOMPETANSE)
+        SqlUtils.insert(database, JOBBSOKERKARTLEGGING)
             .value(ID, id)
             .value(AKTOR_ID, jobbsokerKartlegging.getAktorId())
             .value(LAGRET_TIDSPUNKT, jobbsokerKartlegging.getLagretTidspunkt())
@@ -40,7 +40,7 @@ public class JobbsokerKartleggingDAO {
 
     private JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
         return database.queryForObject(
-            "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE " + ID + " = ?",
+            "SELECT * FROM " + JOBBSOKERKARTLEGGING + " WHERE " + ID + " = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
             id
         );
@@ -58,14 +58,14 @@ public class JobbsokerKartleggingDAO {
 
     List<JobbsokerKartlegging> hentJobbsokerKartlegginger(String aktorId) {
         return database.query(
-            "SELECT * FROM " + JOBBSOKERKOMPETANSE + " WHERE " + AKTOR_ID + " = ?",
+            "SELECT * FROM " + JOBBSOKERKARTLEGGING + " WHERE " + AKTOR_ID + " = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
             aktorId
         );
     }
 
     long getNextUniqueJobbsokerkompetanseId() {
-        return nesteFraSekvens("JOBBSOKERKOMPETANSE_ID_SEQ");
+        return nesteFraSekvens(JOBBSOKERKARTLEGGING + "_ID_SEQ");
     }
 
     private long nesteFraSekvens(String sekvensNavn) {
