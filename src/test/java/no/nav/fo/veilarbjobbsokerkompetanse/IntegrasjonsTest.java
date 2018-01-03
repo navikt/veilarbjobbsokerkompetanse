@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-import static no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO.JOBBSOKERKOMPETANSE;
+import static no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO.JOBBSOKERKARTLEGGING;
 
 public abstract class IntegrasjonsTest extends AbstractIntegrasjonsTest {
 
@@ -29,7 +29,7 @@ public abstract class IntegrasjonsTest extends AbstractIntegrasjonsTest {
 
     @After
     public void deleteTestData() {
-        database.update("DELETE FROM " + JOBBSOKERKOMPETANSE);
+        database.update("DELETE FROM " + JOBBSOKERKARTLEGGING);
     }
 
     private JdbcTemplate database = getBean(JdbcTemplate.class);
@@ -60,9 +60,9 @@ public abstract class IntegrasjonsTest extends AbstractIntegrasjonsTest {
     }
 
     protected JobbsokerKartlegging nyJobbsokerKartlegging(String aktorId,
-                                                        Timestamp lagretTidspunkt,
-                                                        String besvarelse,
-                                                        String raad) {
+                                                          Timestamp lagretTidspunkt,
+                                                          String besvarelse,
+                                                          String raad) {
         return JobbsokerKartlegging.builder()
             .id(new Random().nextLong())
             .aktorId(aktorId)
