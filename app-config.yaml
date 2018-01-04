@@ -24,6 +24,8 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: app_truststore
     resourceType: certificate
+  - alias: loadbalancer:veilarbjobbsokerkompetanse
+    resourceType: loadbalancerconfig
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
