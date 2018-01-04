@@ -15,4 +15,13 @@ public class JobbsokerKartleggingDTO {
     private String besvarelse;
     @NonNull
     private String raad;
+
+    public static JobbsokerKartleggingDTO opprettFraWsDto(no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.informasjon.JobbsokerKartlegging jobbsokerKartlegging) {
+        return JobbsokerKartleggingDTO.builder()
+            .id(jobbsokerKartlegging.getId())
+            .lagretTidspunkt(DateParser.getTimestamp(jobbsokerKartlegging.getLagretTidspunkt()))
+            .besvarelse(jobbsokerKartlegging.getBesvarelse())
+            .raad(jobbsokerKartlegging.getRaad())
+            .build();
+    }
 }
