@@ -6,7 +6,7 @@
     <parent>
         <groupId>no.nav.sbl</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>1-SNAPSHOT</version>
+        <version>2018.01.03.22.21</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -29,7 +29,7 @@
             <dependency>
                 <groupId>no.nav.sbl</groupId>
                 <artifactId>bom</artifactId>
-                <version>LATEST</version>
+                <version>2018.01.03.22.21</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -37,7 +37,7 @@
             <dependency>
                 <groupId>no.nav.tjenester</groupId>
                 <artifactId>brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
+                <version>4.20180104.1216</version>
                 <classifier>jaxws</classifier>
             </dependency>
         </dependencies>
