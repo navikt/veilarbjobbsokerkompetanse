@@ -22,8 +22,6 @@ fasitResources:
     resourceType: baseUrl
   - alias: Aktoer_v2
     resourceType: webserviceendpoint
-  - alias: app_truststore
-    resourceType: certificate
   - alias: loadbalancer:veilarbjobbsokerkompetanse
     resourceType: loadbalancerconfig
   exposed:
