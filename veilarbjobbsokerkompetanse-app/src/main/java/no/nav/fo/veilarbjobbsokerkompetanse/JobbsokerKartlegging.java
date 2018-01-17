@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 @Builder(toBuilder = true)
 public class JobbsokerKartlegging {
     private long id;
-    @NonNull
     private String aktorId;
     @NonNull
     private Timestamp lagretTidspunkt;

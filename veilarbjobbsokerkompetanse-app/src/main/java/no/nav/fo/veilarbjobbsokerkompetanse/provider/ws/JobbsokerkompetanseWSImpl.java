@@ -61,13 +61,14 @@ public class JobbsokerkompetanseWSImpl implements JobbsokerkompetanseV1 {
     public void ping() {
     }
 
-    private String aktorId() {
-        return aktorService.getAktorId(fnr()).get();
+    String aktorId() {
+        return fnr()
+            .map(s -> aktorService.getAktorId(s).get())
+            .orElse(null);
     }
 
-    private String fnr() {
-        return Optional.ofNullable(requestProvider.get().getParameter("fnr"))
-            .orElseThrow(RuntimeException::new);
+    Optional<String> fnr() {
+        return Optional.ofNullable(requestProvider.get().getParameter("fnr"));
     }
 
     private Timestamp now() {
