@@ -70,11 +70,6 @@ public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void oppretter_jobbsokerkartlegging_med_aktorId_null() {
-        opprettJobbsokerKartleggingMedAktorId(null);
-    }
-
-    @Test(expected = NullPointerException.class)
     public void oppretter_jobbsokerkartlegging_med_lagretTidspunkt_null() {
         opprettJobbsokerKartleggingMedLagretTidspunkt(null);
     }

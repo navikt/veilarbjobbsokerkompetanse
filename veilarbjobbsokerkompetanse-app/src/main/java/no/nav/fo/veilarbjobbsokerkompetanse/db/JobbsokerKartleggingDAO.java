@@ -38,7 +38,7 @@ public class JobbsokerKartleggingDAO {
         return hentJobbsokerKartlegging(id);
     }
 
-    private JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
+    public JobbsokerKartlegging hentJobbsokerKartlegging(long id) {
         return database.queryForObject(
             "SELECT * FROM " + JOBBSOKERKARTLEGGING + " WHERE " + ID + " = ?",
             (resultSet, i) -> JobbsokerKartleggingRowMapper.mapJobbsokerKartlegging(resultSet),
