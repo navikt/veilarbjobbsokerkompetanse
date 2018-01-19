@@ -1,10 +1,13 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import no.nav.apiapp.ApiApplication;
+import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
+import no.nav.fo.veilarbjobbsokerkompetanse.provider.ws.JobbsokerkompetanseWSImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +18,8 @@ import javax.sql.DataSource;
 import static no.nav.apiapp.ApiApplication.Sone.FSS;
 
 @Configuration
-@ComponentScan("no.nav.fo.veilarbjobbsokerkompetanse.db")
-@ComponentScan("no.nav.fo.veilarbjobbsokerkompetanse.provider")
+@ComponentScan("no.nav.fo.veilarbjobbsokerkompetanse")
+@Import(AktorConfig.class)
 public class ApplicationConfig implements ApiApplication {
 
     @Override
@@ -43,5 +46,10 @@ public class ApplicationConfig implements ApiApplication {
     @Bean
     public JobbsokerKartleggingDAO getJobbsokerKartleggingDAO(JdbcTemplate jdbcTemplate) {
         return new JobbsokerKartleggingDAO(jdbcTemplate);
+    }
+
+    @Bean
+    public JobbsokerkompetanseWSImpl getJobbsokerkompetanseWS() {
+        return new JobbsokerkompetanseWSImpl();
     }
 }
