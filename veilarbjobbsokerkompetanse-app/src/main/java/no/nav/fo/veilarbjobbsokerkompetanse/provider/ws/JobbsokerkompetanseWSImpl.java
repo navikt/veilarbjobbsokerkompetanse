@@ -18,43 +18,41 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@SoapTjeneste("/jobbsokerkompetanse/ws")
+@SoapTjeneste("/jobbsokerkompetanse")
 public class JobbsokerkompetanseWSImpl implements JobbsokerkompetanseV1 {
 
-    private final JobbsokerKartleggingDAO jobbsokerKartleggingDAO;
-    private final AktorService aktorService;
-    private final Provider<HttpServletRequest> requestProvider;
+    @Inject
+    private JobbsokerKartleggingDAO jobbsokerKartleggingDAO;
 
     @Inject
-    public JobbsokerkompetanseWSImpl(JobbsokerKartleggingDAO jobbsokerKartleggingDAO, AktorService aktorService, Provider<HttpServletRequest> requestProvider) {
-        this.jobbsokerKartleggingDAO = jobbsokerKartleggingDAO;
-        this.aktorService = aktorService;
-        this.requestProvider = requestProvider;
-    }
+    private AktorService aktorService;
+
+    @Inject
+    private Provider<HttpServletRequest> requestProvider;
 
     @Override
     public OpprettJobbsokerKartleggingResponse opprettJobbsokerKartlegging(OpprettJobbsokerKartleggingRequest opprettJobbsokerKartleggingRequest) {
         return Optional.of(opprettJobbsokerKartleggingRequest.getJobbsokerkartlegging())
-            .map(jobbsokerKartlegging -> no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging.opprettFraWsDto(jobbsokerKartlegging, aktorId(), now()))
-            .map(jobbsokerKartleggingDAO::opprettJobbsokerKartlegging)
-            .map(no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging::hentTilWsDto)
-            .map(jobbsokerKartlegging -> {
-                val response = new OpprettJobbsokerKartleggingResponse();
-                response.setJobbsokerkartlegging(jobbsokerKartlegging);
-                return response;
-            })
-            .orElseThrow(RuntimeException::new);
+                .map(jobbsokerKartlegging -> no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging.opprettFraWsDto(jobbsokerKartlegging, aktorId(), now()))
+                .map(jobbsokerKartleggingDAO::opprettJobbsokerKartlegging)
+                .map(no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging::hentTilWsDto)
+                .map(jobbsokerKartlegging -> {
+                    val response = new OpprettJobbsokerKartleggingResponse();
+                    response.setJobbsokerkartlegging(jobbsokerKartlegging);
+                    return response;
+                })
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
     public HentJobbsokerKartleggingResponse hentJobbsokerKartlegging(HentNyesteJobbsokerKartleggingRequest hentNyesteJobbsokerKartleggingRequest) {
         return Optional.of(jobbsokerKartleggingDAO.hentNyesteJobbsokerKartlegging(aktorId()))
-            .map(no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging::hentTilWsDto)
-            .map(jobbsokerKartlegging -> {
-                val response = new HentJobbsokerKartleggingResponse();
-                response.setJobbsokerkartlegging(jobbsokerKartlegging);
-                return response;
-            }).orElseThrow(RuntimeException::new);
+                .map(no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging::hentTilWsDto)
+                .map(jobbsokerKartlegging -> {
+                    val response = new HentJobbsokerKartleggingResponse();
+                    response.setJobbsokerkartlegging(jobbsokerKartlegging);
+                    return response;
+                }).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -67,7 +65,7 @@ public class JobbsokerkompetanseWSImpl implements JobbsokerkompetanseV1 {
 
     private String fnr() {
         return Optional.ofNullable(requestProvider.get().getParameter("fnr"))
-            .orElseThrow(RuntimeException::new);
+                .orElseThrow(RuntimeException::new);
     }
 
     private Timestamp now() {

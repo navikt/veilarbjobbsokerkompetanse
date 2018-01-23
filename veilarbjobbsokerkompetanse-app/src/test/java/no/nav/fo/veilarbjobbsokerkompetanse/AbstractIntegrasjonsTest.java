@@ -15,6 +15,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 
+import static java.lang.System.setProperty;
+
 
 public abstract class AbstractIntegrasjonsTest {
 
@@ -25,6 +27,10 @@ public abstract class AbstractIntegrasjonsTest {
     @SneakyThrows
     public static void setupContext(Class<?>... classes) {
         DatabaseTestContext.setupContext(System.getProperty("database"));
+
+        setProperty("no.nav.modig.security.sts.url", "111111");
+        setProperty("no.nav.modig.security.systemuser.username", "username");
+        setProperty("no.nav.modig.security.systemuser.password", "password");
 
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(classes);
         annotationConfigApplicationContext.start();
