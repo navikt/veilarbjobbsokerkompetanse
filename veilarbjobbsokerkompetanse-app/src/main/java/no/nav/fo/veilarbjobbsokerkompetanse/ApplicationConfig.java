@@ -1,6 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
-import no.nav.apiapp.ApiApplication;
+import no.nav.apiapp.ApiApplication.NaisApiApplication;
+import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.ws.JobbsokerkompetanseWSImpl;
@@ -20,7 +21,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
 @Configuration
 @ComponentScan("no.nav.fo.veilarbjobbsokerkompetanse")
 @Import(AktorConfig.class)
-public class ApplicationConfig implements ApiApplication {
+public class ApplicationConfig implements NaisApiApplication {
 
     @Override
     public Sone getSone() {
@@ -52,4 +53,12 @@ public class ApplicationConfig implements ApiApplication {
     public JobbsokerkompetanseWSImpl getJobbsokerkompetanseWS() {
         return new JobbsokerkompetanseWSImpl();
     }
+
+    @Override
+    public void configure(ApiAppConfigurator apiAppConfigurator) {
+        apiAppConfigurator
+                .samlLogin()
+                .sts();
+    }
+
 }
