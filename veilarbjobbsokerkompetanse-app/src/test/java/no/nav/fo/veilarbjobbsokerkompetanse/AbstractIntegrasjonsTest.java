@@ -1,6 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import lombok.SneakyThrows;
+import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.DatabaseTestContext;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -31,6 +32,8 @@ public abstract class AbstractIntegrasjonsTest {
         setProperty("no.nav.modig.security.sts.url", "111111");
         setProperty("no.nav.modig.security.systemuser.username", "username");
         setProperty("no.nav.modig.security.systemuser.password", "password");
+
+        setProperty(AktorConfig.AKTOER_ENDPOINT_URL, "/");
 
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(classes);
         annotationConfigApplicationContext.start();

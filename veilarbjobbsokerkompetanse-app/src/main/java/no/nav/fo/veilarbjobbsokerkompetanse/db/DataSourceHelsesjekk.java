@@ -25,6 +25,7 @@ public class DataSourceHelsesjekk implements Helsesjekk {
     public HelsesjekkMetadata getMetadata() {
         String databaseUri = getRequiredProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL);
         return new HelsesjekkMetadata(
+                "db",
             "Database: " + databaseUri,
             "Database for veilarbjobbsokerkompetanse",
             true
