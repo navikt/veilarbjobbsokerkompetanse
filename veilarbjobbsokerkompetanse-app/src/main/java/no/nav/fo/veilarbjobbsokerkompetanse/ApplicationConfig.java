@@ -23,6 +23,8 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
 @Import(AktorConfig.class)
 public class ApplicationConfig implements NaisApiApplication {
 
+    public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
+
     @Override
     public Sone getSone() {
         return FSS;
