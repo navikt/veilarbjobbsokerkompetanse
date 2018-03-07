@@ -27,10 +27,10 @@ fasitResources:
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
-    path: /jobbsokerkompetanse/rs
+    path: /veilarbjobbsokerkompetanse/rs
   - alias: veilarbjobbsokerkompetanseWS
     resourceType: webserviceendpoint
-    path: /jobbsokerkompetanse/ws
+    path: /veilarbjobbsokerkompetanse/ws
     wsdlGroupId: no.nav.tjenester
     wsdlArtifactId: brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon
     wsdlVersion: 1.0.1
