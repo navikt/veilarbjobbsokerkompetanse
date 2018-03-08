@@ -37,7 +37,7 @@
             <dependency>
                 <groupId>no.nav.tjenester</groupId>
                 <artifactId>brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon</artifactId>
-                <version>4.20180104.1216</version>
+                <version>1.20180308.1554</version>
                 <classifier>jaxws</classifier>
             </dependency>
         </dependencies>
