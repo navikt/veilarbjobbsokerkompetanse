@@ -3,9 +3,8 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 import lombok.val;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.JobbsokerKartlegging;
-import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 public class JobbsokerKartleggingDAOTest extends IntegrasjonsTest {
 
     @Test

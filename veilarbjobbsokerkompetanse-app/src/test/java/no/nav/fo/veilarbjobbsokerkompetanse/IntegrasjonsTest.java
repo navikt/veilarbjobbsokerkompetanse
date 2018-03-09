@@ -2,11 +2,13 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import no.nav.fo.veilarbjobbsokerkompetanse.db.DatabaseTestContext;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
+import no.nav.testconfig.ApiAppTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -21,12 +23,14 @@ public abstract class IntegrasjonsTest extends AbstractIntegrasjonsTest {
     @BeforeAll
     @BeforeClass
     public static void setupContext() {
+        ApiAppTest.setupTestContext();
         DatabaseTestContext.setupInMemoryContext();
         setupContext(
-            ApplicationConfig.class
+                ApplicationConfig.class
         );
     }
 
+    @AfterEach
     @After
     public void deleteTestData() {
         database.update("DELETE FROM " + JOBBSOKERKARTLEGGING);
@@ -64,12 +68,12 @@ public abstract class IntegrasjonsTest extends AbstractIntegrasjonsTest {
                                                           String besvarelse,
                                                           String raad) {
         return JobbsokerKartlegging.builder()
-            .id(new Random().nextLong())
-            .aktorId(aktorId)
-            .lagretTidspunkt(lagretTidspunkt)
-            .besvarelse(besvarelse)
-            .raad(raad)
-            .build();
+                .id(new Random().nextLong())
+                .aktorId(aktorId)
+                .lagretTidspunkt(lagretTidspunkt)
+                .besvarelse(besvarelse)
+                .raad(raad)
+                .build();
     }
 
     protected JSONObject nyRaad() {
