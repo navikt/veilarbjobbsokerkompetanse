@@ -30,8 +30,8 @@ fasitResources:
     path: /veilarbjobbsokerkompetanse/rs
   - alias: veilarbjobbsokerkompetanseWS
     resourceType: webserviceendpoint
-    path: /veilarbjobbsokerkompetanse/ws
+    path: /veilarbjobbsokerkompetanse/ws/jobbsokerkompetanse
     wsdlGroupId: no.nav.tjenester
     wsdlArtifactId: brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon
-    wsdlVersion: 1.0.1
+    wsdlVersion: 1.20180308.1554
     securityToken: SAML
