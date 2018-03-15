@@ -33,13 +33,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <dependency>
-                <groupId>no.nav.tjenester</groupId>
-                <artifactId>brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon</artifactId>
-                <version>1.20180308.1554</version>
-                <classifier>jaxws</classifier>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

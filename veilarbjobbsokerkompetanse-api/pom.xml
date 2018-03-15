@@ -13,11 +13,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>no.nav.tjenester</groupId>
-            <artifactId>brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon</artifactId>
-            <classifier>jaxws</classifier>
-        </dependency>
-        <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
         </dependency>

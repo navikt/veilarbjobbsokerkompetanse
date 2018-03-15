@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Value
 @Builder(toBuilder = true)
 public class JobbsokerKartlegging {
+
     private long id;
     @NonNull
     private String aktorId;
@@ -21,24 +22,4 @@ public class JobbsokerKartlegging {
     @NonNull
     private String raad;
 
-    public static JobbsokerKartlegging opprettFraWsDto(no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.informasjon.JobbsokerKartlegging jobbsokerKartlegging,
-                                                       String aktorId,
-                                                       Timestamp now) {
-        return JobbsokerKartlegging
-            .builder()
-            .aktorId(aktorId)
-            .lagretTidspunkt(now)
-            .besvarelse(jobbsokerKartlegging.getBesvarelse())
-            .raad(jobbsokerKartlegging.getRaad())
-            .build();
-    }
-
-    public static no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.informasjon.JobbsokerKartlegging hentTilWsDto(JobbsokerKartlegging jobbsokerKartlegging) {
-        val jsk = new no.nav.tjeneste.domene.brukerdialog.jobbsokerkompetanse.v1.informasjon.JobbsokerKartlegging();
-        jsk.setId(jobbsokerKartlegging.getId());
-        jsk.setLagretTidspunkt(DateParser.getXmlCalendar(jobbsokerKartlegging.getLagretTidspunkt()));
-        jsk.setBesvarelse(jobbsokerKartlegging.getBesvarelse());
-        jsk.setRaad(jobbsokerKartlegging.getRaad());
-        return jsk;
-    }
 }
