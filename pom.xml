@@ -16,7 +16,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>veilarbjobbsokerkompetanse-api</module>
         <module>veilarbjobbsokerkompetanse-app</module>
     </modules>
 

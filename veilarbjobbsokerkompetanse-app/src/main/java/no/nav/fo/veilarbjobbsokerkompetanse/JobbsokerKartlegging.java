@@ -3,8 +3,6 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
-import lombok.val;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.ws.DateParser;
 
 import java.sql.Timestamp;
 

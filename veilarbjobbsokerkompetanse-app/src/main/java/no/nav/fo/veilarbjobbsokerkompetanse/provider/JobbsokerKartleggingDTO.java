@@ -1,4 +1,4 @@
-package no.nav.fo.veilarbjobbsokerkompetanse.api;
+package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import lombok.Builder;
 import lombok.NonNull;
