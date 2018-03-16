@@ -25,4 +25,4 @@ fasitResources:
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
-    path: /veilarbjobbsokerkompetanse/rs
+    path: /veilarbjobbsokerkompetanse/api
