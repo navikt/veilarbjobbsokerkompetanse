@@ -1,20 +1,12 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
-import java.sql.Timestamp;
-
-@Value
-@Builder(toBuilder = true)
+@Data
+@Accessors(chain = true)
 public class JobbsokerKartleggingDTO {
 
-    private long id;
-    private Timestamp lagretTidspunkt;
-    @NonNull
     private String besvarelse;
-    @NonNull
-    private String raad;
 
 }
