@@ -15,6 +15,7 @@ public class MainTest {
     public static final String TEST_PORT = "8800";
 
     public static void main(String[] args) throws Exception {
+        setProperty("SERVICE_CALLS_HOME", "target/log");
         ApiAppTest.setupTestContext();
         DatabaseTestContext.setupContext(getProperty("database"));
 
