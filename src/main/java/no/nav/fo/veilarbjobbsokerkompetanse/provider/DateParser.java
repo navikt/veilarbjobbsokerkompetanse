@@ -1,9 +1,10 @@
-package no.nav.fo.veilarbjobbsokerkompetanse.provider.ws;
+package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import lombok.SneakyThrows;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -31,5 +32,10 @@ public class DateParser {
                 .map(XMLGregorianCalendar::toGregorianCalendar)
                 .map(GregorianCalendar::getTime)
                 .orElse(null);
+    }
+
+    public static Timestamp getTimestamp(XMLGregorianCalendar xmlGregorianCalendar) {
+        Date date = getDate(xmlGregorianCalendar);
+        return new Timestamp(date.getTime());
     }
 }
