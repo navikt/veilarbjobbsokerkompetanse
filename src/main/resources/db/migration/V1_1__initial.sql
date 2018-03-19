@@ -4,9 +4,10 @@ CREATE SEQUENCE SVARALTERNATIV_SEQ START WITH 1;
 CREATE SEQUENCE RAAD_SEQ START WITH 1;
 
 CREATE TABLE BESVARELSE (
-  besvarelse_id   NUMBER(19)     NOT NULL,
-  aktor_id        NVARCHAR2(255) NOT NULL,
-  besvarelse_dato TIMESTAMP(6)   NOT NULL,
+  besvarelse_id    NUMBER(19)     NOT NULL,
+  aktor_id         NVARCHAR2(255) NOT NULL,
+  under_oppfolging NUMBER(1, 0)   NOT NULL,
+  besvarelse_dato  TIMESTAMP(6)   NOT NULL,
   CONSTRAINT BESVARELSE_PK PRIMARY KEY (besvarelse_id)
 );
 

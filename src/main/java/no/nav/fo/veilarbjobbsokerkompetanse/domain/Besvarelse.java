@@ -3,6 +3,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.domain;
 import lombok.Builder;
 import lombok.Value;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Value
@@ -11,6 +12,7 @@ public class Besvarelse {
 
     private long besvarelseId;
     private long aktorId;
-    private Date besvarelseDao;
+    private boolean underOppfolging;
+    private Instant besvarelseDato;
 
 }
