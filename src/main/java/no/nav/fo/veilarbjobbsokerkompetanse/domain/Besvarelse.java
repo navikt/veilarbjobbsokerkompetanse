@@ -11,7 +11,7 @@ import java.util.List;
 public class Besvarelse {
 
     private long besvarelseId;
-    private long aktorId;
+    private String aktorId;
     private boolean underOppfolging;
     private Instant besvarelseDato;
 

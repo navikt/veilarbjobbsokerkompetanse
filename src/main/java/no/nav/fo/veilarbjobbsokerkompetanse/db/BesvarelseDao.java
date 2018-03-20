@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.function.Supplier;
 
 import static java.sql.Timestamp.from;
+import static java.util.Comparator.comparing;
 
 @Component
 public class BesvarelseDao {
@@ -47,13 +48,13 @@ public class BesvarelseDao {
         besvarelse.getRaad().forEach(r -> raadDao.create(r, besvarelseId));
     }
 
-    public Besvarelse fetchMostRecentByAktorId(long aktorId) {
+    public Besvarelse fetchMostRecentByAktorId(String aktorId) {
 
         Besvarelse besvarelse = db.query("SELECT * FROM BESVARELSE WHERE aktor_id = ?",
                 this::map,
                 aktorId
         ).stream()
-                .sorted((a, b) -> b.getBesvarelseDato().compareTo(a.getBesvarelseDato()))
+                .sorted(comparing(Besvarelse::getBesvarelseDato).reversed())
                 .findFirst()
                 .orElseThrow(INGEN_BESVARELSE);
 
@@ -67,7 +68,7 @@ public class BesvarelseDao {
     private Besvarelse map(ResultSet rs) {
         return Besvarelse.builder()
                 .besvarelseId(rs.getLong("besvarelse_id"))
-                .aktorId(rs.getLong("aktor_id"))
+                .aktorId(rs.getString("aktor_id"))
                 .underOppfolging(rs.getBoolean("under_oppfolging"))
                 .besvarelseDato(rs.getTimestamp("besvarelse_dato").toInstant())
                 .build();
