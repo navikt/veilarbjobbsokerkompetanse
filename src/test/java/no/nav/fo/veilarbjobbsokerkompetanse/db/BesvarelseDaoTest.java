@@ -1,44 +1,92 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
+import no.nav.apiapp.feil.Feil;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Raad;
+import no.nav.fo.veilarbjobbsokerkompetanse.domain.Svar;
+import no.nav.fo.veilarbjobbsokerkompetanse.domain.SvarAlternativ;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.Instant;
 
-import static java.util.Collections.emptyList;
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BesvarelseDaoTest extends IntegrasjonsTest {
+
+    private static final String AKTOR_ID = "123456";
+    private static final Instant NOW = Instant.now();
+    private static final Instant LATER = NOW.plus(1, DAYS);
 
     @Inject
     private BesvarelseDao besvarelseDao;
 
+    @Transactional
     @Test
-    public void test() {
+    public void testCreateAndFetch() {
+        besvarelseDao.create(besvarelse(AKTOR_ID, NOW));
+        Besvarelse result = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
 
-        besvarelseDao.create(besvarelse());
-        Besvarelse result = besvarelseDao.fetchMostRecentByAktorId(2L);
-        System.out.println(result);
-
+        assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
+        assertThat(result.getBesvarelseDato()).isEqualTo(NOW);
+        assertThat(result.getRaad()).hasAtLeastOneElementOfType(Raad.class);
+        assertThat(result.getSvar()).hasAtLeastOneElementOfType(Svar.class);
+        assertThat(result.getSvar().get(0).getTips()).isEqualTo("TIPS");
+        assertThat(result.getSvar().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
     }
 
-    private Besvarelse besvarelse() {
+    @Transactional
+    @Test
+    public void testMostRecentBesvarelse() {
+        besvarelseDao.create(besvarelse(AKTOR_ID, NOW));
+        besvarelseDao.create(besvarelse(AKTOR_ID, LATER));
 
-        Raad raad = Raad.builder()
-                .besvarelseId(1L)
-                .build();
+        Besvarelse besvarelse = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
 
+        assertThat(besvarelse.getBesvarelseDato()).isEqualTo(LATER);
+    }
+
+    @Transactional
+    @Test(expected = Feil.class)
+    public void testNoBesvarelseFound() {
+        besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
+    }
+
+    private Besvarelse besvarelse(String aktorId, Instant besvarelseDato) {
         return Besvarelse.builder()
-                .besvarelseId(1L)
-                .aktorId(2L)
-                .besvarelseDato(Instant.now())
+                .aktorId(aktorId)
+                .besvarelseDato(besvarelseDato)
                 .underOppfolging(false)
-                .svar(emptyList())
-                .raad(emptyList())
+                .svar(asList(svar(), svar()))
+                .raad(asList(raad(), raad()))
                 .build();
+    }
 
+    private Svar svar() {
+        return Svar.builder()
+                .sporsmalKey("SPORSMAL-1-KEY")
+                .sporsmal("SPORSMAL-1")
+                .tipsKey("TIPS-1-KEY")
+                .tips("TIPS")
+                .svarAlternativ(asList(svarAlternativ(), svarAlternativ()))
+                .build();
+    }
+
+    private SvarAlternativ svarAlternativ() {
+        return SvarAlternativ.builder()
+                .svarAlternativKey("SVARALTERNATIV-1-KEY")
+                .svarAlternativ("SVARALTERNATIV-1")
+                .build();
+    }
+
+    private Raad raad() {
+        return Raad.builder()
+                .raad("Raad-1")
+                .build();
     }
 
 }

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -31,8 +30,6 @@ public abstract class IntegrasjonsTest {
     @BeforeAll
     @BeforeClass
     public static void setupContext() {
-        setProperty("SERVICE_CALLS_HOME", "target/log/accesslog");
-        setProperty("APP_LOG_HOME", "target/log");
         ApiAppTest.setupTestContext();
         DatabaseTestContext.setupInMemoryContext();
         setupContext(
@@ -90,14 +87,6 @@ public abstract class IntegrasjonsTest {
             annotationConfigApplicationContext.destroy();
             annotationConfigApplicationContext = null;
         }
-    }
-
-
-    @AfterEach
-    @After
-    public void deleteTestData() {
-        JdbcTemplate database = getBean(JdbcTemplate.class);
-        database.update("DELETE FROM BESVARELSE");
     }
 
 }
