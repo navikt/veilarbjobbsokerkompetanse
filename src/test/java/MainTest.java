@@ -7,8 +7,8 @@ import no.nav.testconfig.ApiAppTest;
 import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;
 import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
-import static no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
-import static no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig.APPLICATION_NAME;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.APPLICATION_NAME;
 
 public class MainTest {
 

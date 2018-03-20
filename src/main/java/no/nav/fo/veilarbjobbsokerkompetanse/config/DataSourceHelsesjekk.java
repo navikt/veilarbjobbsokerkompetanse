@@ -1,4 +1,4 @@
-package no.nav.fo.veilarbjobbsokerkompetanse.db;
+package no.nav.fo.veilarbjobbsokerkompetanse.config;
 
 import no.nav.apiapp.selftest.Helsesjekk;
 import no.nav.apiapp.selftest.HelsesjekkMetadata;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
-import static no.nav.fo.veilarbjobbsokerkompetanse.db.DataSourceConfig.VEILARBJOBBSOKERKOMPETANSEDB_URL;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig.VEILARBJOBBSOKERKOMPETANSEDB_URL;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 @Component

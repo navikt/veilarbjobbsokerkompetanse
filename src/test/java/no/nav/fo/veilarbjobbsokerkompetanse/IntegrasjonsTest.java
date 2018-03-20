@@ -2,6 +2,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import lombok.SneakyThrows;
 import no.nav.dialogarena.aktor.AktorConfig;
+import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.DatabaseTestContext;
 import no.nav.testconfig.ApiAppTest;
 import org.junit.After;

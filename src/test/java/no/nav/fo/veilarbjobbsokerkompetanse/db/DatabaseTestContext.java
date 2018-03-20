@@ -7,8 +7,8 @@ import no.nav.dialogarena.config.fasit.TestEnvironment;
 
 import java.util.Optional;
 
-import static no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig.APPLICATION_NAME;
-import static no.nav.fo.veilarbjobbsokerkompetanse.db.DataSourceConfig.*;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.APPLICATION_NAME;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig.*;
 
 public class DatabaseTestContext {
 

@@ -1,8 +1,9 @@
-package no.nav.fo.veilarbjobbsokerkompetanse;
+package no.nav.fo.veilarbjobbsokerkompetanse.config;
 
 import no.nav.apiapp.ApiApplication.NaisApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.dialogarena.aktor.AktorConfig;
+import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

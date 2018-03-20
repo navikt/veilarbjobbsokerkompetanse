@@ -1,9 +1,9 @@
 import no.nav.apiapp.ApiApp;
-import no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig;
+import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 
 import static java.lang.System.setProperty;
 import static no.nav.dialogarena.aktor.AktorConfig.AKTOER_ENDPOINT_URL;
-import static no.nav.fo.veilarbjobbsokerkompetanse.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 public class Main {

@@ -1,4 +1,4 @@
-package no.nav.fo.veilarbjobbsokerkompetanse.db;
+package no.nav.fo.veilarbjobbsokerkompetanse.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
