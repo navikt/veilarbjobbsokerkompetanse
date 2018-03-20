@@ -10,27 +10,27 @@ import java.sql.ResultSet;
 import java.util.List;
 
 @Component
-public class SvarAlternativDao {
+class SvarAlternativDao {
 
     @Inject
     private Database db;
 
-    public void create(SvarAlternativ svarAlternativ) {
-        svarAlternativ.toBuilder().svarAlternativId(db.nesteFraSekvens("SVARALTERNATIV_SEQ")).build();
+    void create(SvarAlternativ svarAlternativ, long svarId) {
+        long svarAlternativId = db.nesteFraSekvens("SVARALTERNATIV_SEQ");
         db.update("INSERT INTO SVARALTERNATIV (" +
                         "svaralternativ_id, " +
                         "svar_id, " +
                         "svaralternativ_key, " +
                         "svaralternativ) " +
                         "VALUES (?, ?, ?, ?)",
-                svarAlternativ.getSvarAlternativId(),
-                svarAlternativ.getSvarId(),
+                svarAlternativId,
+                svarId,
                 svarAlternativ.getSvarAlternativKey(),
                 svarAlternativ.getSvarAlternativ()
         );
     }
 
-    public List<SvarAlternativ> fetchBySvarId(long svarId) {
+    List<SvarAlternativ> fetchBySvarId(long svarId) {
         return db.query("SELECT * FROM SVARALTERNATIV WHERE svar_id = ?",
                 this::map,
                 svarId
@@ -38,7 +38,7 @@ public class SvarAlternativDao {
     }
 
     @SneakyThrows
-    public SvarAlternativ map(ResultSet rs) {
+    private SvarAlternativ map(ResultSet rs) {
         return SvarAlternativ.builder()
                 .svarAlternativId(rs.getLong("svaralternativ_id"))
                 .svarId(rs.getLong("svar_id"))

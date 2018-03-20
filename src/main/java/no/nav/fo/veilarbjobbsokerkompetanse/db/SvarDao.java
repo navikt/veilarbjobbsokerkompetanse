@@ -12,7 +12,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Component
-public class SvarDao {
+class SvarDao {
 
     @Inject
     private Database db;
@@ -20,8 +20,8 @@ public class SvarDao {
     @Inject
     private SvarAlternativDao svarAlternativDao;
 
-    public void create(Svar svar) {
-        svar.toBuilder().svarId(db.nesteFraSekvens("SVAR_SEQ"));
+    void create(Svar svar, long besvarelseId) {
+        long svarId = db.nesteFraSekvens("SVAR_SEQ");
         db.update("INSERT INTO SVAR (" +
                         "svar_id, " +
                         "besvarelse_id, " +
@@ -30,17 +30,17 @@ public class SvarDao {
                         "tips_key, " +
                         "tips) " +
                         "VALUES (?, ?, ?, ?, ?, ?)",
-                svar.getSvarId(),
-                svar.getBesvarelseId(),
+                svarId,
+                besvarelseId,
                 svar.getSporsmalKey(),
                 svar.getSporsmal(),
                 svar.getTipsKey(),
                 svar.getTips()
         );
-        svar.getSvarAlternativ().forEach(sa -> svarAlternativDao.create(sa));
+        svar.getSvarAlternativ().forEach(sa -> svarAlternativDao.create(sa, svarId));
     }
 
-    public List<Svar> fetchByBesvarelseId(long besvarelseId) {
+    List<Svar> fetchByBesvarelseId(long besvarelseId) {
         List<Svar> svar = db.query("SELECT * FROM SVAR WHERE svar_id = ?",
                 this::map,
                 besvarelseId
@@ -53,7 +53,7 @@ public class SvarDao {
     }
 
     @SneakyThrows
-    public Svar map(ResultSet rs) {
+    private Svar map(ResultSet rs) {
         return Svar.builder()
                 .svarId(rs.getLong("svar_id"))
                 .besvarelseId(rs.getLong("besvarelse_id"))

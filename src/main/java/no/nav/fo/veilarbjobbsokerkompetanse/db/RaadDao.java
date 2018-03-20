@@ -10,25 +10,25 @@ import java.sql.ResultSet;
 import java.util.List;
 
 @Component
-public class RaadDao {
+class RaadDao {
 
     @Inject
     private Database db;
 
-    public void create(Raad raad) {
-        raad.toBuilder().raadId(db.nesteFraSekvens("RAAD_SEQ")).build();
+    void create(Raad raad, long besvarelseId) {
+        long raadId = db.nesteFraSekvens("RAAD_SEQ");
         db.update("INSERT INTO RAAD (" +
                         "raad_id, " +
                         "besvarelse_id, " +
                         "raad) " +
                         "VALUES (?, ?, ?)",
-                raad.getRaadId(),
-                raad.getBesvarelseId(),
+                raadId,
+                besvarelseId,
                 raad.getRaad()
         );
     }
 
-    public List<Raad> fetchByBesvarelseId(long besvarelseId) {
+    List<Raad> fetchByBesvarelseId(long besvarelseId) {
         return db.query("SELECT * FROM RAAD WHERE besvarelse_id = ?",
                 this::map,
                 besvarelseId
@@ -36,7 +36,7 @@ public class RaadDao {
     }
 
     @SneakyThrows
-    public Raad map(ResultSet rs) {
+    private Raad map(ResultSet rs) {
         return Raad.builder()
                 .raadId(rs.getLong("raad_id"))
                 .besvarelseId(rs.getLong("besvarelse_id"))

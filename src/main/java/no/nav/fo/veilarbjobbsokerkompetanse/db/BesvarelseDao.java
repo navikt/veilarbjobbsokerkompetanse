@@ -30,21 +30,21 @@ public class BesvarelseDao {
 
     @Transactional
     public void create(Besvarelse besvarelse) {
-        long id = db.nesteFraSekvens("BESVARELSE_SEQ");
+        long besvarelseId = db.nesteFraSekvens("BESVARELSE_SEQ");
         db.update("INSERT INTO BESVARELSE (" +
                         "besvarelse_id, " +
                         "aktor_id, " +
                         "under_oppfolging, " +
                         "besvarelse_dato) " +
                         "VALUES (?, ?, ?, ?)",
-                id,
+                besvarelseId,
                 besvarelse.getAktorId(),
                 besvarelse.isUnderOppfolging(),
                 from(besvarelse.getBesvarelseDato())
         );
 
-        besvarelse.getSvar().forEach(s -> svarDao.create(s));
-        besvarelse.getRaad().forEach(r -> raadDao.create(r));
+        besvarelse.getSvar().forEach(s -> svarDao.create(s, besvarelseId));
+        besvarelse.getRaad().forEach(r -> raadDao.create(r, besvarelseId));
     }
 
     public Besvarelse fetchMostRecentByAktorId(long aktorId) {
@@ -64,7 +64,7 @@ public class BesvarelseDao {
     }
 
     @SneakyThrows
-    public Besvarelse map(ResultSet rs) {
+    private Besvarelse map(ResultSet rs) {
         return Besvarelse.builder()
                 .besvarelseId(rs.getLong("besvarelse_id"))
                 .aktorId(rs.getLong("aktor_id"))
