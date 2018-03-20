@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.time.Instant;
-import java.util.Date;
+import java.util.List;
 
 @Value
 @Builder(toBuilder = true)
@@ -14,5 +14,8 @@ public class Besvarelse {
     private long aktorId;
     private boolean underOppfolging;
     private Instant besvarelseDato;
+
+    private List<Raad> raad;
+    private List<Svar> svar;
 
 }

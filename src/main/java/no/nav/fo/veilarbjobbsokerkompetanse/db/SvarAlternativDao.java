@@ -3,16 +3,18 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.SvarAlternativ;
 import no.nav.sbl.jdbc.Database;
+import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.sql.ResultSet;
+import java.util.List;
 
-public class SvarAlternativDao implements Dao<SvarAlternativ> {
+@Component
+public class SvarAlternativDao {
 
     @Inject
     private Database db;
 
-    @Override
     public void create(SvarAlternativ svarAlternativ) {
         svarAlternativ.toBuilder().svarAlternativId(db.nesteFraSekvens("SVARALTERNATIV_SEQ")).build();
         db.update("INSERT INTO SVARALTERNATIV (" +
@@ -28,16 +30,14 @@ public class SvarAlternativDao implements Dao<SvarAlternativ> {
         );
     }
 
-    @Override
-    public SvarAlternativ fetch(long id) {
-        return db.queryForObject("SELECT * FROM SVARALTERNATIV WHERE svaralternativ_id = ?",
+    public List<SvarAlternativ> fetchBySvarId(long svarId) {
+        return db.query("SELECT * FROM SVARALTERNATIV WHERE svar_id = ?",
                 this::map,
-                id
+                svarId
         );
     }
 
     @SneakyThrows
-    @Override
     public SvarAlternativ map(ResultSet rs) {
         return SvarAlternativ.builder()
                 .svarAlternativId(rs.getLong("svaralternativ_id"))

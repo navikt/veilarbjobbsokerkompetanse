@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.sql.ResultSet;
+import java.util.List;
 
 @Component
-public class RaadDao implements Dao<Raad> {
+public class RaadDao {
 
     @Inject
     private Database db;
@@ -27,15 +28,14 @@ public class RaadDao implements Dao<Raad> {
         );
     }
 
-    public Raad fetch(long id) {
-        return db.queryForObject("SELECT * FROM RAAD WHERE raad_id = ?",
+    public List<Raad> fetchByBesvarelseId(long besvarelseId) {
+        return db.query("SELECT * FROM RAAD WHERE besvarelse_id = ?",
                 this::map,
-                id
+                besvarelseId
         );
     }
 
     @SneakyThrows
-    @Override
     public Raad map(ResultSet rs) {
         return Raad.builder()
                 .raadId(rs.getLong("raad_id"))

@@ -3,6 +3,8 @@ package no.nav.fo.veilarbjobbsokerkompetanse.domain;
 import lombok.Builder;
 import lombok.Value;
 
+import java.util.List;
+
 @Value
 @Builder(toBuilder = true)
 public class Svar {
@@ -13,5 +15,7 @@ public class Svar {
     private String sporsmal;
     private String tipsKey;
     private String tips;
+
+    private List<SvarAlternativ> svarAlternativ;
 
 }
