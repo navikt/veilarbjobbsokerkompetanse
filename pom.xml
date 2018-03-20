@@ -41,10 +41,6 @@
             <artifactId>api-app</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
             <groupId>no.nav.sbl</groupId>
             <artifactId>util</artifactId>
         </dependency>
@@ -122,11 +118,6 @@
             <artifactId>modig-security-loginmodule</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
 
         <!--Test no.nav.fo.veilarbjobbsokerkompetanse.db-->
         <dependency>
@@ -154,6 +145,10 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
