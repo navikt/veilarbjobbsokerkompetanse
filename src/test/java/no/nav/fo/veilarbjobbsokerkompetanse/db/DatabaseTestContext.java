@@ -14,8 +14,8 @@ public class DatabaseTestContext {
 
     public static void setupContext(String miljo) {
         val dbCredential = Optional.ofNullable(miljo)
-            .map(TestEnvironment::valueOf)
-            .map(testEnvironment -> FasitUtils.getDbCredentials(testEnvironment, APPLICATION_NAME));
+                .map(TestEnvironment::valueOf)
+                .map(testEnvironment -> FasitUtils.getDbCredentials(testEnvironment, APPLICATION_NAME));
 
         if (dbCredential.isPresent()) {
             setDataSourceProperties(dbCredential.get());
@@ -30,17 +30,15 @@ public class DatabaseTestContext {
     }
 
     private static void setDataSourceProperties(DbCredentials dbCredentials) {
-        System.setProperty(
-            VEILARBJOBBSOKERKOMPETANSEDB_URL, dbCredentials.url);
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL, dbCredentials.url);
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, dbCredentials.getUsername());
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, dbCredentials.getPassword());
 
     }
 
     private static void setInMemoryDataSourceProperties() {
-        System.setProperty(
-            VEILARBJOBBSOKERKOMPETANSEDB_URL,
-            "jdbc:h2:mem:veilarbjobbsokerkompetanse;DB_CLOSE_DELAY=-1;MODE=Oracle");
+        System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL,
+                "jdbc:h2:mem:veilarbjobbsokerkompetanse;DB_CLOSE_DELAY=-1;MODE=Oracle");
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, "sa");
         System.setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, "password");
     }
