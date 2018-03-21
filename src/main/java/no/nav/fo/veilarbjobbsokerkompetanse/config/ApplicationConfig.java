@@ -1,14 +1,12 @@
-package no.nav.fo.veilarbjobbsokerkompetanse;
+package no.nav.fo.veilarbjobbsokerkompetanse.config;
 
 import no.nav.apiapp.ApiApplication.NaisApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.dialogarena.aktor.AktorConfig;
-import no.nav.fo.veilarbjobbsokerkompetanse.db.JobbsokerKartleggingDAO;
-import org.springframework.context.annotation.Bean;
+import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -49,11 +47,6 @@ public class ApplicationConfig implements NaisApiApplication {
         apiAppConfigurator
                 .samlLogin()
                 .sts();
-    }
-
-    @Bean
-    public JobbsokerKartleggingDAO getJobbsokerKartleggingDAO(JdbcTemplate jdbcTemplate) {
-        return new JobbsokerKartleggingDAO(jdbcTemplate);
     }
 
 }
