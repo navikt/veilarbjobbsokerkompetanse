@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import no.nav.apiapp.feil.Feil;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
 import no.nav.sbl.jdbc.Database;
+import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,11 @@ import static java.sql.Timestamp.from;
 import static java.util.Comparator.comparing;
 
 @Component
+@Import({
+        RaadDao.class,
+        SvarDao.class,
+        SvarAlternativDao.class
+})
 public class BesvarelseDao {
 
     private static final Supplier<Feil> INGEN_BESVARELSE =
