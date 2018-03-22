@@ -8,10 +8,10 @@ port: 8080
 healthcheck:
   liveness:
     path: veilarbjobbsokerkompetanse/internal/isAlive
-    initialDelay: 20
+    initialDelay: 60
   readiness:
     path: veilarbjobbsokerkompetanse/internal/selftest
-    initialDay: 20
+    initialDay: 60
 prometheus:
   enabled: true
   path: veilarbjobbsokerkompetanse/internal/metrics
