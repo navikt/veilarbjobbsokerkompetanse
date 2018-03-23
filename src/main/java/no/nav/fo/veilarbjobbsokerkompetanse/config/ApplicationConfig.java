@@ -6,6 +6,7 @@ import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.BesvarelseDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.JobbsokerKartleggingRS;
+import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import static no.nav.apiapp.ApiApplication.Sone.FSS;
         AktorConfig.class,
         DataSourceConfig.class,
         DataSourceHelsesjekk.class,
+        BesvarelseService.class,
         JobbsokerKartleggingRS.class,
         BesvarelseDao.class,
 })

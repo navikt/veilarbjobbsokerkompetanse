@@ -36,7 +36,7 @@ public class BesvarelseDao {
     private RaadDao raadDao;
 
     @Transactional
-    public void create(Besvarelse besvarelse) {
+    public void create(String aktorId, boolean underOppfolging, Besvarelse besvarelse) {
         long besvarelseId = db.nesteFraSekvens("BESVARELSE_SEQ");
         db.update("INSERT INTO BESVARELSE (" +
                         "besvarelse_id, " +
@@ -45,8 +45,8 @@ public class BesvarelseDao {
                         "besvarelse_dato) " +
                         "VALUES (?, ?, ?, ?)",
                 besvarelseId,
-                besvarelse.getAktorId(),
-                besvarelse.isUnderOppfolging(),
+                aktorId,
+                underOppfolging,
                 from(besvarelse.getBesvarelseDato())
         );
 

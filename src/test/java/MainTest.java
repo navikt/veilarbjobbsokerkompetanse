@@ -12,7 +12,7 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.APPL
 
 public class MainTest {
 
-    public static final String TEST_PORT = "8800";
+    private static final String PORT = "8800";
 
     public static void main(String[] args) throws Exception {
         ApiAppTest.setupTestContext();
@@ -27,7 +27,7 @@ public class MainTest {
 
         setProperty(AKTOER_V2_ENDPOINTURL, "https://service-gw-" + getDefaultEnvironment() + ".test.local:443/");
 
-        Main.main(TEST_PORT);
+        Main.main(PORT);
     }
 
 }
