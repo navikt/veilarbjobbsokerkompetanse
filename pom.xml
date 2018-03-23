@@ -118,6 +118,10 @@
             <artifactId>modig-security-loginmodule</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>no.nav.modig</groupId>
+            <artifactId>modig-security-core</artifactId>
+        </dependency>
 
         <!--Test no.nav.fo.veilarbjobbsokerkompetanse.db-->
         <dependency>
