@@ -1,5 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
+import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.BesvarelseDto;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
@@ -13,14 +14,13 @@ import javax.ws.rs.Produces;
 public class JobbsokerKartleggingRS {
 
     @GET
-    public JobbsokerKartleggingDTO hentNyesteJobbsokerKartlegging() {
-        return new JobbsokerKartleggingDTO()
-                .setBesvarelse("Dette er en test");
+    public BesvarelseDto hentNyesteBesvarelseForAktor() {
+        return null;
     }
 
     @POST
     @Path("/opprett")
-    public JobbsokerKartleggingDTO opprettJobbsokerkartlegging(JobbsokerKartleggingDTO jobbsokerKartleggingDTO) {
-        return jobbsokerKartleggingDTO;
+    public BesvarelseDto opprettBesvarelse(BesvarelseDto besvarelseDto) {
+        return besvarelseDto;
     }
 }

@@ -39,7 +39,7 @@ public abstract class IntegrasjonsTest {
     }
 
     @SneakyThrows
-    public static void setupContext(Class<?>... classes) {
+    private static void setupContext(Class<?>... classes) {
         DatabaseTestContext.setupContext(System.getProperty("database"));
 
         setProperty("no.nav.modig.security.sts.url", "111111");
