@@ -21,6 +21,7 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     private static final String AKTOR_ID = "123456";
     private static final Instant NOW = Instant.now();
     private static final Instant LATER = NOW.plus(1, DAYS);
+    private static final boolean UNDER_OPPFOLGING = true;
 
     @Inject
     private BesvarelseDao besvarelseDao;
@@ -28,7 +29,7 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     @Transactional
     @Test
     public void testCreateAndFetch() {
-        besvarelseDao.create(besvarelse(AKTOR_ID, NOW));
+        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse(NOW));
         Besvarelse result = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
 
         assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
@@ -42,8 +43,8 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     @Transactional
     @Test
     public void testMostRecentBesvarelse() {
-        besvarelseDao.create(besvarelse(AKTOR_ID, NOW));
-        besvarelseDao.create(besvarelse(AKTOR_ID, LATER));
+        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse(NOW));
+        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse(LATER));
 
         Besvarelse besvarelse = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
 
@@ -56,11 +57,9 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
         besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
     }
 
-    private Besvarelse besvarelse(String aktorId, Instant besvarelseDato) {
+    private Besvarelse besvarelse(Instant besvarelseDato) {
         return Besvarelse.builder()
-                .aktorId(aktorId)
                 .besvarelseDato(besvarelseDato)
-                .underOppfolging(false)
                 .svar(asList(svar(), svar()))
                 .raad(asList(raad(), raad()))
                 .build();
