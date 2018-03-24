@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class RaadDto {
 
+    private String raadKey;
     private String raad;
 
 }

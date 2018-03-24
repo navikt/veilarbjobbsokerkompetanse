@@ -25,7 +25,9 @@ public class Mapper {
     }
 
     private static RaadDto map(Raad raad) {
-        return new RaadDto().setRaad(raad.getRaad());
+        return new RaadDto()
+            .setRaadKey(raad.getRaadKey())
+            .setRaad(raad.getRaad());
     }
 
     private static SvarDto map(Svar svar) {

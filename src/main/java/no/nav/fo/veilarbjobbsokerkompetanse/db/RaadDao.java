@@ -20,10 +20,12 @@ class RaadDao {
         db.update("INSERT INTO RAAD (" +
                         "raad_id, " +
                         "besvarelse_id, " +
+                        "raad_key, " +
                         "raad) " +
-                        "VALUES (?, ?, ?)",
+                        "VALUES (?, ?, ?, ?)",
                 raadId,
                 besvarelseId,
+                raad.getRaadKey(),
                 raad.getRaad()
         );
     }
@@ -40,6 +42,7 @@ class RaadDao {
         return Raad.builder()
                 .raadId(rs.getLong("raad_id"))
                 .besvarelseId(rs.getLong("besvarelse_id"))
+                .raadKey(rs.getString("raad_key"))
                 .raad(rs.getString("raad"))
                 .build();
     }
