@@ -22,7 +22,7 @@ class RaadDao {
                         "besvarelse_id, " +
                         "raad_key, " +
                         "raad) " +
-                        "VALUES (?, ?, ?)",
+                        "VALUES (?, ?, ?, ?)",
                 raadId,
                 besvarelseId,
                 raad.getRaadKey(),
