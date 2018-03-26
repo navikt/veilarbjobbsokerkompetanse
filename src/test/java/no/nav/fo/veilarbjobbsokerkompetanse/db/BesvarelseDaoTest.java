@@ -84,6 +84,7 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
 
     private Raad raad() {
         return Raad.builder()
+                .raadKey("R1")
                 .raad("Raad-1")
                 .build();
     }

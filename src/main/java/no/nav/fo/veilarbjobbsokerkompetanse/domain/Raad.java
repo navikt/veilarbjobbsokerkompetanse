@@ -9,6 +9,7 @@ public class Raad {
 
     private long raadId;
     private long besvarelseId;
+    private String raadKey;
     private String raad;
 
 }
