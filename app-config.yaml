@@ -36,3 +36,6 @@ fasitResources:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
     path: /veilarbjobbsokerkompetanse/api
+  - alias: veilarbjobbsokerkompetanseSBS
+    resourceType: restservice
+    path: /veilarbjobbsokerkompetanse/api
