@@ -18,6 +18,7 @@ import static java.util.Comparator.comparing;
 @Component
 @Import({
         RaadDao.class,
+        AktivitetDao.class,
         SvarDao.class,
         SvarAlternativDao.class
 })

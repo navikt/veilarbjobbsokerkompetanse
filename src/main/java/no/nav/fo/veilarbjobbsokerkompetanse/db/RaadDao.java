@@ -9,11 +9,16 @@ import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 class RaadDao {
 
     @Inject
     private Database db;
+
+    @Inject
+    private AktivitetDao aktivitetDao;
 
     void create(Raad raad, long besvarelseId) {
         long raadId = db.nesteFraSekvens("RAAD_SEQ");
@@ -21,20 +26,28 @@ class RaadDao {
                         "raad_id, " +
                         "besvarelse_id, " +
                         "raad_key, " +
-                        "raad) " +
-                        "VALUES (?, ?, ?, ?)",
+                        "raad_tittel, " +
+                        "raad_ingress) " +
+                        "VALUES (?, ?, ?, ?, ?)",
                 raadId,
                 besvarelseId,
                 raad.getRaadKey(),
-                raad.getRaad()
+                raad.getRaadTittel(),
+                raad.getRaadIngress()
         );
+        raad.getRaadAktiviteter().forEach(ra -> aktivitetDao.create(ra, raadId));
     }
 
     List<Raad> fetchByBesvarelseId(long besvarelseId) {
-        return db.query("SELECT * FROM RAAD WHERE besvarelse_id = ?",
+        List<Raad> raad = db.query("SELECT * FROM RAAD WHERE besvarelse_id = ?",
                 this::map,
                 besvarelseId
         );
+        return raad.stream()
+                .map(s -> s.toBuilder()
+                    .raadAktiviteter(aktivitetDao.fetchByRaadId(s.getRaadId()))
+                    .build())
+                .collect(toList());
     }
 
     @SneakyThrows
@@ -43,7 +56,8 @@ class RaadDao {
                 .raadId(rs.getLong("raad_id"))
                 .besvarelseId(rs.getLong("besvarelse_id"))
                 .raadKey(rs.getString("raad_key"))
-                .raad(rs.getString("raad"))
+                .raadTittel(rs.getString("raad_tittel"))
+                .raadIngress(rs.getString("raad_ingress"))
                 .build();
     }
 

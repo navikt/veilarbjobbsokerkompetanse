@@ -1,13 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Raad;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Svar;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.SvarAlternativ;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.BesvarelseDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.RaadDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.SvarAlternativDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.SvarDto;
+import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
+import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -24,10 +18,18 @@ public class Mapper {
                 .setSvar(besvarelse.getSvar().stream().map(Mapper::map).collect(toList()));
     }
 
+    private static AktivitetDto map(Aktivitet aktivitet) {
+        return new AktivitetDto()
+            .setTittel(aktivitet.getTittel())
+            .setInnhold(aktivitet.getInnhold());
+    }
+
     private static RaadDto map(Raad raad) {
         return new RaadDto()
             .setRaadKey(raad.getRaadKey())
-            .setRaad(raad.getRaad());
+            .setRaadTittel(raad.getRaadTittel())
+            .setRaadIngress(raad.getRaadIngress())
+            .setRaadAktiviteter(raad.getRaadAktiviteter().stream().map(Mapper::map).collect(toList()));
     }
 
     private static SvarDto map(Svar svar) {
@@ -73,7 +75,17 @@ public class Mapper {
 
     private static Raad map(RaadDto raadDto) {
         return Raad.builder()
-                .raad(raadDto.getRaad())
-                .build();
+            .raadKey(raadDto.getRaadKey())
+            .raadTittel(raadDto.getRaadTittel())
+            .raadIngress(raadDto.getRaadIngress())
+            .raadAktiviteter(raadDto.getRaadAktiviteter().stream().map(Mapper::map).collect(toList()))
+            .build();
+    }
+
+    private static Aktivitet map(AktivitetDto raadAktivitetDto) {
+        return Aktivitet.builder()
+            .tittel(raadAktivitetDto.getTittel())
+            .innhold(raadAktivitetDto.getInnhold())
+            .build();
     }
 }
