@@ -2,10 +2,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import no.nav.apiapp.feil.Feil;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Raad;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Svar;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.SvarAlternativ;
+import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +32,8 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
         assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
         assertThat(result.getBesvarelseDato()).isEqualTo(NOW);
         assertThat(result.getRaad()).hasAtLeastOneElementOfType(Raad.class);
+        assertThat(result.getRaad().get(0).getRaadAktiviteter()).hasAtLeastOneElementOfType(Aktivitet.class);
+        assertThat(result.getRaad().get(0).getRaadAktiviteter().get(0).getTittel()).isEqualTo("AktivitetTittel");
         assertThat(result.getSvar()).hasAtLeastOneElementOfType(Svar.class);
         assertThat(result.getSvar().get(0).getTips()).isEqualTo("TIPS");
         assertThat(result.getSvar().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
@@ -85,7 +84,16 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     private Raad raad() {
         return Raad.builder()
                 .raadKey("R1")
-                .raad("Raad-1")
+                .raadTittel("RaadTittel")
+                .raadIngress("RaadIngress")
+                .raadAktiviteter(asList(aktivitet(), aktivitet()))
+                .build();
+    }
+
+    private Aktivitet aktivitet() {
+        return Aktivitet.builder()
+                .tittel("AktivitetTittel")
+                .innhold("AktivitetInnhold")
                 .build();
     }
 
