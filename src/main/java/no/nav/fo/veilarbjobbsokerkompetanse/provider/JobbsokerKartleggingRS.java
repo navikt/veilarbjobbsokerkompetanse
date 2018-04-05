@@ -23,7 +23,7 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 public class JobbsokerKartleggingRS {
 
     private static final Supplier<Feil> FANT_IKKE_AKTOR =
-            () -> new Feil(FINNES_IKKE, "Finer ikke aktørId for gitt Fnr");
+            () -> new Feil(FINNES_IKKE, "Finner ikke aktørId for gitt Fnr");
 
     @Inject
     private AktorService aktorService;

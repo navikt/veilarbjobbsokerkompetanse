@@ -2,9 +2,10 @@ package no.nav.fo.veilarbjobbsokerkompetanse.config;
 
 import no.nav.apiapp.ApiApplication.NaisApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
-import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.BesvarelseDao;
+import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.MockConfiguration;
+import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.RealConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.JobbsokerKartleggingRS;
 import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +17,12 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import static no.nav.apiapp.ApiApplication.Sone.FSS;
+import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 
 @Configuration
 @Import({
-        AktorConfig.class,
+        RealConfiguration.class,
+        MockConfiguration.class,
         DataSourceConfig.class,
         DataSourceHelsesjekk.class,
         BesvarelseService.class,
@@ -30,6 +33,7 @@ public class ApplicationConfig implements NaisApiApplication {
 
     public static final String APPLICATION_NAME = "veilarbjobbsokerkompetanse";
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
+    public static final String RUN_WITH_MOCKS = "RUN_WITH_MOCKS";
 
     @Inject
     private DataSource dataSource;
@@ -55,6 +59,10 @@ public class ApplicationConfig implements NaisApiApplication {
         apiAppConfigurator
                 .samlLogin()
                 .sts();
+    }
+
+    public static boolean isMocksEnabled() {
+        return Boolean.valueOf(getOptionalProperty(RUN_WITH_MOCKS).orElse("false"));
     }
 
 }
