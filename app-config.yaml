@@ -32,6 +32,8 @@ fasitResources:
     resourceType: baseUrl
   - alias: Aktoer_v2
     resourceType: webserviceendpoint
+  - alias: veilArbOppfolgingAPI
+    resourceType: restservice
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
