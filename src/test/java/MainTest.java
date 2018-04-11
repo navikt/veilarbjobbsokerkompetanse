@@ -8,6 +8,7 @@ import static java.lang.System.getProperty;
 import static java.lang.System.setProperty;
 import static no.nav.dialogarena.config.fasit.FasitUtils.Zone.FSS;
 import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
+import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
 
 public class MainTest {
@@ -26,6 +27,7 @@ public class MainTest {
         setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, srvveilarbjobbsokerkompetanse.getPassword());
 
         setProperty(AKTOER_V2_ENDPOINTURL, "https://app-" + getDefaultEnvironment() + ".adeo.no/aktoerid/AktoerService/v2");
+        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "http://localhost:8080/veilarboppfolging/api");
         setProperty(RUN_WITH_MOCKS, "true");
 
         Main.main(PORT);

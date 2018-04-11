@@ -21,6 +21,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import javax.sql.DataSource;
 
 import static java.lang.System.setProperty;
+import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
 
 public abstract class IntegrasjonsTest {
 
@@ -47,6 +48,7 @@ public abstract class IntegrasjonsTest {
         setProperty("no.nav.modig.security.systemuser.password", "password");
 
         setProperty(AktorConfig.AKTOER_ENDPOINT_URL, "/");
+        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "/");
 
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(classes);
         annotationConfigApplicationContext.start();

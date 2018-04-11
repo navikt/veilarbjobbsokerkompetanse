@@ -3,6 +3,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.config;
 import no.nav.apiapp.ApiApplication.NaisApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
+import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.BesvarelseDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.MockConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.RealConfiguration;
@@ -28,6 +29,7 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
         BesvarelseService.class,
         JobbsokerKartleggingRS.class,
         BesvarelseDao.class,
+        OppfolgingClient.class
 })
 public class ApplicationConfig implements NaisApiApplication {
 
