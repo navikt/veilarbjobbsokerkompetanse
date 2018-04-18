@@ -34,6 +34,10 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: veilArbOppfolgingAPI
     resourceType: restservice
+  - alias: aad_b2c_clientid
+    resourceType: credential
+  - alias: aad_b2c_discovery
+    resourceType: baseurl
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
