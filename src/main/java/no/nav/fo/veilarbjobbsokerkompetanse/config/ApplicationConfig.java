@@ -59,8 +59,8 @@ public class ApplicationConfig implements NaisApiApplication {
     @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
         apiAppConfigurator
-                .samlLogin()
-                .sts();
+                .sts()
+                .azureADB2CLogin();
     }
 
     public static boolean isMocksEnabled() {
