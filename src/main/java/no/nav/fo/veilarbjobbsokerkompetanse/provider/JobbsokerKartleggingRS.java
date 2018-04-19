@@ -1,10 +1,10 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
+import no.nav.apiapp.util.SubjectUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.BesvarelseDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.MeDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
-import no.nav.modig.core.context.SubjectHandler;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -46,7 +46,7 @@ public class JobbsokerKartleggingRS {
     }
 
     private String getFnr() {
-        return SubjectHandler.getSubjectHandler().getUid();
+        return SubjectUtils.getUserId().orElseThrow(IllegalArgumentException::new);
     }
 
 }

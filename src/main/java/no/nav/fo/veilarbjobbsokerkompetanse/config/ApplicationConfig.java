@@ -4,6 +4,7 @@ import no.nav.apiapp.ApiApplication.NaisApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
+import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClientHelseSjekk;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.BesvarelseDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.MockConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.RealConfiguration;
@@ -29,7 +30,8 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
         BesvarelseService.class,
         JobbsokerKartleggingRS.class,
         BesvarelseDao.class,
-        OppfolgingClient.class
+        OppfolgingClient.class,
+        OppfolgingClientHelseSjekk.class
 })
 public class ApplicationConfig implements NaisApiApplication {
 
@@ -59,8 +61,10 @@ public class ApplicationConfig implements NaisApiApplication {
     @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
         apiAppConfigurator
-                .samlLogin()
-                .sts();
+                .sts()
+                .issoLogin()
+                .azureADB2CLogin()
+        ;
     }
 
     public static boolean isMocksEnabled() {

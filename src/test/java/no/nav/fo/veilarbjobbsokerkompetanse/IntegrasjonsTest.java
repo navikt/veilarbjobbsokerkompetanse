@@ -33,7 +33,7 @@ public abstract class IntegrasjonsTest {
     @BeforeClass
     public static void setupContext() {
         ApiAppTest.setupTestContext();
-        DatabaseTestContext.setupInMemoryContext();
+        TestContext.setup();
         setupContext(
                 ApplicationConfig.class
         );
@@ -42,13 +42,6 @@ public abstract class IntegrasjonsTest {
     @SneakyThrows
     private static void setupContext(Class<?>... classes) {
         DatabaseTestContext.setupContext(System.getProperty("database"));
-
-        setProperty("no.nav.modig.security.sts.url", "111111");
-        setProperty("no.nav.modig.security.systemuser.username", "username");
-        setProperty("no.nav.modig.security.systemuser.password", "password");
-
-        setProperty(AktorConfig.AKTOER_ENDPOINT_URL, "/");
-        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "/");
 
         annotationConfigApplicationContext = new AnnotationConfigApplicationContext(classes);
         annotationConfigApplicationContext.start();
