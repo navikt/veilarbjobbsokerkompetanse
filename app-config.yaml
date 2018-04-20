@@ -38,6 +38,18 @@ fasitResources:
     resourceType: credential
   - alias: aad_b2c_discovery
     resourceType: baseurl
+  - alias: isso-host
+    resourceType: baseurl
+  - alias: isso-jwks
+    resourceType: baseurl
+  - alias: isso-issuer
+    resourceType: baseurl
+  - alias: isso.isalive
+    resourceType: baseurl
+  - alias: isso-rp-user
+    resourceType: credential
+  - alias: veilarblogin.redirect-url
+    resourceType: baseurl
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
