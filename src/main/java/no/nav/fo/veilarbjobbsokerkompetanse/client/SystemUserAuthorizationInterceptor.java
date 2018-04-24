@@ -5,15 +5,26 @@ package no.nav.fo.veilarbjobbsokerkompetanse.client;
 import no.nav.brukerdialog.security.oidc.SystemUserTokenProvider;
 import no.nav.fo.feed.common.OutInterceptor;
 
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.client.Invocation;
+import java.io.IOException;
 
-public class SystemUserAuthorizationInterceptor implements OutInterceptor {
+public class SystemUserAuthorizationInterceptor implements ClientRequestFilter {
 
-    private SystemUserTokenProvider systemUserTokenProvider = new SystemUserTokenProvider();
+    private final SystemUserTokenProvider systemUserTokenProvider ;
+
+    public SystemUserAuthorizationInterceptor() {
+        this(new SystemUserTokenProvider());
+    }
+
+    SystemUserAuthorizationInterceptor(SystemUserTokenProvider systemUserTokenProvider) {
+        this.systemUserTokenProvider = systemUserTokenProvider;
+    }
 
     @Override
-    public void apply(Invocation.Builder builder) {
-        builder.header("Authorization", "Bearer " + systemUserTokenProvider.getToken());
+    public void filter(ClientRequestContext requestContext) throws IOException {
+        requestContext.getHeaders().putSingle("Authorization", "Bearer " + systemUserTokenProvider.getToken());
     }
 
 }
