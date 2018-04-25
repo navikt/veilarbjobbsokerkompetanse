@@ -24,6 +24,8 @@ resources:
     memory: 512Mi
 fasitResources:
   used:
+  - alias: loadbalancer:veilarbjobbsokerkompetanse
+    resourceType: loadbalancerconfig
   - alias: veilarbjobbsokerkompetanseDB
     resourceType: datasource
   - alias: srvveilarbjobbsokerkompetanse
@@ -34,10 +36,14 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: veilArbOppfolgingAPI
     resourceType: restservice
+
+  # oidc med AzureAD B2C
   - alias: aad_b2c_clientid
     resourceType: credential
   - alias: aad_b2c_discovery
     resourceType: baseurl
+
+  # ISSO
   - alias: isso-host
     resourceType: baseurl
   - alias: isso-jwks
@@ -50,6 +56,7 @@ fasitResources:
     resourceType: credential
   - alias: veilarblogin.redirect-url
     resourceType: baseurl
+
   exposed:
   - alias: veilarbjobbsokerkompetanseRS
     resourceType: restservice
