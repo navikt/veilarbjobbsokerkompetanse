@@ -3,9 +3,12 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.chrono.ChronoZonedDateTime;
 
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 public class Mapper {
@@ -48,9 +51,13 @@ public class Mapper {
     }
 
     public static Besvarelse map(BesvarelseDto besvarelseDto) {
+        Instant besvarelseDato = ofNullable(besvarelseDto.getBesvarelseDato())
+                .map(d -> d.atZone(ZoneId.of("Europe/Oslo")))
+                .map(ChronoZonedDateTime::toInstant)
+                .orElse(null);
         return Besvarelse.builder()
                 .underOppfolging(besvarelseDto.isUnderOppfolging())
-                .besvarelseDato(besvarelseDto.getBesvarelseDato().atZone(ZoneId.of("Europe/Oslo")).toInstant())
+                .besvarelseDato(besvarelseDato)
                 .raad(besvarelseDto.getRaad().stream().map(Mapper::map).collect(toList()))
                 .svar(besvarelseDto.getSvar().stream().map(Mapper::map).collect(toList()))
                 .build();

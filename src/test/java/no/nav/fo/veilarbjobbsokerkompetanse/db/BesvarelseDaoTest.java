@@ -17,6 +17,7 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
 
     private static final String AKTOR_ID = "123456";
     private static final Instant NOW = Instant.now();
+    private static final Instant BEFORE = NOW.minus(1, DAYS);
     private static final Instant LATER = NOW.plus(1, DAYS);
     private static final boolean UNDER_OPPFOLGING = true;
 
@@ -26,11 +27,11 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     @Transactional
     @Test
     public void testCreateAndFetch() {
-        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse(NOW));
+        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse());
         Besvarelse result = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
 
         assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
-        assertThat(result.getBesvarelseDato()).isEqualTo(NOW);
+        assertThat(result.getBesvarelseDato()).isNotNull();
         assertThat(result.getRaad()).hasAtLeastOneElementOfType(Raad.class);
         assertThat(result.getRaad().get(0).getRaadAktiviteter()).hasAtLeastOneElementOfType(Aktivitet.class);
         assertThat(result.getRaad().get(0).getRaadAktiviteter().get(0).getTittel()).isEqualTo("AktivitetTittel");
@@ -42,12 +43,12 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     @Transactional
     @Test
     public void testMostRecentBesvarelse() {
-        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse(NOW));
-        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse(LATER));
+        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse());
+        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse());
 
         Besvarelse besvarelse = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
 
-        assertThat(besvarelse.getBesvarelseDato()).isEqualTo(LATER);
+        assertThat(besvarelse.getBesvarelseDato()).isBetween(BEFORE, LATER);
     }
 
     @Transactional
@@ -56,9 +57,8 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
         besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
     }
 
-    private Besvarelse besvarelse(Instant besvarelseDato) {
+    private Besvarelse besvarelse() {
         return Besvarelse.builder()
-                .besvarelseDato(besvarelseDato)
                 .svar(asList(svar(), svar()))
                 .raad(asList(raad(), raad()))
                 .build();
