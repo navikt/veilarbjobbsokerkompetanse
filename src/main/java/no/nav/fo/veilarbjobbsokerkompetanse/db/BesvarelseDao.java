@@ -4,6 +4,8 @@ import lombok.SneakyThrows;
 import no.nav.apiapp.feil.Feil;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
 import no.nav.sbl.jdbc.Database;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,8 @@ import static java.util.Comparator.comparing;
         SvarAlternativDao.class
 })
 public class BesvarelseDao {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BesvarelseDao.class);
 
     private static final Supplier<Feil> INGEN_BESVARELSE =
             () -> new Feil(Feil.Type.FINNES_IKKE, "Ingen lagrede besvarelser for aktør");
@@ -44,15 +48,16 @@ public class BesvarelseDao {
                         "aktor_id, " +
                         "under_oppfolging, " +
                         "besvarelse_dato) " +
-                        "VALUES (?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, NOW())",
                 besvarelseId,
                 aktorId,
-                underOppfolging,
-                from(besvarelse.getBesvarelseDato())
+                underOppfolging
         );
 
         besvarelse.getSvar().forEach(s -> svarDao.create(s, besvarelseId));
         besvarelse.getRaad().forEach(r -> raadDao.create(r, besvarelseId));
+
+        LOGGER.info("lagret besvarelse med id={}",besvarelseId);
     }
 
     public Besvarelse fetchMostRecentByAktorId(String aktorId) {
