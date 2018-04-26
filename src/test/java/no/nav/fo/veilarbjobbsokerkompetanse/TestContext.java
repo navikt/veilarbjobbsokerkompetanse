@@ -5,6 +5,7 @@ import no.nav.brukerdialog.tools.SecurityConstants;
 import no.nav.dialogarena.config.fasit.FasitUtils;
 import no.nav.dialogarena.config.fasit.ServiceUser;
 import no.nav.dialogarena.config.util.Util;
+import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 
 import static java.lang.System.setProperty;
@@ -13,9 +14,7 @@ import static no.nav.apiapp.config.Konfigurator.AZUREAD_B2C_EXPECTED_AUDIENCE_PR
 import static no.nav.dialogarena.config.fasit.FasitUtils.Zone.FSS;
 import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
 import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.APPLICATION_NAME;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.RUN_WITH_MOCKS;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
 
 public class TestContext {
 
@@ -28,7 +27,7 @@ public class TestContext {
         setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, srvveilarbjobbsokerkompetanse.getPassword());
 
         setProperty(AKTOER_V2_ENDPOINTURL, "https://app-" + getDefaultEnvironment() + ".adeo.no/aktoerid/AktoerService/v2");
-        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "http://localhost:8080/veilarboppfolging/api");
+        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "https://app-t6.adeo.no/veilarboppfolging/api");
         setProperty(RUN_WITH_MOCKS, "true");
 
 
@@ -47,6 +46,7 @@ public class TestContext {
         setProperty(Constants.ISSO_ISALIVE_URL_PROPERTY_NAME, issoIsAlive);
         setProperty(SecurityConstants.SYSTEMUSER_USERNAME, srvveilarbjobbsokerkompetanse.getUsername());
         setProperty(SecurityConstants.SYSTEMUSER_PASSWORD, srvveilarbjobbsokerkompetanse.getPassword());
+        setProperty(ApplicationConfig.VEILARBLOGIN_REDIRECT_URL_URL, loginUrl);
         setProperty(Constants.OIDC_REDIRECT_URL_PROPERTY_NAME, loginUrl);
 
         ServiceUser azureADClientId = FasitUtils.getServiceUser("aad_b2c_clientid", APPLICATION_NAME);

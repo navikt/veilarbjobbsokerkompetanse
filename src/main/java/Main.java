@@ -19,7 +19,7 @@ public class Main {
         setProperty("https.proxyPort", "8088");
 
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
-        setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty("VEILARBLOGIN_REDIRECT_URL_URL"));
+        setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(ApplicationConfig.VEILARBLOGIN_REDIRECT_URL_URL));
         ApiApp.startApp(ApplicationConfig.class, args);
     }
 
