@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.sql.ResultSet;
 import java.util.function.Supplier;
 
@@ -28,8 +30,8 @@ public class BesvarelseDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BesvarelseDao.class);
 
-    private static final Supplier<Feil> INGEN_BESVARELSE =
-            () -> new Feil(Feil.Type.FINNES_IKKE, "Ingen lagrede besvarelser for aktør");
+    private static final Supplier<WebApplicationException> INGEN_BESVARELSE =
+            () -> new WebApplicationException("Ingen lagrede besvarelser for aktør", Response.Status.NO_CONTENT);
 
     @Inject
     private Database db;
