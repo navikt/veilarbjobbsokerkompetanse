@@ -2,7 +2,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import no.nav.apiapp.util.SubjectUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.BesvarelseDto;
+import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.MeDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
 import org.springframework.stereotype.Component;
@@ -34,14 +34,14 @@ public class JobbsokerKartleggingRS {
 
     @GET
     @Path("hent")
-    public BesvarelseDto hentNyesteBesvarelseForAktor() {
+    public KartleggingDto hentNyesteBesvarelseForAktor() {
         return map(besvarelseService.fetchMostRecentByFnr(getFnr()));
     }
 
     @POST
     @Path("opprett")
-    public BesvarelseDto opprettBesvarelse(BesvarelseDto besvarelseDto) {
-        besvarelseService.create(getFnr(), map(besvarelseDto));
+    public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
+        besvarelseService.create(getFnr(), map(kartleggingDto));
         return map(besvarelseService.fetchMostRecentByFnr(getFnr()));
     }
 

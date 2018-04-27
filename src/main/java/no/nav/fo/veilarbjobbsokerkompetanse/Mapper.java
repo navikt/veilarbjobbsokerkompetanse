@@ -13,12 +13,12 @@ import static java.util.stream.Collectors.toList;
 
 public class Mapper {
 
-    public static BesvarelseDto map(Besvarelse besvarelse) {
-        return new BesvarelseDto()
+    public static KartleggingDto map(Besvarelse besvarelse) {
+        return new KartleggingDto()
                 .setUnderOppfolging(besvarelse.isUnderOppfolging())
                 .setBesvarelseDato(LocalDateTime.ofInstant(besvarelse.getBesvarelseDato(), ZoneId.of("Europe/Oslo")))
                 .setRaad(besvarelse.getRaad().stream().map(Mapper::map).collect(toList()))
-                .setSvar(besvarelse.getSvar().stream().map(Mapper::map).collect(toList()));
+                .setBesvarelse(besvarelse.getSvar().stream().map(Mapper::map).collect(toList()));
     }
 
     private static AktivitetDto map(Aktivitet aktivitet) {
@@ -35,13 +35,13 @@ public class Mapper {
             .setRaadAktiviteter(raad.getRaadAktiviteter().stream().map(Mapper::map).collect(toList()));
     }
 
-    private static SvarDto map(Svar svar) {
-        return new SvarDto()
+    private static BesvarelseDto map(Svar svar) {
+        return new BesvarelseDto()
                 .setSporsmalKey(svar.getSporsmalKey())
                 .setSporsmal(svar.getSporsmal())
                 .setTipsKey(svar.getTipsKey())
                 .setTips(svar.getTips())
-                .setSvarAlternativ(svar.getSvarAlternativ().stream().map(Mapper::map).collect(toList()));
+                .setSvarAlternativer(svar.getSvarAlternativ().stream().map(Mapper::map).collect(toList()));
     }
 
     private static SvarAlternativDto map(SvarAlternativ svarAlternativ) {
@@ -50,16 +50,16 @@ public class Mapper {
                 .setSvarAlternativ(svarAlternativ.getSvarAlternativ());
     }
 
-    public static Besvarelse map(BesvarelseDto besvarelseDto) {
-        Instant besvarelseDato = ofNullable(besvarelseDto.getBesvarelseDato())
+    public static Besvarelse map(KartleggingDto kartleggingDto) {
+        Instant besvarelseDato = ofNullable(kartleggingDto.getBesvarelseDato())
                 .map(d -> d.atZone(ZoneId.of("Europe/Oslo")))
                 .map(ChronoZonedDateTime::toInstant)
                 .orElse(null);
         return Besvarelse.builder()
-                .underOppfolging(besvarelseDto.isUnderOppfolging())
+                .underOppfolging(kartleggingDto.isUnderOppfolging())
                 .besvarelseDato(besvarelseDato)
-                .raad(besvarelseDto.getRaad().stream().map(Mapper::map).collect(toList()))
-                .svar(besvarelseDto.getSvar().stream().map(Mapper::map).collect(toList()))
+                .raad(kartleggingDto.getRaad().stream().map(Mapper::map).collect(toList()))
+                .svar(kartleggingDto.getBesvarelse().stream().map(Mapper::map).collect(toList()))
                 .build();
     }
 
@@ -70,13 +70,13 @@ public class Mapper {
                 .build();
     }
 
-    private static Svar map(SvarDto svarDto) {
+    private static Svar map(BesvarelseDto besvarelseDto) {
         return Svar.builder()
-                .sporsmalKey(svarDto.getSporsmalKey())
-                .sporsmal(svarDto.getSporsmal())
-                .tipsKey(svarDto.getTipsKey())
-                .tips(svarDto.getTips())
-                .svarAlternativ(svarDto.getSvarAlternativ().stream().map(Mapper::map).collect(toList()))
+                .sporsmalKey(besvarelseDto.getSporsmalKey())
+                .sporsmal(besvarelseDto.getSporsmal())
+                .tipsKey(besvarelseDto.getTipsKey())
+                .tips(besvarelseDto.getTips())
+                .svarAlternativ(besvarelseDto.getSvarAlternativer().stream().map(Mapper::map).collect(toList()))
                 .build();
     }
 
