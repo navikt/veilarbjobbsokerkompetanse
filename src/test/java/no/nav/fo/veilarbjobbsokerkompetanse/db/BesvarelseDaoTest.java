@@ -1,12 +1,12 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
-import no.nav.apiapp.feil.Feil;
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.ws.rs.WebApplicationException;
 import java.time.Instant;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -52,7 +52,7 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     }
 
     @Transactional
-    @Test(expected = Feil.class)
+    @Test(expected = WebApplicationException.class)
     public void testNoBesvarelseFound() {
         besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
     }
