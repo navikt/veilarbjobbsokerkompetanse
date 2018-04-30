@@ -81,7 +81,7 @@ CREATE TABLE AKTIVITET (
   aktivitet_id  NUMBER(19) NOT NULL,
   raad_id       NUMBER(19) NOT NULL,
   tittel        NVARCHAR2(255),
-  innhold       NVARCHAR2(255),
+  innhold       CLOB,
   CONSTRAINT AKTIVITET_PK PRIMARY KEY (aktivitet_id),
   CONSTRAINT AKTIVITET_RAAD_FK FOREIGN KEY (raad_id) REFERENCES RAAD (raad_id)
 );
