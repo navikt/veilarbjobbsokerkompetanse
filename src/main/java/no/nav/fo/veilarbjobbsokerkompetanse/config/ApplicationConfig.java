@@ -5,11 +5,11 @@ import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClientHelseSjekk;
-import no.nav.fo.veilarbjobbsokerkompetanse.db.BesvarelseDao;
+import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.MockConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.RealConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.JobbsokerKartleggingRS;
-import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
+import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +27,9 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
         MockConfiguration.class,
         DataSourceConfig.class,
         DataSourceHelsesjekk.class,
-        BesvarelseService.class,
+        KartleggingService.class,
         JobbsokerKartleggingRS.class,
-        BesvarelseDao.class,
+        KartleggingDao.class,
         OppfolgingClient.class,
         OppfolgingClientHelseSjekk.class
 })

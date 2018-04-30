@@ -10,7 +10,7 @@ import java.util.List;
 public class Raad {
 
     private long raadId;
-    private long besvarelseId;
+    private long kartleggingId;
     private String raadKey;
     private String raadTittel;
     private String raadIngress;

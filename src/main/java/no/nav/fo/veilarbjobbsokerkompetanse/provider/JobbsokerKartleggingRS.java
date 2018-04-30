@@ -1,10 +1,9 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
-import no.nav.apiapp.util.SubjectUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.MeDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
+import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -21,7 +20,7 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 public class JobbsokerKartleggingRS {
 
     @Inject
-    private BesvarelseService besvarelseService;
+    private KartleggingService kartleggingService;
 
     @Inject
     private OppfolgingClient oppfolgingClient;
@@ -35,14 +34,14 @@ public class JobbsokerKartleggingRS {
     @GET
     @Path("hent")
     public KartleggingDto hentNyesteBesvarelseForAktor() {
-        return map(besvarelseService.fetchMostRecentByFnr(getFnr()));
+        return map(kartleggingService.fetchMostRecentByFnr(getFnr()));
     }
 
     @POST
     @Path("opprett")
     public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
-        besvarelseService.create(getFnr(), map(kartleggingDto));
-        return map(besvarelseService.fetchMostRecentByFnr(getFnr()));
+        kartleggingService.create(getFnr(), map(kartleggingDto));
+        return map(kartleggingService.fetchMostRecentByFnr(getFnr()));
     }
 
     private String getFnr() {

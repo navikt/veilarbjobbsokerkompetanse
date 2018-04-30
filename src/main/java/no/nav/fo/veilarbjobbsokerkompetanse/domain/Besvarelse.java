@@ -3,7 +3,6 @@ package no.nav.fo.veilarbjobbsokerkompetanse.domain;
 import lombok.Builder;
 import lombok.Value;
 
-import java.time.Instant;
 import java.util.List;
 
 @Value
@@ -11,11 +10,12 @@ import java.util.List;
 public class Besvarelse {
 
     private long besvarelseId;
-    private String aktorId;
-    private boolean underOppfolging;
-    private Instant besvarelseDato;
+    private long kartleggingId;
+    private String sporsmalKey;
+    private String sporsmal;
+    private String tipsKey;
+    private String tips;
 
-    private List<Raad> raad;
-    private List<Svar> svar;
+    private List<SvarAlternativ> svarAlternativ;
 
 }

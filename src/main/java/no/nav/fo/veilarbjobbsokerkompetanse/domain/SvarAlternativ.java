@@ -8,7 +8,7 @@ import lombok.Value;
 public class SvarAlternativ {
 
     private long svarAlternativId;
-    private long svarId;
+    private long besvarelseId;
     private String svarAlternativKey;
     private String svarAlternativ;
 
