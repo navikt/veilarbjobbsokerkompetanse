@@ -61,6 +61,7 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         return Kartlegging.builder()
                 .besvarelse(asList(besvarelse(), besvarelse()))
                 .raad(asList(raad(), raad()))
+                .kartleggingDato(Instant.now())
                 .build();
     }
 
