@@ -2,9 +2,9 @@ package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import no.nav.apiapp.util.SubjectUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.BesvarelseDto;
+import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.MeDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.service.BesvarelseService;
+import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -21,7 +21,7 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 public class JobbsokerKartleggingRS {
 
     @Inject
-    private BesvarelseService besvarelseService;
+    private KartleggingService kartleggingService;
 
     @Inject
     private OppfolgingClient oppfolgingClient;
@@ -34,15 +34,15 @@ public class JobbsokerKartleggingRS {
 
     @GET
     @Path("hent")
-    public BesvarelseDto hentNyesteBesvarelseForAktor() {
-        return map(besvarelseService.fetchMostRecentByFnr(getFnr()));
+    public KartleggingDto hentNyesteBesvarelseForAktor() {
+        return map(kartleggingService.fetchMostRecentByFnr(getFnr()));
     }
 
     @POST
     @Path("opprett")
-    public BesvarelseDto opprettBesvarelse(BesvarelseDto besvarelseDto) {
-        besvarelseService.create(getFnr(), map(besvarelseDto));
-        return map(besvarelseService.fetchMostRecentByFnr(getFnr()));
+    public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
+        kartleggingService.create(getFnr(), map(kartleggingDto));
+        return map(kartleggingService.fetchMostRecentByFnr(getFnr()));
     }
 
     private String getFnr() {

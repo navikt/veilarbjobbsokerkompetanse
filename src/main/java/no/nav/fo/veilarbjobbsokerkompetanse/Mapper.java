@@ -7,18 +7,20 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.chrono.ChronoZonedDateTime;
+import java.util.Optional;
 
+import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 public class Mapper {
 
-    public static BesvarelseDto map(Besvarelse besvarelse) {
-        return new BesvarelseDto()
-                .setUnderOppfolging(besvarelse.isUnderOppfolging())
-                .setBesvarelseDato(LocalDateTime.ofInstant(besvarelse.getBesvarelseDato(), ZoneId.of("Europe/Oslo")))
-                .setRaad(besvarelse.getRaad().stream().map(Mapper::map).collect(toList()))
-                .setSvar(besvarelse.getSvar().stream().map(Mapper::map).collect(toList()));
+    public static KartleggingDto map(Kartlegging kartlegging) {
+        return new KartleggingDto()
+                .setUnderOppfolging(kartlegging.isUnderOppfolging())
+                .setBesvarelseDato(LocalDateTime.ofInstant(kartlegging.getKartleggingDato(), ZoneId.of("Europe/Oslo")))
+                .setRaad(kartlegging.getRaad().stream().map(Mapper::map).collect(toList()))
+                .setBesvarelse(kartlegging.getBesvarelse().stream().map(Mapper::map).collect(toList()));
     }
 
     private static AktivitetDto map(Aktivitet aktivitet) {
@@ -35,13 +37,13 @@ public class Mapper {
             .setRaadAktiviteter(raad.getRaadAktiviteter().stream().map(Mapper::map).collect(toList()));
     }
 
-    private static SvarDto map(Svar svar) {
-        return new SvarDto()
-                .setSporsmalKey(svar.getSporsmalKey())
-                .setSporsmal(svar.getSporsmal())
-                .setTipsKey(svar.getTipsKey())
-                .setTips(svar.getTips())
-                .setSvarAlternativ(svar.getSvarAlternativ().stream().map(Mapper::map).collect(toList()));
+    private static BesvarelseDto map(Besvarelse besvarelse) {
+        return new BesvarelseDto()
+                .setSporsmalKey(besvarelse.getSporsmalKey())
+                .setSporsmal(besvarelse.getSporsmal())
+                .setTipsKey(besvarelse.getTipsKey())
+                .setTips(besvarelse.getTips())
+                .setSvarAlternativer(besvarelse.getSvarAlternativ().stream().map(Mapper::map).collect(toList()));
     }
 
     private static SvarAlternativDto map(SvarAlternativ svarAlternativ) {
@@ -50,16 +52,16 @@ public class Mapper {
                 .setSvarAlternativ(svarAlternativ.getSvarAlternativ());
     }
 
-    public static Besvarelse map(BesvarelseDto besvarelseDto) {
-        Instant besvarelseDato = ofNullable(besvarelseDto.getBesvarelseDato())
+    public static Kartlegging map(KartleggingDto kartleggingDto) {
+        Instant besvarelseDato = of(Instant.now())
                 .map(d -> d.atZone(ZoneId.of("Europe/Oslo")))
                 .map(ChronoZonedDateTime::toInstant)
                 .orElse(null);
-        return Besvarelse.builder()
-                .underOppfolging(besvarelseDto.isUnderOppfolging())
-                .besvarelseDato(besvarelseDato)
-                .raad(besvarelseDto.getRaad().stream().map(Mapper::map).collect(toList()))
-                .svar(besvarelseDto.getSvar().stream().map(Mapper::map).collect(toList()))
+        return Kartlegging.builder()
+                .underOppfolging(kartleggingDto.isUnderOppfolging())
+                .kartleggingDato(besvarelseDato)
+                .raad(kartleggingDto.getRaad().stream().map(Mapper::map).collect(toList()))
+                .besvarelse(kartleggingDto.getBesvarelse().stream().map(Mapper::map).collect(toList()))
                 .build();
     }
 
@@ -70,13 +72,13 @@ public class Mapper {
                 .build();
     }
 
-    private static Svar map(SvarDto svarDto) {
-        return Svar.builder()
-                .sporsmalKey(svarDto.getSporsmalKey())
-                .sporsmal(svarDto.getSporsmal())
-                .tipsKey(svarDto.getTipsKey())
-                .tips(svarDto.getTips())
-                .svarAlternativ(svarDto.getSvarAlternativ().stream().map(Mapper::map).collect(toList()))
+    private static Besvarelse map(BesvarelseDto besvarelseDto) {
+        return Besvarelse.builder()
+                .sporsmalKey(besvarelseDto.getSporsmalKey())
+                .sporsmal(besvarelseDto.getSporsmal())
+                .tipsKey(besvarelseDto.getTipsKey())
+                .tips(besvarelseDto.getTips())
+                .svarAlternativ(besvarelseDto.getSvarAlternativer().stream().map(Mapper::map).collect(toList()))
                 .build();
     }
 

@@ -3,8 +3,8 @@ package no.nav.fo.veilarbjobbsokerkompetanse.service;
 import no.nav.apiapp.feil.Feil;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
-import no.nav.fo.veilarbjobbsokerkompetanse.db.BesvarelseDao;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
+import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
+import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -12,24 +12,24 @@ import javax.inject.Inject;
 import static no.nav.apiapp.feil.Feil.Type.FINNES_IKKE;
 
 @Component
-public class BesvarelseService {
+public class KartleggingService {
 
     @Inject
     private AktorService aktorService;
 
     @Inject
-    private BesvarelseDao besvarelseDao;
+    private KartleggingDao kartleggingDao;
 
     @Inject
     private OppfolgingClient oppfolgingClient;
 
-    public void create(String fnr, Besvarelse besvarelse) {
+    public void create(String fnr, Kartlegging kartlegging) {
         boolean underOppfolging = oppfolgingClient.underOppfolging(fnr);
-        besvarelseDao.create(getAktorId(fnr), underOppfolging, besvarelse);
+        kartleggingDao.create(getAktorId(fnr), underOppfolging, kartlegging);
     }
 
-    public Besvarelse fetchMostRecentByFnr(String fnr) {
-        return besvarelseDao.fetchMostRecentByAktorId(getAktorId(fnr));
+    public Kartlegging fetchMostRecentByFnr(String fnr) {
+        return kartleggingDao.fetchMostRecentByAktorId(getAktorId(fnr));
     }
 
     private String getAktorId(String fnr) {

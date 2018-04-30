@@ -13,7 +13,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BesvarelseDaoTest extends IntegrasjonsTest {
+public class KartleggingDaoTest extends IntegrasjonsTest {
 
     private static final String AKTOR_ID = "123456";
     private static final Instant NOW = Instant.now();
@@ -22,50 +22,51 @@ public class BesvarelseDaoTest extends IntegrasjonsTest {
     private static final boolean UNDER_OPPFOLGING = true;
 
     @Inject
-    private BesvarelseDao besvarelseDao;
+    private KartleggingDao kartleggingDao;
 
     @Transactional
     @Test
     public void testCreateAndFetch() {
-        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse());
-        Besvarelse result = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
+        kartleggingDao.create(AKTOR_ID, UNDER_OPPFOLGING, kartlegging());
+        Kartlegging result = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
 
         assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
-        assertThat(result.getBesvarelseDato()).isNotNull();
+        assertThat(result.getKartleggingDato()).isNotNull();
         assertThat(result.getRaad()).hasAtLeastOneElementOfType(Raad.class);
         assertThat(result.getRaad().get(0).getRaadAktiviteter()).hasAtLeastOneElementOfType(Aktivitet.class);
         assertThat(result.getRaad().get(0).getRaadAktiviteter().get(0).getTittel()).isEqualTo("AktivitetTittel");
-        assertThat(result.getSvar()).hasAtLeastOneElementOfType(Svar.class);
-        assertThat(result.getSvar().get(0).getTips()).isEqualTo("TIPS");
-        assertThat(result.getSvar().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
+        assertThat(result.getBesvarelse()).hasAtLeastOneElementOfType(Besvarelse.class);
+        assertThat(result.getBesvarelse().get(0).getTips()).isEqualTo("TIPS");
+        assertThat(result.getBesvarelse().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
     }
 
     @Transactional
     @Test
     public void testMostRecentBesvarelse() {
-        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse());
-        besvarelseDao.create(AKTOR_ID, UNDER_OPPFOLGING, besvarelse());
+        kartleggingDao.create(AKTOR_ID, UNDER_OPPFOLGING, kartlegging());
+        kartleggingDao.create(AKTOR_ID, UNDER_OPPFOLGING, kartlegging());
 
-        Besvarelse besvarelse = besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
+        Kartlegging kartlegging = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
 
-        assertThat(besvarelse.getBesvarelseDato()).isBetween(BEFORE, LATER);
+        assertThat(kartlegging.getKartleggingDato()).isBetween(BEFORE, LATER);
     }
 
     @Transactional
     @Test(expected = WebApplicationException.class)
     public void testNoBesvarelseFound() {
-        besvarelseDao.fetchMostRecentByAktorId(AKTOR_ID);
+        kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
+    }
+
+    private Kartlegging kartlegging() {
+        return Kartlegging.builder()
+                .besvarelse(asList(besvarelse(), besvarelse()))
+                .raad(asList(raad(), raad()))
+                .kartleggingDato(Instant.now())
+                .build();
     }
 
     private Besvarelse besvarelse() {
         return Besvarelse.builder()
-                .svar(asList(svar(), svar()))
-                .raad(asList(raad(), raad()))
-                .build();
-    }
-
-    private Svar svar() {
-        return Svar.builder()
                 .sporsmalKey("SPORSMAL-1-KEY")
                 .sporsmal("SPORSMAL-1")
                 .tipsKey("TIPS-1-KEY")

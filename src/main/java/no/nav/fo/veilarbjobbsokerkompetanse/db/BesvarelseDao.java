@@ -1,90 +1,66 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import lombok.SneakyThrows;
-import no.nav.apiapp.feil.Feil;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
 import no.nav.sbl.jdbc.Database;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.sql.ResultSet;
-import java.util.function.Supplier;
+import java.util.List;
 
-import static java.sql.Timestamp.from;
-import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 @Component
-@Import({
-        RaadDao.class,
-        AktivitetDao.class,
-        SvarDao.class,
-        SvarAlternativDao.class
-})
-public class BesvarelseDao {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BesvarelseDao.class);
-
-    private static final Supplier<WebApplicationException> INGEN_BESVARELSE =
-            () -> new WebApplicationException("Ingen lagrede besvarelser for aktør", Response.Status.NO_CONTENT);
+class BesvarelseDao {
 
     @Inject
     private Database db;
 
     @Inject
-    private SvarDao svarDao;
+    private SvarAlternativDao svarAlternativDao;
 
-    @Inject
-    private RaadDao raadDao;
-
-    @Transactional
-    public void create(String aktorId, boolean underOppfolging, Besvarelse besvarelse) {
+    void create(Besvarelse besvarelse, long kartleggingId) {
         long besvarelseId = db.nesteFraSekvens("BESVARELSE_SEQ");
         db.update("INSERT INTO BESVARELSE (" +
                         "besvarelse_id, " +
-                        "aktor_id, " +
-                        "under_oppfolging, " +
-                        "besvarelse_dato) " +
-                        "VALUES (?, ?, ?, NOW())",
+                        "kartlegging_id, " +
+                        "sporsmal_key, " +
+                        "sporsmal, " +
+                        "tips_key, " +
+                        "tips) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)",
                 besvarelseId,
-                aktorId,
-                underOppfolging
+                kartleggingId,
+                besvarelse.getSporsmalKey(),
+                besvarelse.getSporsmal(),
+                besvarelse.getTipsKey(),
+                besvarelse.getTips()
         );
-
-        besvarelse.getSvar().forEach(s -> svarDao.create(s, besvarelseId));
-        besvarelse.getRaad().forEach(r -> raadDao.create(r, besvarelseId));
-
-        LOGGER.info("lagret besvarelse med id={}",besvarelseId);
+        besvarelse.getSvarAlternativ().forEach(sa -> svarAlternativDao.create(sa, besvarelseId));
     }
 
-    public Besvarelse fetchMostRecentByAktorId(String aktorId) {
-
-        Besvarelse besvarelse = db.query("SELECT * FROM BESVARELSE WHERE aktor_id = ?",
+    List<Besvarelse> fetchByKartleggingId(long kartleggingId) {
+        List<Besvarelse> besvarelse = db.query("SELECT * FROM BESVARELSE WHERE kartlegging_id = ?",
                 this::map,
-                aktorId
-        ).stream()
-                .sorted(comparing(Besvarelse::getBesvarelseDato).reversed())
-                .findFirst()
-                .orElseThrow(INGEN_BESVARELSE);
-
-        return besvarelse.toBuilder()
-                .svar(svarDao.fetchByBesvarelseId(besvarelse.getBesvarelseId()))
-                .raad(raadDao.fetchByBesvarelseId(besvarelse.getBesvarelseId()))
-                .build();
+                kartleggingId
+        );
+        return besvarelse.stream()
+                .map(s -> s.toBuilder()
+                        .svarAlternativ(svarAlternativDao.fetchByBesvarelseId(s.getBesvarelseId()))
+                        .build())
+                .collect(toList());
     }
 
     @SneakyThrows
     private Besvarelse map(ResultSet rs) {
         return Besvarelse.builder()
                 .besvarelseId(rs.getLong("besvarelse_id"))
-                .aktorId(rs.getString("aktor_id"))
-                .underOppfolging(rs.getBoolean("under_oppfolging"))
-                .besvarelseDato(rs.getTimestamp("besvarelse_dato").toInstant())
+                .kartleggingId(rs.getLong("kartlegging_id"))
+                .sporsmalKey(rs.getString("sporsmal_key"))
+                .sporsmal(rs.getString("sporsmal"))
+                .tipsKey(rs.getString("tips_key"))
+                .tips(rs.getString("tips"))
                 .build();
     }
 
