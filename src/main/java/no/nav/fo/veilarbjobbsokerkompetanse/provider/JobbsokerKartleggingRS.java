@@ -1,5 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
+import no.nav.apiapp.util.SubjectUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.MeDto;

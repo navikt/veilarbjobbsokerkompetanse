@@ -23,8 +23,8 @@ public class KartleggingService {
     @Inject
     private OppfolgingClient oppfolgingClient;
 
-        boolean underOppfolging = oppfolgingClient.underOppfolging(fnr);
     public void create(String fnr, Kartlegging kartlegging) {
+        boolean underOppfolging = oppfolgingClient.underOppfolging(fnr);
         kartleggingDao.create(getAktorId(fnr), underOppfolging, kartlegging);
     }
 
