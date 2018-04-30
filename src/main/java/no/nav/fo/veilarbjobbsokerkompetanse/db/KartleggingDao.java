@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.function.Supplier;
 
 import static java.util.Comparator.comparing;
@@ -48,10 +49,11 @@ public class KartleggingDao {
                         "aktor_id, " +
                         "under_oppfolging, " +
                         "kartlegging_dato) " +
-                        "VALUES (?, ?, ?, NOW())",
+                        "VALUES (?, ?, ?, ?)",
                 kartleggingId,
                 aktorId,
-                underOppfolging
+                underOppfolging,
+                Timestamp.from(kartlegging.getKartleggingDato())
         );
 
         kartlegging.getBesvarelse().forEach(s -> besvarelseDao.create(s, kartleggingId));

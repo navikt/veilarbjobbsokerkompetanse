@@ -7,7 +7,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.chrono.ChronoZonedDateTime;
+import java.util.Optional;
 
+import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
@@ -51,7 +53,7 @@ public class Mapper {
     }
 
     public static Kartlegging map(KartleggingDto kartleggingDto) {
-        Instant besvarelseDato = ofNullable(kartleggingDto.getBesvarelseDato())
+        Instant besvarelseDato = of(Instant.now())
                 .map(d -> d.atZone(ZoneId.of("Europe/Oslo")))
                 .map(ChronoZonedDateTime::toInstant)
                 .orElse(null);
