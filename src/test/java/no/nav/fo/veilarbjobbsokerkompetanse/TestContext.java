@@ -27,7 +27,8 @@ public class TestContext {
         setProperty(StsSecurityConstants.SYSTEMUSER_PASSWORD, srvveilarbjobbsokerkompetanse.getPassword());
 
         setProperty(AKTOER_V2_ENDPOINTURL, "https://app-" + getDefaultEnvironment() + ".adeo.no/aktoerid/AktoerService/v2");
-        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "https://app-t6.adeo.no/veilarboppfolging/api");
+        setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "https://app-q6.adeo.no/veilarboppfolging/api");
+        setProperty(FEATURE_ENDPOINT_URL_ENV_NAME, "https://feature-fss-q6.nais.preprod.local/feature");
         setProperty(RUN_WITH_MOCKS, "true");
 
 

@@ -4,7 +4,7 @@ import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.Constants.OIDC_REDIRECT_URL_PROPERTY_NAME;
 import static no.nav.dialogarena.aktor.AktorConfig.AKTOER_ENDPOINT_URL;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 public class Main {
@@ -19,7 +19,8 @@ public class Main {
         setProperty("https.proxyPort", "8088");
 
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
-        setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(ApplicationConfig.VEILARBLOGIN_REDIRECT_URL_URL));
+        setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(VEILARBLOGIN_REDIRECT_URL_URL));
+        setProperty(FEATURE_ENDPOINT_URL_PROPERTY_NAME, getRequiredProperty(FEATURE_ENDPOINT_URL_ENV_NAME));
         ApiApp.startApp(ApplicationConfig.class, args);
     }
 

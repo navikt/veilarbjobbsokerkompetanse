@@ -3,6 +3,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.service;
 import no.nav.apiapp.feil.Feil;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
+import no.nav.fo.veilarbjobbsokerkompetanse.config.RemoteFeatureConfig.UnderOppfolgingFeature;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import org.springframework.stereotype.Component;
@@ -23,8 +24,15 @@ public class KartleggingService {
     @Inject
     private OppfolgingClient oppfolgingClient;
 
+    @Inject
+    private UnderOppfolgingFeature underOppfolgingFeature;
+
     public void create(String fnr, Kartlegging kartlegging) {
-        boolean underOppfolging = oppfolgingClient.underOppfolging(fnr);
+        // TODO: Remove feature when no longer needed.
+        boolean underOppfolging = false;
+        if (underOppfolgingFeature.erAktiv()) {
+            underOppfolging = oppfolgingClient.underOppfolging(fnr);
+        }
         kartleggingDao.create(getAktorId(fnr), underOppfolging, kartlegging);
     }
 

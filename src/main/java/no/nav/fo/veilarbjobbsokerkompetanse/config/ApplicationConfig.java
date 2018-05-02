@@ -25,6 +25,7 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 @Import({
         RealConfiguration.class,
         MockConfiguration.class,
+        RemoteFeatureConfig.class,
         DataSourceConfig.class,
         DataSourceHelsesjekk.class,
         KartleggingService.class,
@@ -39,6 +40,8 @@ public class ApplicationConfig implements NaisApiApplication {
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
     public static final String RUN_WITH_MOCKS = "RUN_WITH_MOCKS";
     public static final String VEILARBLOGIN_REDIRECT_URL_URL = "VEILARBLOGIN_REDIRECT_URL_URL";
+    public static final String FEATURE_ENDPOINT_URL_PROPERTY_NAME = "feature_endpoint.url";
+    public static final String FEATURE_ENDPOINT_URL_ENV_NAME = "FEATURE_ENDPOINT_URL";
 
     @Inject
     private DataSource dataSource;
