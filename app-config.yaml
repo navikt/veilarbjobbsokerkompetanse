@@ -36,6 +36,8 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: veilArbOppfolgingAPI
     resourceType: restservice
+  - alias: feature_endpoint
+    resourceType: restservice
 
   # oidc med AzureAD B2C
   - alias: aad_b2c_clientid
