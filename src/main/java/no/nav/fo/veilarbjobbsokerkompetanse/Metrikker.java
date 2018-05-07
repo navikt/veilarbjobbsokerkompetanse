@@ -14,6 +14,7 @@ public class Metrikker {
         kartlegging.getRaad().forEach(r ->
                 createEvent("jobbsokerkompetanse.opprett.raad")
                         .addFieldToReport("raadKey", r.getRaadKey())
+                        .addFieldToReport("raadTittel", r.getRaadTittel())
                         .report());
 
     }
