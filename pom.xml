@@ -65,6 +65,10 @@
             <artifactId>feature-toggle</artifactId>
         </dependency>
         <dependency>
+            <groupId>no.nav</groupId>
+            <artifactId>metrics</artifactId>
+        </dependency>
+        <dependency>
             <groupId>no.nav.sbl.dialogarena</groupId>
             <artifactId>aktor-klient</artifactId>
         </dependency>
