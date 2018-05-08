@@ -2,6 +2,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
+import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kulepunkt;
 import no.nav.sbl.jdbc.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,8 @@ import static java.util.Comparator.comparing;
         RaadDao.class,
         AktivitetDao.class,
         BesvarelseDao.class,
-        SvarAlternativDao.class
+        SvarAlternativDao.class,
+        KulepunktDao.class
 })
 public class KartleggingDao {
 
@@ -40,6 +42,9 @@ public class KartleggingDao {
 
     @Inject
     private RaadDao raadDao;
+
+    @Inject
+    private KulepunktDao kulepunktDao;
 
     @Transactional
     public void create(String aktorId, boolean underOppfolging, Kartlegging kartlegging) {
@@ -58,6 +63,7 @@ public class KartleggingDao {
 
         kartlegging.getBesvarelse().forEach(s -> besvarelseDao.create(s, kartleggingId));
         kartlegging.getRaad().forEach(r -> raadDao.create(r, kartleggingId));
+        kartlegging.getKulepunkter().forEach(k -> kulepunktDao.create(k, kartleggingId));
 
         LOGGER.info("lagret kartlegging med id={}",kartleggingId);
     }
@@ -75,6 +81,7 @@ public class KartleggingDao {
         return kartlegging.toBuilder()
                 .besvarelse(besvarelseDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
                 .raad(raadDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
+                .kulepunkter(kulepunktDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
                 .build();
     }
 

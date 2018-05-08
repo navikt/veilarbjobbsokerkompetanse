@@ -5,6 +5,7 @@ import lombok.Value;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 @Value
 @Builder(toBuilder = true)
@@ -17,5 +18,5 @@ public class Kartlegging {
 
     private List<Raad> raad;
     private List<Besvarelse> besvarelse;
-
+    private List<Kulepunkt> kulepunkter;
 }
