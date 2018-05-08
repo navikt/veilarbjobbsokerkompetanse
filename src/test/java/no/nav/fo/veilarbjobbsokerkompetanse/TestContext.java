@@ -9,8 +9,8 @@ import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 
 import static java.lang.System.setProperty;
-import static no.nav.apiapp.config.Konfigurator.AZUREAD_B2C_DISCOVERY_URL_PROPERTY_NAME;
-import static no.nav.apiapp.config.Konfigurator.AZUREAD_B2C_EXPECTED_AUDIENCE_PROPERTY_NAME;
+import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CConfig.AZUREAD_B2C_DISCOVERY_URL_PROPERTY_NAME;
+import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CConfig.AZUREAD_B2C_EXPECTED_AUDIENCE_PROPERTY_NAME;
 import static no.nav.dialogarena.config.fasit.FasitUtils.Zone.FSS;
 import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
 import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
