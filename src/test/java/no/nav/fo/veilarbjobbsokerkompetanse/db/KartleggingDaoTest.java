@@ -71,7 +71,7 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
     private Kulepunkt kulepunkt() {
         return Kulepunkt.builder()
             .kulepunktKey("KULEPUNKT-KEY")
-            .kulepunktPrioritet("KULEPUNKT-PRIORITET")
+            .kulepunktPrioritet(10)
             .kulepunkt("KULEPUNKT-TEKST-TEKST-TEKST")
             .build();
     }

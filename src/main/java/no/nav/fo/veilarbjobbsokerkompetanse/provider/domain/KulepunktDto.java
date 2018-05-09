@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 public class KulepunktDto {
 
     private String kulepunktKey;
-    private String kulepunktPrioritet;
+    private int kulepunktPrioritet;
     private String kulepunkt;
 
 }

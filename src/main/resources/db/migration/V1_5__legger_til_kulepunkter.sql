@@ -4,7 +4,7 @@ CREATE TABLE KULEPUNKT (
   kulepunkt_id        NUMBER(19) NOT NULL,
   kartlegging_id      NUMBER(19) NOT NULL,
   kulepunkt_key       NVARCHAR2(255),
-  kulepunkt_prioritet NVARCHAR2(255),
+  kulepunkt_prioritet NUMBER(3),
   kulepunkt           NVARCHAR2(255),
   CONSTRAINT KULEPUNKT_PK PRIMARY KEY (kulepunkt_id),
   CONSTRAINT KULEPUNKT_KARTLEGGING_FK FOREIGN KEY (kartlegging_id) REFERENCES KARTLEGGING (kartlegging_id)

@@ -46,7 +46,7 @@ public class KulepunktDao {
             .kulepunktId(rs.getLong("kulepunkt_id"))
             .kartleggingId(rs.getLong("kartlegging_id"))
             .kulepunktKey(rs.getString("kulepunkt_key"))
-            .kulepunktPrioritet(rs.getString("kulepunkt_prioritet"))
+            .kulepunktPrioritet(rs.getInt("kulepunkt_prioritet"))
             .kulepunkt(rs.getString("kulepunkt"))
             .build();
     }

@@ -11,6 +11,6 @@ public class Kulepunkt {
     private long kartleggingId;
 
     private String kulepunktKey;
-    private String kulepunktPrioritet;
+    private int kulepunktPrioritet;
     private String kulepunkt;
 }
