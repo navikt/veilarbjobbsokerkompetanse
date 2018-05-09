@@ -17,5 +17,5 @@ public class Kartlegging {
 
     private List<Raad> raad;
     private List<Besvarelse> besvarelse;
-
+    private List<Kulepunkt> kulepunkter;
 }

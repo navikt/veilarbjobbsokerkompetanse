@@ -20,7 +20,15 @@ public class Mapper {
                 .setUnderOppfolging(kartlegging.isUnderOppfolging())
                 .setBesvarelseDato(LocalDateTime.ofInstant(kartlegging.getKartleggingDato(), ZoneId.of("Europe/Oslo")))
                 .setRaad(kartlegging.getRaad().stream().map(Mapper::map).collect(toList()))
-                .setBesvarelse(kartlegging.getBesvarelse().stream().map(Mapper::map).collect(toList()));
+                .setBesvarelse(kartlegging.getBesvarelse().stream().map(Mapper::map).collect(toList()))
+                .setKulepunkter(kartlegging.getKulepunkter().stream().map(Mapper::map).collect(toList()));
+    }
+
+    private static KulepunktDto map(Kulepunkt kulepunkt) {
+        return new KulepunktDto()
+            .setKulepunktKey(kulepunkt.getKulepunktKey())
+            .setKulepunktPrioritet(kulepunkt.getKulepunktPrioritet())
+            .setKulepunkt(kulepunkt.getKulepunkt());
     }
 
     private static AktivitetDto map(Aktivitet aktivitet) {
@@ -62,7 +70,16 @@ public class Mapper {
                 .kartleggingDato(besvarelseDato)
                 .raad(kartleggingDto.getRaad().stream().map(Mapper::map).collect(toList()))
                 .besvarelse(kartleggingDto.getBesvarelse().stream().map(Mapper::map).collect(toList()))
+                .kulepunkter(kartleggingDto.getKulepunkter().stream().map(Mapper::map).collect(toList()))
                 .build();
+    }
+
+    private static Kulepunkt map(KulepunktDto kulepunktDto) {
+        return Kulepunkt.builder()
+            .kulepunktKey(kulepunktDto.getKulepunktKey())
+            .kulepunktPrioritet(kulepunktDto.getKulepunktPrioritet())
+            .kulepunkt(kulepunktDto.getKulepunkt())
+            .build();
     }
 
     private static SvarAlternativ map(SvarAlternativDto svarAlternativDto) {

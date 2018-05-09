@@ -14,5 +14,6 @@ public class KartleggingDto {
     private LocalDateTime besvarelseDato;
     private List<RaadDto> raad;
     private List<BesvarelseDto> besvarelse;
+    private List<KulepunktDto> kulepunkter;
 
 }

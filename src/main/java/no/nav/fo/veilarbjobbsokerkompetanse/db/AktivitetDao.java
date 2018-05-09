@@ -28,7 +28,7 @@ public class AktivitetDao {
         );
     }
 
-    public List<Aktivitet> fetchByRaadId(long raadId) {
+    List<Aktivitet> fetchByRaadId(long raadId) {
         return db.query("SELECT * FROM AKTIVITET WHERE raad_id = ?",
             this::map,
             raadId

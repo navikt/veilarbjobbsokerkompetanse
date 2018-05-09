@@ -38,6 +38,8 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         assertThat(result.getBesvarelse()).hasAtLeastOneElementOfType(Besvarelse.class);
         assertThat(result.getBesvarelse().get(0).getTips()).isEqualTo("TIPS");
         assertThat(result.getBesvarelse().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
+        assertThat(result.getKulepunkter()).hasAtLeastOneElementOfType(Kulepunkt.class);
+        assertThat(result.getKulepunkter().get(0).getKulepunktKey()).isEqualTo("KULEPUNKT-KEY");
     }
 
     @Transactional
@@ -61,8 +63,17 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         return Kartlegging.builder()
                 .besvarelse(asList(besvarelse(), besvarelse()))
                 .raad(asList(raad(), raad()))
+                .kulepunkter(asList(kulepunkt(), kulepunkt()))
                 .kartleggingDato(Instant.now())
                 .build();
+    }
+
+    private Kulepunkt kulepunkt() {
+        return Kulepunkt.builder()
+            .kulepunktKey("KULEPUNKT-KEY")
+            .kulepunktPrioritet(10)
+            .kulepunkt("KULEPUNKT-TEKST-TEKST-TEKST")
+            .build();
     }
 
     private Besvarelse besvarelse() {
