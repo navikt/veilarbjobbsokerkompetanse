@@ -1,7 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import lombok.SneakyThrows;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kulepunkt;
 import no.nav.sbl.jdbc.Database;
 import org.springframework.stereotype.Component;

@@ -7,10 +7,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.chrono.ChronoZonedDateTime;
-import java.util.Optional;
 
 import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 public class Mapper {
@@ -18,6 +16,8 @@ public class Mapper {
     public static KartleggingDto map(Kartlegging kartlegging) {
         return new KartleggingDto()
                 .setUnderOppfolging(kartlegging.isUnderOppfolging())
+                .setOppsummering(kartlegging.getOppsummering())
+                .setOppsummeringKey(kartlegging.getOppsummeringKey())
                 .setBesvarelseDato(LocalDateTime.ofInstant(kartlegging.getKartleggingDato(), ZoneId.of("Europe/Oslo")))
                 .setRaad(kartlegging.getRaad().stream().map(Mapper::map).collect(toList()))
                 .setBesvarelse(kartlegging.getBesvarelse().stream().map(Mapper::map).collect(toList()))
@@ -67,6 +67,8 @@ public class Mapper {
                 .orElse(null);
         return Kartlegging.builder()
                 .underOppfolging(kartleggingDto.isUnderOppfolging())
+                .oppsummering(kartleggingDto.getOppsummering())
+                .oppsummeringKey(kartleggingDto.getOppsummeringKey())
                 .kartleggingDato(besvarelseDato)
                 .raad(kartleggingDto.getRaad().stream().map(Mapper::map).collect(toList()))
                 .besvarelse(kartleggingDto.getBesvarelse().stream().map(Mapper::map).collect(toList()))
