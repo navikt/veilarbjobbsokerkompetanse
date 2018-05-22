@@ -5,6 +5,7 @@ replicas:
   max: 4
   cpuThresholdPercentage: 50
 port: 8080
+webproxy: true
 healthcheck:
   liveness:
     path: veilarbjobbsokerkompetanse/internal/isAlive
