@@ -11,9 +11,10 @@ import java.util.List;
 public class KartleggingDto {
 
     private boolean underOppfolging;
+    private String oppsummering;
+    private String oppsummeringKey;
     private LocalDateTime besvarelseDato;
     private List<RaadDto> raad;
     private List<BesvarelseDto> besvarelse;
     private List<KulepunktDto> kulepunkter;
-
 }

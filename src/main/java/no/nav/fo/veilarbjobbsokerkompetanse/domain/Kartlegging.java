@@ -13,6 +13,8 @@ public class Kartlegging {
     private long kartleggingId;
     private String aktorId;
     private boolean underOppfolging;
+    private String oppsummering;
+    private String oppsummeringKey;
     private Instant kartleggingDato;
 
     private List<Raad> raad;

@@ -2,7 +2,6 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
-import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kulepunkt;
 import no.nav.sbl.jdbc.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ import static java.util.Comparator.comparing;
         AktivitetDao.class,
         BesvarelseDao.class,
         SvarAlternativDao.class,
-        KulepunktDao.class
+        KulepunktDao.class,
 })
 public class KartleggingDao {
 
@@ -53,14 +52,17 @@ public class KartleggingDao {
                         "kartlegging_id, " +
                         "aktor_id, " +
                         "under_oppfolging, " +
+                        "oppsummering, " +
+                        "oppsummering_key, " +
                         "kartlegging_dato) " +
-                        "VALUES (?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, ?)",
                 kartleggingId,
                 aktorId,
                 underOppfolging,
+                kartlegging.getOppsummering(),
+                kartlegging.getOppsummeringKey(),
                 Timestamp.from(kartlegging.getKartleggingDato())
         );
-
         kartlegging.getBesvarelse().forEach(s -> besvarelseDao.create(s, kartleggingId));
         kartlegging.getRaad().forEach(r -> raadDao.create(r, kartleggingId));
         kartlegging.getKulepunkter().forEach(k -> kulepunktDao.create(k, kartleggingId));
@@ -91,6 +93,8 @@ public class KartleggingDao {
                 .kartleggingId(rs.getLong("kartlegging_id"))
                 .aktorId(rs.getString("aktor_id"))
                 .underOppfolging(rs.getBoolean("under_oppfolging"))
+                .oppsummering(rs.getString("oppsummering"))
+                .oppsummeringKey(rs.getString("oppsummering_key"))
                 .kartleggingDato(rs.getTimestamp("kartlegging_dato").toInstant())
                 .build();
     }

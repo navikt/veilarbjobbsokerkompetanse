@@ -20,6 +20,8 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
     private static final Instant BEFORE = NOW.minus(1, DAYS);
     private static final Instant LATER = NOW.plus(1, DAYS);
     private static final boolean UNDER_OPPFOLGING = true;
+    private static final String OPPSUMMERING = "Dette er en oppsummering";
+    private static final String OPPSUMMERING_KEY = "oppsummering-key1";
 
     @Inject
     private KartleggingDao kartleggingDao;
@@ -40,6 +42,8 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         assertThat(result.getBesvarelse().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
         assertThat(result.getKulepunkter()).hasAtLeastOneElementOfType(Kulepunkt.class);
         assertThat(result.getKulepunkter().get(0).getKulepunktKey()).isEqualTo("KULEPUNKT-KEY");
+        assertThat(result.getOppsummering()).isEqualTo(OPPSUMMERING);
+        assertThat(result.getOppsummeringKey()).isEqualTo(OPPSUMMERING_KEY);
     }
 
     @Transactional
@@ -64,6 +68,8 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
                 .besvarelse(asList(besvarelse(), besvarelse()))
                 .raad(asList(raad(), raad()))
                 .kulepunkter(asList(kulepunkt(), kulepunkt()))
+                .oppsummering("Dette er en oppsummering")
+                .oppsummeringKey("oppsummering-key1")
                 .kartleggingDato(Instant.now())
                 .build();
     }
@@ -108,5 +114,4 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
                 .innhold("AktivitetInnhold")
                 .build();
     }
-
 }
