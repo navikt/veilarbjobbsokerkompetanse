@@ -11,13 +11,6 @@ public class Main {
 
     public static void main(String... args) throws Exception {
 
-        // TODO bør dette flyttes til enten baseimage eller api-app?
-        setProperty("http.nonProxyHosts", "*.155.55.|*.192.168.|*.10.|*.local|*.rtv.gov|*.adeo.no|*.nav.no|*.aetat.no|*.devillo.no|*.oera.no");
-        setProperty("http.proxyHost", "webproxy-utvikler.nav.no");
-        setProperty("http.proxyPort", "8088");
-        setProperty("https.proxyHost", "webproxy-utvikler.nav.no");
-        setProperty("https.proxyPort", "8088");
-
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
         setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(VEILARBLOGIN_REDIRECT_URL_URL));
         setProperty(FEATURE_ENDPOINT_URL_PROPERTY_NAME, getRequiredProperty(FEATURE_ENDPOINT_URL_ENV_NAME));
