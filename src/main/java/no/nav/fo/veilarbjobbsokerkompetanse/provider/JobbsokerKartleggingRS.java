@@ -4,7 +4,7 @@ import no.nav.apiapp.util.SubjectUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.MeDto;
+import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.OppfolgingDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +29,9 @@ public class JobbsokerKartleggingRS {
     private OppfolgingClient oppfolgingClient;
 
     @GET
-    @Path("me")
-    public MeDto aboutMe() {
-        return new MeDto().setUnderOppfolging(oppfolgingClient.underOppfolging(getFnr()));
+    @Path("oppfolging")
+    public OppfolgingDto aboutMe() {
+        return new OppfolgingDto().setUnderOppfolging(oppfolgingClient.underOppfolging(getFnr()));
     }
 
     @GET

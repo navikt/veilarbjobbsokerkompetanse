@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class MeDto {
+public class OppfolgingDto {
 
     private boolean underOppfolging;
 
