@@ -14,7 +14,7 @@ public class Main {
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
         setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(VEILARBLOGIN_REDIRECT_URL_URL));
         setProperty(FEATURE_ENDPOINT_URL_PROPERTY_NAME, getRequiredProperty(FEATURE_ENDPOINT_URL_ENV_NAME));
-        ApiApp.startApp(ApplicationConfig.class, args);
+        ApiApp.runApp(ApplicationConfig.class, args);
     }
 
 }

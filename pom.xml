@@ -6,7 +6,7 @@
     <parent>
         <groupId>no.nav.sbl</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>2018.05.07.19.57-SNAPSHOT</version>
+        <version>2018.05.25.17.36</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>no.nav.sbl</groupId>
                 <artifactId>bom</artifactId>
-                <version>2018.05.07.19.57-SNAPSHOT</version>
+                <version>2018.05.25.17.36</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -39,6 +39,10 @@
         <dependency>
             <groupId>no.nav.sbl</groupId>
             <artifactId>api-app</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.common</groupId>
+            <artifactId>auth</artifactId>
         </dependency>
         <dependency>
             <groupId>no.nav.sbl</groupId>
@@ -137,11 +141,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>no.nav.modig</groupId>
-            <artifactId>modig-security-loginmodule</artifactId>
-            <scope>runtime</scope>
-        </dependency>
 
         <!--Test no.nav.fo.veilarbjobbsokerkompetanse.db-->
         <dependency>
@@ -216,18 +215,6 @@
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-consumer-junit_2.12</artifactId>
-            <version>3.5.15</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>au.com.dius</groupId>
-            <artifactId>pact-jvm-model</artifactId>
             <version>3.5.15</version>
             <scope>test</scope>
             <exclusions>

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
-import static no.nav.apiapp.feil.Feil.Type.FINNES_IKKE;
+import static no.nav.apiapp.feil.FeilType.FINNES_IKKE;
 
 @Component
 public class KartleggingService {

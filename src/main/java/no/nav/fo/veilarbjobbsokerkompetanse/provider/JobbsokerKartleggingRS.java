@@ -1,6 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
-import no.nav.apiapp.util.SubjectUtils;
+import no.nav.common.auth.SubjectHandler;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
@@ -50,7 +50,7 @@ public class JobbsokerKartleggingRS {
     }
 
     private String getFnr() {
-        return SubjectUtils.getUserId().orElseThrow(IllegalArgumentException::new);
+        return SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new);
     }
 
 }
