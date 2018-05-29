@@ -3,22 +3,20 @@ package no.nav.fo.veilarbjobbsokerkompetanse.client;
 import no.nav.apiapp.selftest.Helsesjekk;
 import no.nav.apiapp.selftest.HelsesjekkMetadata;
 
-import javax.inject.Inject;
-
 import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
+import static no.nav.sbl.rest.RestUtils.withClient;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 public class OppfolgingClientHelseSjekk implements Helsesjekk {
 
-    @Inject
-    private OppfolgingClient oppfolgingClient;
-
     private String veilarboppfolgingPingUrl = getRequiredProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME) + "/ping";
+    private final SystemUserAuthorizationInterceptor systemUserAuthorizationInterceptor = new SystemUserAuthorizationInterceptor();
 
     @Override
     public void helsesjekk() throws Throwable {
-        int status = oppfolgingClient.withClient(c ->
-                c.target(veilarboppfolgingPingUrl)
+        int status = withClient(c ->
+                c.register(systemUserAuthorizationInterceptor)
+                        .target(veilarboppfolgingPingUrl)
                         .request()
                         .get()
                         .getStatus());

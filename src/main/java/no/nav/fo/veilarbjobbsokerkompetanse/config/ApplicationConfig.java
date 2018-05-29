@@ -66,7 +66,6 @@ public class ApplicationConfig implements NaisApiApplication {
     public void configure(ApiAppConfigurator apiAppConfigurator) {
         apiAppConfigurator
                 .sts()
-                .issoLogin()
                 .azureADB2CLogin()
         ;
     }
