@@ -4,6 +4,7 @@ import no.nav.common.auth.SubjectHandler;
 import no.nav.sbl.rest.RestUtils;
 import org.springframework.stereotype.Component;
 
+import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CProvider.AZUREADB2C_OIDC_COOKIE_NAME;
 import static no.nav.common.auth.SsoToken.Type.OIDC;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
@@ -28,7 +29,7 @@ public class OppfolgingClient {
         OppfolgingStatus oppfolgingStatus = RestUtils.withClient(c -> c.target(veilarboppfolgingTarget + "/oppfolging")
                 .queryParam(FNR_QUERY_PARAM, fnr)
                 .request()
-                .cookie("selvbetjening-idtoken", SubjectHandler.getSsoToken(OIDC).orElseThrow(IllegalArgumentException::new))
+                .cookie(AZUREADB2C_OIDC_COOKIE_NAME, SubjectHandler.getSsoToken(OIDC).orElseThrow(IllegalArgumentException::new))
                 .get(OppfolgingStatus.class)
         );
         return oppfolgingStatus.isUnderOppfolging();
