@@ -43,6 +43,9 @@ public class ApplicationConfig implements NaisApiApplication {
     public static final String VEILARBLOGIN_REDIRECT_URL_URL = "VEILARBLOGIN_REDIRECT_URL_URL";
     public static final String FEATURE_ENDPOINT_URL_PROPERTY_NAME = "feature_endpoint.url";
     public static final String FEATURE_ENDPOINT_URL_ENV_NAME = "FEATURE_ENDPOINT_URL";
+    public static final String ABAC_PDP_ENDPOINT_URL_ENV_NAME = "ABAC_PDP_ENDPOINT_URL";
+    public static final String SRV_USERNAME_ENV_NAME = "SRVVEILARBJOBBSOKERKOMPETANSE_USERNAME";
+    public static final String SRV_PASSWORD_ENV_NAME = "SRVVEILARBJOBBSOKERKOMPETANSE_PASSWORD";
 
     @Inject
     private DataSource dataSource;
