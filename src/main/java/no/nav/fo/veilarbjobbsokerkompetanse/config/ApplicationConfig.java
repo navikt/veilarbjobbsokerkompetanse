@@ -28,6 +28,7 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
         RemoteFeatureConfig.class,
         DataSourceConfig.class,
         DataSourceHelsesjekk.class,
+        PepConfig.class,
         KartleggingService.class,
         JobbsokerKartleggingRS.class,
         KartleggingDao.class,

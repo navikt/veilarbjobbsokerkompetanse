@@ -6,6 +6,7 @@ import no.nav.dialogarena.config.fasit.FasitUtils;
 import no.nav.dialogarena.config.fasit.ServiceUser;
 import no.nav.dialogarena.config.util.Util;
 import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
+import no.nav.sbl.dialogarena.common.abac.pep.CredentialConstants;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 
 import static java.lang.System.setProperty;
@@ -15,6 +16,7 @@ import static no.nav.dialogarena.config.fasit.FasitUtils.Zone.FSS;
 import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
 import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
+import static no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig.ABAC_ENDPOINT_URL_PROPERTY_NAME;
 
 public class TestContext {
 
@@ -31,6 +33,9 @@ public class TestContext {
         setProperty(FEATURE_ENDPOINT_URL_ENV_NAME, "https://feature-fss-q6.nais.preprod.local/feature");
         setProperty(RUN_WITH_MOCKS, "true");
 
+        setProperty(ABAC_ENDPOINT_URL_PROPERTY_NAME, FasitUtils.getRestService("abac.pdp.endpoint", getDefaultEnvironment()).getUrl());
+        setProperty(CredentialConstants.SYSTEMUSER_USERNAME, srvveilarbjobbsokerkompetanse.getUsername());
+        setProperty(CredentialConstants.SYSTEMUSER_PASSWORD, srvveilarbjobbsokerkompetanse.getPassword());
 
         String issoHost = FasitUtils.getBaseUrl("isso-host");
         String issoJWS = FasitUtils.getBaseUrl("isso-jwks");
