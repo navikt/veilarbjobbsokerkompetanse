@@ -1,5 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
+import no.nav.apiapp.security.PepClient;
 import no.nav.common.auth.SubjectHandler;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
@@ -9,11 +10,14 @@ import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import static java.util.Optional.ofNullable;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Metrikker.opprettKartleggingMetrikk;
 
@@ -22,35 +26,52 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.Metrikker.opprettKartleggingM
 @Produces("application/json")
 public class JobbsokerKartleggingRS {
 
+    public static final String FNR_QUERY_PARAM = "fnr";
     @Inject
     private KartleggingService kartleggingService;
 
     @Inject
     private OppfolgingClient oppfolgingClient;
 
+    @Inject
+    private PepClient pepClient;
+
+    @Inject
+    private Provider<HttpServletRequest> requestProvider;
+
     @GET
     @Path("oppfolging")
     public OppfolgingDto aboutMe() {
-        return new OppfolgingDto().setUnderOppfolging(oppfolgingClient.underOppfolging(getFnr()));
+        String fnr = getFnr();
+        pepClient.sjekkLeseTilgangTilFnr(fnr);
+        return new OppfolgingDto().setUnderOppfolging(oppfolgingClient.underOppfolging(fnr));
     }
 
     @GET
     @Path("hent")
     public KartleggingDto hentNyesteBesvarelseForAktor() {
-        return map(kartleggingService.fetchMostRecentByFnr(getFnr()));
+        String fnr = getFnr();
+        pepClient.sjekkLeseTilgangTilFnr(fnr);
+        return map(kartleggingService.fetchMostRecentByFnr(fnr));
     }
 
     @POST
     @Path("opprett")
     public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
-        kartleggingService.create(getFnr(), map(kartleggingDto));
-        Kartlegging kartlegging = kartleggingService.fetchMostRecentByFnr(getFnr());
+        String fnr = getFnr();
+        pepClient.sjekkSkriveTilgangTilFnr(fnr);
+        kartleggingService.create(fnr, map(kartleggingDto));
+        Kartlegging kartlegging = kartleggingService.fetchMostRecentByFnr(fnr);
         opprettKartleggingMetrikk(kartlegging);
         return map(kartlegging);
     }
 
     private String getFnr() {
-        return SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new);
+        String fnr = requestProvider.get().getParameter(FNR_QUERY_PARAM);
+        return ofNullable(fnr).orElseGet(() ->
+                SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new)
+        );
+
     }
 
 }
