@@ -20,6 +20,8 @@ import static no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig.A
 
 public class TestContext {
 
+    public static final String APPLICATION_NAME = "veilarbjobbsokerkompetanse";
+
     public static void setup() {
         String securityTokenService = FasitUtils.getBaseUrl("securityTokenService", FSS);
         ServiceUser srvveilarbjobbsokerkompetanse = FasitUtils.getServiceUser("srvveilarbjobbsokerkompetanse", APPLICATION_NAME);

@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static no.nav.brukerdialog.security.domain.IdentType.EksternBruker;
 import static no.nav.common.pact.PactUtil.dtoBody;
+import static no.nav.fo.veilarbjobbsokerkompetanse.TestContext.APPLICATION_NAME;
 import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.FNR_QUERY_PARAM;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.APPLICATION_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(PactConsumerTestExt.class)

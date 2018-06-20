@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
-import static no.nav.apiapp.ApiApplication.Sone.FSS;
 import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 
 @Configuration
@@ -37,7 +36,6 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
 })
 public class ApplicationConfig implements NaisApiApplication {
 
-    public static final String APPLICATION_NAME = "veilarbjobbsokerkompetanse";
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
     public static final String RUN_WITH_MOCKS = "RUN_WITH_MOCKS";
     public static final String VEILARBLOGIN_REDIRECT_URL_URL = "VEILARBLOGIN_REDIRECT_URL_URL";
@@ -46,16 +44,6 @@ public class ApplicationConfig implements NaisApiApplication {
 
     @Inject
     private DataSource dataSource;
-
-    @Override
-    public Sone getSone() {
-        return FSS;
-    }
-
-    @Override
-    public String getApplicationName() {
-        return APPLICATION_NAME;
-    }
 
     @Transactional
     @Override
