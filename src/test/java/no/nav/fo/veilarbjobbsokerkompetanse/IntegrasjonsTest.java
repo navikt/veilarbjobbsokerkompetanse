@@ -1,7 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import lombok.SneakyThrows;
-import no.nav.dialogarena.aktor.AktorConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.DatabaseTestContext;
 import no.nav.testconfig.ApiAppTest;
@@ -20,8 +19,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 
-import static java.lang.System.setProperty;
-import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
+import static no.nav.fo.veilarbjobbsokerkompetanse.TestContext.APPLICATION_NAME;
 
 public abstract class IntegrasjonsTest {
 
@@ -32,7 +30,7 @@ public abstract class IntegrasjonsTest {
     @BeforeAll
     @BeforeClass
     public static void setupContext() {
-        ApiAppTest.setupTestContext();
+        ApiAppTest.setupTestContext(ApiAppTest.Config.builder().applicationName(APPLICATION_NAME).build());
         TestContext.setup();
         setupContext(
                 ApplicationConfig.class
@@ -80,7 +78,6 @@ public abstract class IntegrasjonsTest {
         if (annotationConfigApplicationContext != null) {
             annotationConfigApplicationContext.stop();
             annotationConfigApplicationContext.close();
-            annotationConfigApplicationContext.destroy();
             annotationConfigApplicationContext = null;
         }
     }

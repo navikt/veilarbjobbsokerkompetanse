@@ -5,22 +5,14 @@ import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.Constants.OIDC_REDIRECT_URL_PROPERTY_NAME;
 import static no.nav.dialogarena.aktor.AktorConfig.AKTOER_ENDPOINT_URL;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
-import static no.nav.sbl.dialogarena.common.abac.pep.CredentialConstants.SYSTEMUSER_PASSWORD;
-import static no.nav.sbl.dialogarena.common.abac.pep.CredentialConstants.SYSTEMUSER_USERNAME;
-import static no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig.ABAC_ENDPOINT_URL_PROPERTY_NAME;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 public class Main {
 
     public static void main(String... args) throws Exception {
-
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
         setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(VEILARBLOGIN_REDIRECT_URL_URL));
         setProperty(FEATURE_ENDPOINT_URL_PROPERTY_NAME, getRequiredProperty(FEATURE_ENDPOINT_URL_ENV_NAME));
-
-        setProperty(ABAC_ENDPOINT_URL_PROPERTY_NAME, getRequiredProperty(ABAC_PDP_ENDPOINT_URL_ENV_NAME));
-        setProperty(SYSTEMUSER_USERNAME, getRequiredProperty(SRV_USERNAME_ENV_NAME));
-        setProperty(SYSTEMUSER_PASSWORD, getRequiredProperty(SRV_PASSWORD_ENV_NAME));
 
         ApiApp.runApp(ApplicationConfig.class, args);
     }
