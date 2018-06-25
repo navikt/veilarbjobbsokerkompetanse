@@ -6,7 +6,7 @@
     <parent>
         <groupId>no.nav.sbl</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>2018.06.20.12.02</version>
+        <version>2018.06.21.16.06</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -28,7 +28,7 @@
             <dependency>
                 <groupId>no.nav.sbl</groupId>
                 <artifactId>bom</artifactId>
-                <version>2018.06.20.12.02</version>
+                <version>2018.06.21.16.06</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -189,58 +189,22 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
-
-
-        <!-- TODO bør inn i bommen asap -->
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-model</artifactId>
-            <version>3.5.15</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-consumer_2.12</artifactId>
-            <version>3.5.15</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-consumer-junit_2.12</artifactId>
-            <version>3.5.15</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-consumer-junit5_2.12</artifactId>
-            <version>3.5.15</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!-- TODO bør inn i bommen asap -->
 
     </dependencies>
 
