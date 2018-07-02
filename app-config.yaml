@@ -37,8 +37,6 @@ fasitResources:
     resourceType: webserviceendpoint
   - alias: veilArbOppfolgingAPI
     resourceType: restservice
-  - alias: feature_endpoint
-    resourceType: restservice
   - alias: abac.pdp.endpoint
     resourceType: restservice
 
