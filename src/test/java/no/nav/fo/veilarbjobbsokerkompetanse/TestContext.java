@@ -32,7 +32,6 @@ public class TestContext {
 
         setProperty(AKTOER_V2_ENDPOINTURL, "https://app-" + getDefaultEnvironment() + ".adeo.no/aktoerid/AktoerService/v2");
         setProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME, "https://localhost.nav.no:8443/veilarboppfolging/api");
-        setProperty(FEATURE_ENDPOINT_URL_ENV_NAME, "https://feature-fss-q6.nais.preprod.local/feature");
         setProperty(RUN_WITH_MOCKS, "true");
 
         setProperty(ABAC_ENDPOINT_URL_PROPERTY_NAME, FasitUtils.getRestService("abac.pdp.endpoint", getDefaultEnvironment()).getUrl());
