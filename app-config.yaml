@@ -32,6 +32,8 @@ fasitResources:
     resourceType: datasource
   - alias: srvveilarbjobbsokerkompetanse
     resourceType: credential
+  - alias: appdynamics
+    resourceType: applicationproperties
   - alias: securityTokenService
     resourceType: baseUrl
   - alias: Aktoer_v2
