@@ -1,6 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import no.nav.apiapp.security.PepClient;
+import no.nav.brukerdialog.security.domain.IdentType;
 import no.nav.common.auth.SubjectHandler;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
@@ -18,6 +19,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import static java.util.Optional.ofNullable;
+import static no.nav.brukerdialog.security.domain.IdentType.EksternBruker;
+import static no.nav.brukerdialog.security.domain.IdentType.InternBruker;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Metrikker.opprettKartleggingMetrikk;
 
@@ -52,7 +55,13 @@ public class JobbsokerKartleggingRS {
     public KartleggingDto hentNyesteBesvarelseForAktor() {
         String fnr = getFnr();
         pepClient.sjekkLeseTilgangTilFnr(fnr);
-        return map(kartleggingService.fetchMostRecentByFnr(fnr));
+        IdentType identType = SubjectHandler.getIdentType().orElse(EksternBruker);
+        Kartlegging kartlegging = kartleggingService.fetchMostRecentByFnr(fnr);
+
+        if (identType == InternBruker && !kartlegging.isUnderOppfolging()) {
+            return null;
+        }
+        return map(kartlegging);
     }
 
     @POST
