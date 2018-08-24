@@ -19,7 +19,7 @@ prometheus:
   path: veilarbjobbsokerkompetanse/internal/metrics
 resources:
   limits:
-    cpu: 500m
+    cpu: 3
     memory: 1024Mi
   requests:
     cpu: 200m
