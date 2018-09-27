@@ -44,7 +44,4 @@ public class KartleggingService {
     private Feil fantIkkeAktor() {
         return new Feil(FINNES_IKKE, "Finner ikke aktørId for gitt Fnr");
     }
-
-
-
 }

@@ -1,7 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
-import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +12,6 @@ import java.time.Instant;
 import static java.time.temporal.ChronoUnit.DAYS;
 import static no.nav.fo.veilarbjobbsokerkompetanse.TestData.kartlegging;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class KartleggingDaoTest extends IntegrasjonsTest {
 
@@ -47,12 +44,6 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         assertThat(result.getKulepunkter().get(0).getKulepunktKey()).isEqualTo("KULEPUNKT-KEY");
         assertThat(result.getOppsummering()).isEqualTo(OPPSUMMERING);
         assertThat(result.getOppsummeringKey()).isEqualTo(OPPSUMMERING_KEY);
-    }
-
-    @Test
-    public void testCreateNarIkkeUnderOppfolging() {
-        OppfolgingClient oppfolgingClient = mock(OppfolgingClient.class);
-        when(oppfolgingClient.underOppfolging(FNR)).thenReturn(false);
     }
 
     @Transactional
