@@ -1,6 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
 import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
+import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,16 +11,18 @@ import javax.ws.rs.WebApplicationException;
 import java.time.Instant;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-import static java.util.Arrays.asList;
+import static no.nav.fo.veilarbjobbsokerkompetanse.TestData.kartlegging;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class KartleggingDaoTest extends IntegrasjonsTest {
 
+    private static final String FNR = "12345678910";
     private static final String AKTOR_ID = "123456";
     private static final Instant NOW = Instant.now();
     private static final Instant BEFORE = NOW.minus(1, DAYS);
     private static final Instant LATER = NOW.plus(1, DAYS);
-    private static final boolean UNDER_OPPFOLGING = true;
     private static final String OPPSUMMERING = "Dette er en oppsummering";
     private static final String OPPSUMMERING_KEY = "oppsummering-key1";
 
@@ -29,7 +32,7 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
     @Transactional
     @Test
     public void testCreateAndFetch() {
-        kartleggingDao.create(AKTOR_ID, UNDER_OPPFOLGING, kartlegging());
+        kartleggingDao.create(AKTOR_ID, kartlegging());
         Kartlegging result = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
 
         assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
@@ -46,11 +49,17 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         assertThat(result.getOppsummeringKey()).isEqualTo(OPPSUMMERING_KEY);
     }
 
+    @Test
+    public void testCreateNarIkkeUnderOppfolging() {
+        OppfolgingClient oppfolgingClient = mock(OppfolgingClient.class);
+        when(oppfolgingClient.underOppfolging(FNR)).thenReturn(false);
+    }
+
     @Transactional
     @Test
     public void testMostRecentBesvarelse() {
-        kartleggingDao.create(AKTOR_ID, UNDER_OPPFOLGING, kartlegging());
-        kartleggingDao.create(AKTOR_ID, UNDER_OPPFOLGING, kartlegging());
+        kartleggingDao.create(AKTOR_ID, kartlegging());
+        kartleggingDao.create(AKTOR_ID, kartlegging());
 
         Kartlegging kartlegging = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
 
@@ -63,55 +72,5 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
     }
 
-    private Kartlegging kartlegging() {
-        return Kartlegging.builder()
-                .besvarelse(asList(besvarelse(), besvarelse()))
-                .raad(asList(raad(), raad()))
-                .kulepunkter(asList(kulepunkt(), kulepunkt()))
-                .oppsummering("Dette er en oppsummering")
-                .oppsummeringKey("oppsummering-key1")
-                .kartleggingDato(Instant.now())
-                .build();
-    }
 
-    private Kulepunkt kulepunkt() {
-        return Kulepunkt.builder()
-            .kulepunktKey("KULEPUNKT-KEY")
-            .kulepunktPrioritet(10)
-            .kulepunkt("KULEPUNKT-TEKST-TEKST-TEKST")
-            .build();
-    }
-
-    private Besvarelse besvarelse() {
-        return Besvarelse.builder()
-                .sporsmalKey("SPORSMAL-1-KEY")
-                .sporsmal("SPORSMAL-1")
-                .tipsKey("TIPS-1-KEY")
-                .tips("TIPS")
-                .svarAlternativ(asList(svarAlternativ(), svarAlternativ()))
-                .build();
-    }
-
-    private SvarAlternativ svarAlternativ() {
-        return SvarAlternativ.builder()
-                .svarAlternativKey("SVARALTERNATIV-1-KEY")
-                .svarAlternativ("SVARALTERNATIV-1")
-                .build();
-    }
-
-    private Raad raad() {
-        return Raad.builder()
-                .raadKey("R1")
-                .raadTittel("RaadTittel")
-                .raadIngress("RaadIngress")
-                .raadAktiviteter(asList(aktivitet(), aktivitet()))
-                .build();
-    }
-
-    private Aktivitet aktivitet() {
-        return Aktivitet.builder()
-                .tittel("AktivitetTittel")
-                .innhold("AktivitetInnhold")
-                .build();
-    }
 }

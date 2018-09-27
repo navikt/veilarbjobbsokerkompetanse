@@ -8,8 +8,11 @@ import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 import static no.nav.apiapp.feil.FeilType.FINNES_IKKE;
+import static no.nav.apiapp.feil.FeilType.UGYLDIG_HANDLING;
 
 @Component
 public class KartleggingService {
@@ -24,7 +27,10 @@ public class KartleggingService {
     private OppfolgingClient oppfolgingClient;
 
     public void create(String fnr, Kartlegging kartlegging) {
-        kartleggingDao.create(getAktorId(fnr), oppfolgingClient.underOppfolging(fnr), kartlegging);
+        if (oppfolgingClient.underOppfolging(fnr)) {
+            kartleggingDao.create(getAktorId(fnr), kartlegging);
+        }
+        throw new Feil(new BrukerIkkeUnderOppfolging());
     }
 
     public Kartlegging fetchMostRecentByFnr(String fnr) {
@@ -38,6 +44,7 @@ public class KartleggingService {
     private Feil fantIkkeAktor() {
         return new Feil(FINNES_IKKE, "Finner ikke aktørId for gitt Fnr");
     }
+
 
 
 }
