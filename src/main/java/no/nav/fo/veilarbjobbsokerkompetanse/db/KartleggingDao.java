@@ -46,7 +46,7 @@ public class KartleggingDao {
     private KulepunktDao kulepunktDao;
 
     @Transactional
-    public void create(String aktorId, boolean underOppfolging, Kartlegging kartlegging) {
+    public void create(String aktorId, Kartlegging kartlegging) {
         long kartleggingId = db.nesteFraSekvens("KARTLEGGING_SEQ");
         db.update("INSERT INTO KARTLEGGING (" +
                         "kartlegging_id, " +
@@ -58,7 +58,7 @@ public class KartleggingDao {
                         "VALUES (?, ?, ?, ?, ?, ?)",
                 kartleggingId,
                 aktorId,
-                underOppfolging,
+                true,
                 kartlegging.getOppsummering(),
                 kartlegging.getOppsummeringKey(),
                 Timestamp.from(kartlegging.getKartleggingDato())
