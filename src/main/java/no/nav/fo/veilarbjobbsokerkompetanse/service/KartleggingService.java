@@ -30,7 +30,9 @@ public class KartleggingService {
         if (oppfolgingClient.underOppfolging(fnr)) {
             kartleggingDao.create(getAktorId(fnr), kartlegging);
         }
-        throw new Feil(new BrukerIkkeUnderOppfolging());
+        else {
+            throw new Feil(new BrukerIkkeUnderOppfolging());
+        }
     }
 
     public Kartlegging fetchMostRecentByFnr(String fnr) {
