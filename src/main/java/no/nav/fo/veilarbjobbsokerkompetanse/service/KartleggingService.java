@@ -34,7 +34,10 @@ public class KartleggingService {
     }
 
     public Kartlegging fetchMostRecentByFnr(String fnr) {
-        return kartleggingDao.fetchMostRecentByAktorId(getAktorId(fnr));
+        if (oppfolgingClient.underOppfolging(fnr)) {
+            return kartleggingDao.fetchMostRecentByAktorId(getAktorId(fnr));
+        }
+        throw new Feil(new BrukerIkkeUnderOppfolging());
     }
 
     private String getAktorId(String fnr) {

@@ -29,4 +29,10 @@ public class KartleggingServiceTest {
         when(oppfolgingClient.underOppfolging(FNR)).thenReturn(false);
         kartleggingService.create(FNR, TestData.kartlegging());
     }
+
+    @Test(expected = Feil.class)
+    public void testFetchNarIkkeUnderOppfolging() {
+        when(oppfolgingClient.underOppfolging(FNR)).thenReturn(false);
+        kartleggingService.fetchMostRecentByFnr(FNR);
+    }
 }
