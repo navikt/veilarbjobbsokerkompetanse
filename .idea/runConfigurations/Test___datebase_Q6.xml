@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Test - datebase=T6" type="Application" factoryName="Application" singleton="true">
+  <configuration default="false" name="Test - datebase=Q6" type="Application" factoryName="Application" singleton="true">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <option name="MAIN_CLASS_NAME" value="MainTest" />
-    <option name="VM_PARAMETERS" value="-Ddatabase=T6" />
+    <option name="VM_PARAMETERS" value="-Ddatabase=Q6" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />

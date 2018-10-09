@@ -88,7 +88,7 @@ public class KartleggingDao {
     }
 
     @SneakyThrows
-    private Kartlegging map(ResultSet rs) {
+    Kartlegging map(ResultSet rs) {
         return Kartlegging.builder()
                 .kartleggingId(rs.getLong("kartlegging_id"))
                 .aktorId(rs.getString("aktor_id"))
