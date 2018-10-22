@@ -87,6 +87,13 @@ public class KartleggingDao {
                 .build();
     }
 
+    public void anonymiserByAktorId(String aktorId) {
+        db.update("UPDATE KARTLEGGING " +
+                                "SET aktor_id = 'anonym' " +
+                                "WHERE aktor_id = ? ",
+                        aktorId);
+    }
+
     @SneakyThrows
     Kartlegging map(ResultSet rs) {
         return Kartlegging.builder()
@@ -98,5 +105,4 @@ public class KartleggingDao {
                 .kartleggingDato(rs.getTimestamp("kartlegging_dato").toInstant())
                 .build();
     }
-
 }

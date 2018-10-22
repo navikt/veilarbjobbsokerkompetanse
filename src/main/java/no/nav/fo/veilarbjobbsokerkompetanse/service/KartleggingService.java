@@ -8,11 +8,8 @@ import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 
 import static no.nav.apiapp.feil.FeilType.FINNES_IKKE;
-import static no.nav.apiapp.feil.FeilType.UGYLDIG_HANDLING;
 
 @Component
 public class KartleggingService {
