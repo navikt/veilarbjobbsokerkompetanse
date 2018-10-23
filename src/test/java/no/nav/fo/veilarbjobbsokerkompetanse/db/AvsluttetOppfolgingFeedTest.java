@@ -19,8 +19,8 @@ public class AvsluttetOppfolgingFeedTest extends IntegrasjonsTest {
 
     @Test(expected=RuntimeException.class)
     public void skalIkkeOppdatereSisteIdHvisException() {
-        doThrow(new RuntimeException("Mock exception")).when(kartleggingDao).anonymiserByAktorId(null);
-        List<AvsluttetOppfolgingFeedDto> feedElements = asList(feedElement(new Date(), null));
+        doThrow(new RuntimeException("Mock exception")).when(kartleggingDao).anonymiserByAktorId(null, null);
+        List<AvsluttetOppfolgingFeedDto> feedElements = asList(feedElement(null, new Date()));
 
         try {
             new AvsluttetOppfolgingFeedService(kartleggingDao, feedMetaDataDao).lesAvsluttetOppfolgingFeed(null, feedElements);
@@ -29,15 +29,15 @@ public class AvsluttetOppfolgingFeedTest extends IntegrasjonsTest {
         }
     }
 
-    private AvsluttetOppfolgingFeedDto feedElement(Date date, String aktorId) {
-        return new AvsluttetOppfolgingFeedDto().setOppdatert(date).setAktoerid(aktorId);
+    private AvsluttetOppfolgingFeedDto feedElement(String aktorId, Date oppdatert) {
+        return new AvsluttetOppfolgingFeedDto().setAktoerid(aktorId).setOppdatert(oppdatert);
     }
 
     @Test
     public void skalOppdatereSisteIdHvisOk() {
         Date date1 = new Date();
         Date date2 = new Date(date1.getTime() + 1000);
-        List<AvsluttetOppfolgingFeedDto> feedElements = asList(feedElement(date1, "id1"), feedElement(date2, "id2"));
+        List<AvsluttetOppfolgingFeedDto> feedElements = asList(feedElement("id1", date1), feedElement("id2", date2));
         new AvsluttetOppfolgingFeedService(kartleggingDao, feedMetaDataDao).lesAvsluttetOppfolgingFeed(null, feedElements);
         verify(feedMetaDataDao).oppdaterSisteLestTidspunkt(date2);
     }
@@ -46,12 +46,10 @@ public class AvsluttetOppfolgingFeedTest extends IntegrasjonsTest {
     public void skalAvslutteForAlleElementerIFeed() {
         Date date1 = new Date();
         Date date2 = new Date(date1.getTime() + 1000);
-        List<AvsluttetOppfolgingFeedDto> feedElements = asList(feedElement(date1, "id1"), feedElement(date2, "id2"));
-
+        List<AvsluttetOppfolgingFeedDto> feedElements = asList(feedElement("id1", date1), feedElement("id2", date2));
         new AvsluttetOppfolgingFeedService(kartleggingDao, feedMetaDataDao).lesAvsluttetOppfolgingFeed(null, feedElements);
-
-        verify(kartleggingDao).anonymiserByAktorId("id1");
-        verify(kartleggingDao).anonymiserByAktorId("id2");
+        verify(kartleggingDao).anonymiserByAktorId("id1", null);
+        verify(kartleggingDao).anonymiserByAktorId("id2", null);
         verifyNoMoreInteractions(kartleggingDao);
     }
 }

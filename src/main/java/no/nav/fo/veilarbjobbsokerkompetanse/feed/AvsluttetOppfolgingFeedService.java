@@ -34,7 +34,7 @@ public class AvsluttetOppfolgingFeedService {
         int successfulIdCount = 0;
 
         for (AvsluttetOppfolgingFeedDto element : feedElements) {
-            kartleggingDao.anonymiserByAktorId(element.getAktoerid());
+            kartleggingDao.anonymiserByAktorId(element.getAktoerid(), element.getSluttdato());
             lastSuccessfulId = element.getOppdatert();
             successfulIdCount ++;
         }
