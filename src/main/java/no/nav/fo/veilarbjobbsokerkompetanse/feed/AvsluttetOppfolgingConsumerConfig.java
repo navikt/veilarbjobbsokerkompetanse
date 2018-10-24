@@ -17,7 +17,7 @@ import net.javacrumbs.shedlock.provider.jdbc.JdbcLockProvider;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 @Configuration
-public class AvsluttetOppfolgingFeedConfig {
+public class AvsluttetOppfolgingConsumerConfig {
 
     public static final String VEILARBOPPFOLGINGAPI_URL_PROPERTY = "VEILARBOPPFOLGINGAPI_URL";
     private static final String AVSLUTTETOPPFOLGING_FEED_NAME = "avsluttetoppfolging";
@@ -34,7 +34,7 @@ public class AvsluttetOppfolgingFeedConfig {
         return new JdbcLockProvider(dataSource);
     }
 
-    public AvsluttetOppfolgingFeedConfig() {
+    public AvsluttetOppfolgingConsumerConfig() {
         host = getRequiredProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY);
     }
 

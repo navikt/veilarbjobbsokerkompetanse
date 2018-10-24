@@ -4,6 +4,14 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import java.util.Date;
 
+/*
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
+ */
 @Data
 @Accessors(chain = true)
 public class AvsluttetOppfolgingFeedDto implements Comparable<AvsluttetOppfolgingFeedDto> {

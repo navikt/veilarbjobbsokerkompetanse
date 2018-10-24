@@ -1,22 +1,23 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.feed;
+import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.FeedMetaDataDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.AvsluttetOppfolgingFeedDto;
-import javax.inject.Inject;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class AvsluttetOppfolgingFeedService {
 
     private KartleggingDao kartleggingDao;
     private FeedMetaDataDao feedMetaDataDao;
     private static final Logger LOGGER = LoggerFactory.getLogger(KartleggingDao.class);
 
-    @Inject
     public AvsluttetOppfolgingFeedService(KartleggingDao kartleggingDao, FeedMetaDataDao feedMetaDataDao) {
         this.kartleggingDao = kartleggingDao;
         this.feedMetaDataDao = feedMetaDataDao;
