@@ -1,5 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
+import no.nav.apiapp.feil.IngenTilgang;
 import no.nav.apiapp.security.PepClient;
 import no.nav.brukerdialog.security.domain.IdentType;
 import no.nav.common.auth.SubjectHandler;
@@ -17,10 +18,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import java.security.InvalidParameterException;
 
 import static java.util.Optional.ofNullable;
-import static no.nav.brukerdialog.security.domain.IdentType.EksternBruker;
-import static no.nav.brukerdialog.security.domain.IdentType.InternBruker;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Metrikker.opprettKartleggingMetrikk;
 
@@ -52,16 +52,25 @@ public class JobbsokerKartleggingRS {
 
     @GET
     @Path("hent")
-    public KartleggingDto hentNyesteBesvarelseForAktor() {
-        String fnr = getFnr();
+    public KartleggingDto hentNyesteBesvarelseForBruker() {
+        skalVere(IdentType.EksternBruker);
+        String fnr = SubjectHandler.getIdent().orElseThrow(NullPointerException::new);
         pepClient.sjekkLeseTilgangTilFnr(fnr);
-        IdentType identType = SubjectHandler.getIdentType().orElse(EksternBruker);
-        Kartlegging kartlegging = kartleggingService.fetchMostRecentByFnr(fnr);
 
-        if (identType == InternBruker && !kartlegging.isUnderOppfolging()) {
-            return null;
-        }
-        return map(kartlegging);
+        return map(kartleggingService.fetchMostRecentByFnr(fnr));
+    }
+
+    @GET
+    @Path("hentSomInternBruker")
+    public KartleggingDto hentNyesteBesvarelseForBrukerSomInternBruker() {
+        skalVere(IdentType.InternBruker);
+
+        String fnr = ofNullable(requestProvider.get().getParameter(FNR_QUERY_PARAM))
+            .orElseThrow(InvalidParameterException::new);
+
+        pepClient.sjekkLeseTilgangTilFnr(fnr);
+
+        return map(kartleggingService.fetchMostRecentByFnr(fnr));
     }
 
     @POST
@@ -78,9 +87,16 @@ public class JobbsokerKartleggingRS {
     private String getFnr() {
         String fnr = requestProvider.get().getParameter(FNR_QUERY_PARAM);
         return ofNullable(fnr).orElseGet(() ->
-                SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new)
+            SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new)
         );
 
+    }
+
+    private void skalVere(IdentType forventetIdentType) {
+        IdentType identType = SubjectHandler.getIdentType().orElse(null);
+        if (identType != forventetIdentType) {
+            throw new IngenTilgang(String.format("%s != %s", identType, forventetIdentType));
+        }
     }
 
 }
