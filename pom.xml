@@ -85,6 +85,11 @@
             <artifactId>oidc-security</artifactId>
         </dependency>
         <dependency>
+            <groupId>no.nav.fo</groupId>
+            <artifactId>veilarboppfolging-api</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>org.glassfish.hk2.external</groupId>
             <artifactId>javax.inject</artifactId>
             <scope>compile</scope>
@@ -140,6 +145,14 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-jdbc</artifactId>
         </dependency>
 
         <!--Test no.nav.fo.veilarbjobbsokerkompetanse.db-->
