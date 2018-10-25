@@ -21,10 +21,9 @@ public class AvsluttetOppfolgingConsumerConfig {
 
     public static final String VEILARBOPPFOLGINGAPI_URL_PROPERTY = "VEILARBOPPFOLGINGAPI_URL";
     private static final String AVSLUTTETOPPFOLGING_FEED_NAME = "avsluttetoppfolging";
+    public static final String POLLINGRATE = "avsluttoppfolging.feed.consumer.pollingrate";
     private final String host;
-
-    @Value("${avsluttoppfolging.feed.consumer.pollingrate}")
-    private String polling;
+    private final String polling;
 
     @Inject
     private DataSource dataSource;
@@ -36,6 +35,7 @@ public class AvsluttetOppfolgingConsumerConfig {
 
     public AvsluttetOppfolgingConsumerConfig() {
         host = getRequiredProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY);
+        polling = getRequiredProperty(POLLINGRATE);
     }
 
     @Bean

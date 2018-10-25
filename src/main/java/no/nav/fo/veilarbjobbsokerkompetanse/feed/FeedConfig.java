@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({
         AvsluttetOppfolgingFeedServiceConfig.class,
-        UTOppfolgingFeedConsumerConfig.class
+        AvsluttetOppfolgingConsumerConfig.class
 })
 public class FeedConfig {
 }
