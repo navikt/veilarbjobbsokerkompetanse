@@ -14,6 +14,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.function.Supplier;
 
 import static java.util.Comparator.comparing;
@@ -87,6 +88,13 @@ public class KartleggingDao {
                 .build();
     }
 
+    public void anonymiserByAktorId(String aktorId, Date sluttDato) {
+        db.update("UPDATE KARTLEGGING " +
+                                "SET aktor_id = 'anonym' " +
+                                "WHERE aktor_id = ? AND KARTLEGGING_DATO <= ?",
+                        aktorId, sluttDato);
+    }
+
     @SneakyThrows
     Kartlegging map(ResultSet rs) {
         return Kartlegging.builder()
@@ -98,5 +106,4 @@ public class KartleggingDao {
                 .kartleggingDato(rs.getTimestamp("kartlegging_dato").toInstant())
                 .build();
     }
-
 }

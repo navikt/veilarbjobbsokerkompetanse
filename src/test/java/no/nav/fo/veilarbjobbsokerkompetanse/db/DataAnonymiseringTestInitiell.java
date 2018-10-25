@@ -6,13 +6,14 @@ import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.sbl.jdbc.Database;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.inject.Inject;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class DataAnonymiseringTest extends IntegrasjonsTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class DataAnonymiseringTestInitiell extends IntegrasjonsTest {
 
     @Inject
     private Database db;
