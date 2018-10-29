@@ -21,7 +21,7 @@ public class AvsluttetOppfolgingConsumerConfig {
 
     public static final String VEILARBOPPFOLGINGAPI_URL_PROPERTY = "VEILARBOPPFOLGINGAPI_URL";
     private static final String AVSLUTTETOPPFOLGING_FEED_NAME = "avsluttetoppfolging";
-    public static final String POLLINGRATE = "avsluttoppfolging.feed.consumer.pollingrate";
+    public static final String POLLINGRATE = "AVSLUTTOPPFOLGING_FEED_CONSUMER_POLLINGRATE";
     private final String host;
     private final String polling;
 
