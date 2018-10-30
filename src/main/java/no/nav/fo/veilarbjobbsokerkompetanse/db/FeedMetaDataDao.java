@@ -17,7 +17,7 @@ public class FeedMetaDataDao {
 
     public Date hentSisteLestTidspunkt() {
         return database.queryForObject(
-                "SELECT tidspunkt_siste_endring " +
+                "SELECT tidspunkt_siste_lesing " +
                         "FROM FEED_METADATA",
                 (rs) -> Database.hentDato(rs, "tidspunkt_siste_lesing")
         );
