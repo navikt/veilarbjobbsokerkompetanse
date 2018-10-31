@@ -48,6 +48,5 @@ public class AvsluttetOppfolgingFeedService {
             feedMetaDataDao.oppdaterSisteLestTidspunkt(lastSuccessfulId);
             LOGGER.info("anonymisering av {} aktører fullført", successfulIdCount);
         }
-        LOGGER.error("anonymisering av aktører feilet");
     }
 }
