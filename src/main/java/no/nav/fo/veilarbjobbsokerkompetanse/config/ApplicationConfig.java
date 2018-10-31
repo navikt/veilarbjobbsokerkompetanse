@@ -32,7 +32,6 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
         KartleggingService.class,
         JobbsokerKartleggingRS.class,
         KartleggingDao.class,
-        FeedMetaDataDao.class,
         OppfolgingClient.class,
         OppfolgingClientHelseSjekk.class,
         FeedConfig.class
