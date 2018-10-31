@@ -16,7 +16,7 @@ public class AvsluttetOppfolgingFeedService {
 
     private KartleggingDao kartleggingDao;
     private FeedMetaDataDao feedMetaDataDao;
-    private static final Logger LOGGER = LoggerFactory.getLogger(KartleggingDao.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AvsluttetOppfolgingFeedService.class);
 
     public AvsluttetOppfolgingFeedService(KartleggingDao kartleggingDao, FeedMetaDataDao feedMetaDataDao) {
         this.kartleggingDao = kartleggingDao;
@@ -37,7 +37,7 @@ public class AvsluttetOppfolgingFeedService {
         for (AvsluttetOppfolgingFeedDto element : feedElements) {
             kartleggingDao.anonymiserByAktorId(element.getAktoerid(), element.getSluttdato());
             lastSuccessfulId = element.getOppdatert();
-            successfulIdCount ++;
+            successfulIdCount++;
         }
 
         // Håndterer ikke exceptions her. Dersom en exception oppstår i løkkeprosesseringen over, vil
