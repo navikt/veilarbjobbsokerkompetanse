@@ -25,9 +25,6 @@ public class AvsluttetOppfolgingConsumerConfig {
     private final String host;
     private final String polling;
 
-    @Inject
-    private DataSource dataSource;
-
     @Bean
     public LockProvider lockProvider(DataSource dataSource) {
         return new JdbcLockProvider(dataSource);
@@ -39,7 +36,7 @@ public class AvsluttetOppfolgingConsumerConfig {
     }
 
     @Bean
-    public FeedConsumer<AvsluttetOppfolgingFeedDto> oppfolgingFeedConsumer(AvsluttetOppfolgingFeedService service) {
+    public FeedConsumer<AvsluttetOppfolgingFeedDto> oppfolgingFeedConsumer(AvsluttetOppfolgingFeedService service, LockProvider lock) {
         FeedConsumerConfig<AvsluttetOppfolgingFeedDto> config = new FeedConsumerConfig<>(
                 new FeedConsumerConfig.BaseConfig<>(
                         AvsluttetOppfolgingFeedDto.class,
@@ -49,7 +46,7 @@ public class AvsluttetOppfolgingConsumerConfig {
                 ),
                 new FeedConsumerConfig.CronPollingConfig(polling)
         )
-                .lockProvider(lockProvider(dataSource), 10000)
+                .lockProvider(lock, 10000)
                 .callback(service::lesAvsluttetOppfolgingFeed)
                 .interceptors(Collections.singletonList(new OidcFeedOutInterceptor()));
 
