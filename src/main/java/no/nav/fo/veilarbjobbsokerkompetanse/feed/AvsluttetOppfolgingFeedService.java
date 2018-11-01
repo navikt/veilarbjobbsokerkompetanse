@@ -1,5 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.feed;
 import lombok.extern.slf4j.Slf4j;
+import no.nav.fo.veilarbjobbsokerkompetanse.Metrikker;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.FeedMetaDataDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.AvsluttetOppfolgingFeedDto;
@@ -29,15 +30,15 @@ public class AvsluttetOppfolgingFeedService {
     }
 
     public void lesAvsluttetOppfolgingFeed(String lastEntry, List<AvsluttetOppfolgingFeedDto> feedElements) {
-        LOGGER.info("lest {} aktører fra avsluttetoppfolging-feed", feedElements.size());
+        LOGGER.info("Anonymisering: {} nye aktørIDer fra avsluttetoppfolging-feed", feedElements.size());
 
         Date lastSuccessfulId = null;
-        int successfulIdCount = 0;
+        int raderAnonymisert = 0;
 
         for (AvsluttetOppfolgingFeedDto element : feedElements) {
-            kartleggingDao.anonymiserByAktorId(element.getAktoerid(), element.getSluttdato());
+            int rader = kartleggingDao.anonymiserByAktorId(element.getAktoerid(), element.getSluttdato());
             lastSuccessfulId = element.getOppdatert();
-            successfulIdCount++;
+            raderAnonymisert += rader;
         }
 
         // Håndterer ikke exceptions her. Dersom en exception oppstår i løkkeprosesseringen over, vil
@@ -46,7 +47,9 @@ public class AvsluttetOppfolgingFeedService {
         // er idempotent
         if(lastSuccessfulId != null) {
             feedMetaDataDao.oppdaterSisteLestTidspunkt(lastSuccessfulId);
-            LOGGER.info("anonymisering av {} aktører fullført", successfulIdCount);
         }
+
+        LOGGER.info("Anonymisering: {} kartlegginger anonymisert for {} aktørIDer", raderAnonymisert, feedElements.size());
+        Metrikker.anonymiseringAvKartleggingerMetrikk(feedElements.size(), raderAnonymisert);
     }
 }

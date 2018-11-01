@@ -88,8 +88,8 @@ public class KartleggingDao {
             .build();
     }
 
-    public void anonymiserByAktorId(String aktorId, Date sluttDato) {
-        db.update("UPDATE KARTLEGGING " +
+    public int anonymiserByAktorId(String aktorId, Date sluttDato) {
+        return db.update("UPDATE KARTLEGGING " +
                 "SET aktor_id = 'anonym' " +
                 "WHERE aktor_id = ? AND KARTLEGGING_DATO <= ?",
             aktorId, sluttDato);

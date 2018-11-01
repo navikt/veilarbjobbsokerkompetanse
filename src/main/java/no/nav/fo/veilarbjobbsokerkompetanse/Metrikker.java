@@ -19,4 +19,11 @@ public class Metrikker {
 
     }
 
+    public static void anonymiseringAvKartleggingerMetrikk(int nyeAktorIDerPaFeed, int raderAnonymisert) {
+        createEvent("jobbsokerkompetanse.anonymisering")
+            .addFieldToReport("nyeAktorIDerPaFeed", nyeAktorIDerPaFeed)
+            .addFieldToReport("raderAnonymisert", raderAnonymisert)
+            .report();
+    }
+
 }
