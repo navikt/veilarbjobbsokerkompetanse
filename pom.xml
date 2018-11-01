@@ -3,10 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>no.nav.sbl</groupId>
+        <groupId>no.nav.common</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>2018.10.23.14.04</version>
+        <version>2018.10.30.12.04</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -26,9 +27,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>no.nav.sbl</groupId>
+                <groupId>no.nav.common</groupId>
                 <artifactId>bom</artifactId>
-                <version>2018.10.23.14.04</version>
+                <version>2018.10.30.12.04</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -37,7 +38,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>api-app</artifactId>
         </dependency>
         <dependency>
@@ -45,15 +46,15 @@
             <artifactId>auth</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-abac</artifactId>
+            <groupId>no.nav.common</groupId>
+            <artifactId>abac</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>util</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>rest</artifactId>
         </dependency>
         <dependency>
@@ -61,33 +62,33 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-cxf</artifactId>
+            <groupId>no.nav.common</groupId>
+            <artifactId>cxf</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>metrics</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>aktor-klient</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>test-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.dialogarena</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>oidc-security</artifactId>
         </dependency>
         <dependency>
             <groupId>no.nav.fo</groupId>
             <artifactId>veilarboppfolging-api</artifactId>
-            <version>RELEASE</version>
+            <version>1587.20181030.2339</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.hk2.external</groupId>
@@ -163,12 +164,12 @@
 
         <!--Test-->
         <dependency>
-            <groupId>no.nav.sbl</groupId>
+            <groupId>no.nav.common</groupId>
             <artifactId>fasit</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.sbl.dialogarena</groupId>
-            <artifactId>common-test</artifactId>
+            <groupId>no.nav.common</groupId>
+            <artifactId>test</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
