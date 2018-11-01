@@ -3,10 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>no.nav.sbl</groupId>
+        <groupId>no.nav.common</groupId>
         <artifactId>mor-pom</artifactId>
-        <version>2018.10.23.14.04</version>
+        <version>2018.10.30.12.04</version>
     </parent>
 
     <groupId>no.nav.fo</groupId>
@@ -28,7 +29,7 @@
             <dependency>
                 <groupId>no.nav.sbl</groupId>
                 <artifactId>bom</artifactId>
-                <version>2018.10.23.14.04</version>
+                <version>2018.10.30.12.04</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -87,7 +88,7 @@
         <dependency>
             <groupId>no.nav.fo</groupId>
             <artifactId>veilarboppfolging-api</artifactId>
-            <version>RELEASE</version>
+            <version>1587.20181030.2339</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.hk2.external</groupId>
