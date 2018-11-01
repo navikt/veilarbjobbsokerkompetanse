@@ -21,9 +21,7 @@ public class AvsluttetOppfolgingConsumerConfig {
 
     public static final String VEILARBOPPFOLGINGAPI_URL_PROPERTY = "VEILARBOPPFOLGINGAPI_URL";
     private static final String AVSLUTTETOPPFOLGING_FEED_NAME = "avsluttetoppfolging";
-    public static final String POLLINGRATE = "AVSLUTTOPPFOLGING_FEED_CONSUMER_POLLINGRATE";
     private final String host;
-    private final String polling;
 
     @Bean
     public LockProvider lockProvider(DataSource dataSource) {
@@ -32,7 +30,6 @@ public class AvsluttetOppfolgingConsumerConfig {
 
     public AvsluttetOppfolgingConsumerConfig() {
         host = getRequiredProperty(VEILARBOPPFOLGINGAPI_URL_PROPERTY);
-        polling = getRequiredProperty(POLLINGRATE);
     }
 
     @Bean
@@ -44,7 +41,7 @@ public class AvsluttetOppfolgingConsumerConfig {
                         host,
                         AVSLUTTETOPPFOLGING_FEED_NAME
                 ),
-                new FeedConsumerConfig.CronPollingConfig(polling)
+                new FeedConsumerConfig.SimplePollingConfig(60)
         )
                 .lockProvider(lock, 10000)
                 .callback(service::lesAvsluttetOppfolgingFeed)
