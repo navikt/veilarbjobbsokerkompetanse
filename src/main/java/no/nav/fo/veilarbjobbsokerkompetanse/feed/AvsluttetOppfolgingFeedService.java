@@ -39,6 +39,7 @@ public class AvsluttetOppfolgingFeedService {
             int rader = kartleggingDao.anonymiserByAktorId(element.getAktoerid(), element.getSluttdato());
             lastSuccessfulId = element.getOppdatert();
             raderAnonymisert += rader;
+            LOGGER.debug("Anonymisering for bruker: oppdatert = {}, rader endret = {}", element.getOppdatert(), rader);
         }
 
         // Håndterer ikke exceptions her. Dersom en exception oppstår i løkkeprosesseringen over, vil
@@ -46,10 +47,13 @@ public class AvsluttetOppfolgingFeedService {
         // prosessere noen elementer flere ganger. Dette skal gå bra, siden koden som setter dialoger til historisk
         // er idempotent
         if(lastSuccessfulId != null) {
+            LOGGER.debug("Anonymisering: lastSuccessfulId = {}", lastSuccessfulId);
             feedMetaDataDao.oppdaterSisteLestTidspunkt(lastSuccessfulId);
         }
 
         LOGGER.info("Anonymisering: {} kartlegginger anonymisert for {} aktørIDer", raderAnonymisert, feedElements.size());
         Metrikker.anonymiseringAvKartleggingerMetrikk(feedElements.size(), raderAnonymisert);
+
+        LOGGER.debug("Anonymisering avsluttet!");
     }
 }
