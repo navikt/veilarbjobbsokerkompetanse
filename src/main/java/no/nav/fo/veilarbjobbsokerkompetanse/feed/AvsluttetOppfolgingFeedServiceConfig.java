@@ -1,5 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.feed;
 
+import no.nav.fo.veilarbjobbsokerkompetanse.config.FeatureToggle;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.FeedMetaDataDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.sbl.jdbc.Database;
@@ -14,7 +15,11 @@ public class AvsluttetOppfolgingFeedServiceConfig {
     }
 
     @Bean
-    public AvsluttetOppfolgingFeedService oppfolgingFeedService(KartleggingDao kartleggingDao, FeedMetaDataDao feedMetaDataDao) {
-        return new AvsluttetOppfolgingFeedService(kartleggingDao, feedMetaDataDao);
+    public AvsluttetOppfolgingFeedService oppfolgingFeedService(
+        KartleggingDao kartleggingDao,
+        FeedMetaDataDao feedMetaDataDao,
+        FeatureToggle featureToggle
+    ) {
+        return new AvsluttetOppfolgingFeedService(kartleggingDao, feedMetaDataDao, featureToggle);
     }
 }

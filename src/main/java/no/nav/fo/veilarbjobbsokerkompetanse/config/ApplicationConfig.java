@@ -34,7 +34,8 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
         KartleggingDao.class,
         OppfolgingClient.class,
         OppfolgingClientHelseSjekk.class,
-        FeedConfig.class
+        FeedConfig.class,
+        FeatureToggleConfig.class
 })
 public class ApplicationConfig implements NaisApiApplication {
 
