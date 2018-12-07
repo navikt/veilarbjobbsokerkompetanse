@@ -1,6 +1,5 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.feed;
 
-// import no.nav.fo.veilarbjobbsokerkompetanse.config.FeatureToggle;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.FeedMetaDataDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.sbl.jdbc.Database;

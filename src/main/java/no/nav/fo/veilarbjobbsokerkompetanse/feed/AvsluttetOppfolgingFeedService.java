@@ -1,4 +1,5 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.feed;
+
 import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarbjobbsokerkompetanse.Metrikker;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.FeedMetaDataDao;
