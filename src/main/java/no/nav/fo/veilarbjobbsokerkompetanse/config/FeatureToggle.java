@@ -12,8 +12,4 @@ public class FeatureToggle {
     public FeatureToggle(UnleashService unleashService) {
         this.unleashService = unleashService;
     }
-
-    public boolean isAnonymiseringEnabled() {
-        return unleashService.isEnabled("veilarbjobbsokerkompetanse.anonymisering");
-    }
 }
