@@ -7,12 +7,16 @@ replicas:
   cpuThresholdPercentage: 50
 port: 8080
 webproxy: true
+
+alertProfiles:
+  - pus-decorator
+
 healthcheck:
   liveness:
     path: veilarbjobbsokerkompetanse/internal/isAlive
     initialDelay: 60
   readiness:
-    path: veilarbjobbsokerkompetanse/internal/selftest
+    path: veilarbjobbsokerkompetanse/internal/isReady
     initialDay: 60
 prometheus:
   enabled: true
