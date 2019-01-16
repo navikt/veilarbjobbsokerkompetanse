@@ -10,12 +10,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.function.Supplier;
+import java.util.Optional;
 
 import static java.util.Comparator.comparing;
 
@@ -31,9 +29,6 @@ public class KartleggingDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KartleggingDao.class);
 
-    private static final Supplier<WebApplicationException> INGEN_BESVARELSE =
-        () -> new WebApplicationException("Ingen lagrede besvarelser for aktør", Response.Status.NO_CONTENT);
-
     @Inject
     private Database db;
 
@@ -47,7 +42,7 @@ public class KartleggingDao {
     private KulepunktDao kulepunktDao;
 
     @Transactional
-    public void create(String aktorId, Kartlegging kartlegging) {
+    public long create(String aktorId, Kartlegging kartlegging) {
         long kartleggingId = db.nesteFraSekvens("KARTLEGGING_SEQ");
         db.update("INSERT INTO KARTLEGGING (" +
                 "kartlegging_id, " +
@@ -69,23 +64,22 @@ public class KartleggingDao {
         kartlegging.getKulepunkter().forEach(k -> kulepunktDao.create(k, kartleggingId));
 
         LOGGER.info("lagret kartlegging med id={}", kartleggingId);
+        return kartleggingId;
     }
 
-    public Kartlegging fetchMostRecentByAktorId(String aktorId) {
-
-        Kartlegging kartlegging = db.query("SELECT * FROM KARTLEGGING WHERE aktor_id = ?",
+    public Optional<Kartlegging> fetchMostRecentByAktorId(String aktorId) {
+        return db.query("SELECT * FROM KARTLEGGING WHERE aktor_id = ?",
             this::map,
             aktorId
         ).stream()
             .sorted(comparing(Kartlegging::getKartleggingDato).reversed())
             .findFirst()
-            .orElseThrow(INGEN_BESVARELSE);
-
-        return kartlegging.toBuilder()
-            .besvarelse(besvarelseDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
-            .raad(raadDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
-            .kulepunkter(kulepunktDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
-            .build();
+            .map(k -> k.toBuilder()
+                .besvarelse(besvarelseDao.fetchByKartleggingId(k.getKartleggingId()))
+                .raad(raadDao.fetchByKartleggingId(k.getKartleggingId()))
+                .kulepunkter(kulepunktDao.fetchByKartleggingId(k.getKartleggingId()))
+                .build()
+            );
     }
 
     public int anonymiserByAktorId(String aktorId, Date sluttDato) {
@@ -106,4 +100,12 @@ public class KartleggingDao {
             .kartleggingDato(rs.getTimestamp("kartlegging_dato").toInstant())
             .build();
     }
+
+    public Kartlegging fetchById(long id) {
+        return db.queryForObject("SELECT * FROM KARTLEGGING WHERE kartlegging_id = ?",
+            this::map,
+            id
+        );
+    }
+
 }

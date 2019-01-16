@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class KartleggingDaoTest extends IntegrasjonsTest {
 
-    private static final String FNR = "12345678910";
     private static final String AKTOR_ID = "123456";
     private static final Instant NOW = Instant.now();
     private static final Instant BEFORE = NOW.minus(1, DAYS);
@@ -30,7 +29,7 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
     @Test
     public void testCreateAndFetch() {
         kartleggingDao.create(AKTOR_ID, kartlegging());
-        Kartlegging result = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
+        Kartlegging result = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID).get();
 
         assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
         assertThat(result.getKartleggingDato()).isNotNull();
@@ -52,8 +51,16 @@ public class KartleggingDaoTest extends IntegrasjonsTest {
         kartleggingDao.create(AKTOR_ID, kartlegging());
         kartleggingDao.create(AKTOR_ID, kartlegging());
 
-        Kartlegging kartlegging = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID);
+        Kartlegging kartlegging = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID).get();
 
+        assertThat(kartlegging.getKartleggingDato()).isBetween(BEFORE, LATER);
+    }
+
+    @Transactional
+    @Test
+    public void testFetchById() {
+        long id = kartleggingDao.create(AKTOR_ID, kartlegging());
+        Kartlegging kartlegging = kartleggingDao.fetchById(id);
         assertThat(kartlegging.getKartleggingDato()).isBetween(BEFORE, LATER);
     }
 

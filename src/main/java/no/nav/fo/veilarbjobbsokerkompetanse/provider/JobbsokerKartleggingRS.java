@@ -1,13 +1,15 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
+import no.nav.apiapp.feil.Feil;
 import no.nav.apiapp.security.PepClient;
-import no.nav.brukerdialog.security.domain.IdentType;
 import no.nav.common.auth.SubjectHandler;
+import no.nav.dialogarena.aktor.AktorService;
+import no.nav.fo.veilarbjobbsokerkompetanse.Mapper;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
+import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.KartleggingDto;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.OppfolgingDto;
-import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -19,8 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import static java.util.Optional.ofNullable;
-import static no.nav.brukerdialog.security.domain.IdentType.EksternBruker;
-import static no.nav.brukerdialog.security.domain.IdentType.InternBruker;
+import static no.nav.apiapp.feil.FeilType.FINNES_IKKE;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Mapper.map;
 import static no.nav.fo.veilarbjobbsokerkompetanse.Metrikker.opprettKartleggingMetrikk;
 
@@ -30,8 +31,12 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.Metrikker.opprettKartleggingM
 public class JobbsokerKartleggingRS {
 
     public static final String FNR_QUERY_PARAM = "fnr";
+
     @Inject
-    private KartleggingService kartleggingService;
+    private AktorService aktorService;
+
+    @Inject
+    private KartleggingDao kartleggingDao;
 
     @Inject
     private OppfolgingClient oppfolgingClient;
@@ -40,7 +45,7 @@ public class JobbsokerKartleggingRS {
     private PepClient pepClient;
 
     @Inject
-    private Provider<HttpServletRequest> requestProvider;
+    Provider<HttpServletRequest> requestProvider;
 
     @GET
     @Path("oppfolging")
@@ -55,13 +60,11 @@ public class JobbsokerKartleggingRS {
     public KartleggingDto hentNyesteBesvarelseForAktor() {
         String fnr = getFnr();
         pepClient.sjekkLeseTilgangTilFnr(fnr);
-        IdentType identType = SubjectHandler.getIdentType().orElse(EksternBruker);
-        Kartlegging kartlegging = kartleggingService.fetchMostRecentByFnr(fnr);
+        sjekkAtBrukerErUnderOppfolging(fnr);
 
-        if (identType == InternBruker && !kartlegging.isUnderOppfolging()) {
-            return null;
-        }
-        return map(kartlegging);
+        return kartleggingDao.fetchMostRecentByAktorId(getAktorId(fnr))
+            .map(Mapper::map)
+            .orElse(null); // 204
     }
 
     @POST
@@ -69,18 +72,33 @@ public class JobbsokerKartleggingRS {
     public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
         String fnr = getFnr();
         pepClient.sjekkSkriveTilgangTilFnr(fnr);
-        kartleggingService.create(fnr, map(kartleggingDto));
-        Kartlegging kartlegging = kartleggingService.fetchMostRecentByFnr(fnr);
+        sjekkAtBrukerErUnderOppfolging(fnr);
+
+        long id = kartleggingDao.create(getAktorId(fnr), map(kartleggingDto));
+        Kartlegging kartlegging = kartleggingDao.fetchById(id);
         opprettKartleggingMetrikk(kartlegging);
         return map(kartlegging);
+    }
+
+    private void sjekkAtBrukerErUnderOppfolging(String fnr) {
+        if (!oppfolgingClient.underOppfolging(fnr)) {
+            throw new Feil(new BrukerIkkeUnderOppfolging());
+        }
     }
 
     private String getFnr() {
         String fnr = requestProvider.get().getParameter(FNR_QUERY_PARAM);
         return ofNullable(fnr).orElseGet(() ->
-                SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new)
+            SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new)
         );
+    }
 
+    private String getAktorId(String fnr) {
+        return aktorService.getAktorId(fnr).orElseThrow(this::fantIkkeAktor);
+    }
+
+    private Feil fantIkkeAktor() {
+        return new Feil(FINNES_IKKE, "Finner ikke aktørId for gitt Fnr");
     }
 
 }
