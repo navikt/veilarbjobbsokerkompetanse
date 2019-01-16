@@ -10,7 +10,6 @@ import no.nav.fo.veilarbjobbsokerkompetanse.feed.FeedConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.MockConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.RealConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.JobbsokerKartleggingRS;
-import no.nav.fo.veilarbjobbsokerkompetanse.service.KartleggingService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,6 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
     DataSourceConfig.class,
     DataSourceHelsesjekk.class,
     PepConfig.class,
-    KartleggingService.class,
     JobbsokerKartleggingRS.class,
     KartleggingDao.class,
     OppfolgingClient.class,
@@ -54,9 +52,9 @@ public class ApplicationConfig implements NaisApiApplication {
     @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
         apiAppConfigurator
-                .sts()
-                .azureADB2CLogin()
-                .issoLogin()
+            .sts()
+            .azureADB2CLogin()
+            .issoLogin()
         ;
     }
 
