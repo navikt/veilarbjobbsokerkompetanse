@@ -6,7 +6,6 @@ import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClientHelseSjekk;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.KartleggingDao;
-import no.nav.fo.veilarbjobbsokerkompetanse.feed.FeedConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.MockConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.config.RealConfiguration;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.JobbsokerKartleggingRS;
@@ -31,7 +30,6 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
     KartleggingDao.class,
     OppfolgingClient.class,
     OppfolgingClientHelseSjekk.class,
-    FeedConfig.class,
     FeatureToggleConfig.class
 })
 public class ApplicationConfig implements NaisApiApplication {

@@ -2,6 +2,7 @@ package no.nav.fo.veilarbjobbsokerkompetanse.mock.config;
 
 import lombok.extern.slf4j.Slf4j;
 import no.nav.fo.veilarbjobbsokerkompetanse.mock.AktorServiceMock;
+import no.nav.fo.veilarbjobbsokerkompetanse.mock.FeedConfigMock;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -10,7 +11,8 @@ import org.springframework.context.annotation.Import;
 @Conditional(Mock.class)
 @Configuration
 @Import({
-        AktorServiceMock.class
+    AktorServiceMock.class,
+    FeedConfigMock.class
 })
 public class MockConfiguration {
 
