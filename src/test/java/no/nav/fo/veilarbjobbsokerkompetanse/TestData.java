@@ -14,7 +14,6 @@ public class TestData {
             .kulepunkter(asList(kulepunkt(), kulepunkt()))
             .oppsummering("Dette er en oppsummering")
             .oppsummeringKey("oppsummering-key1")
-            .kartleggingDato(Instant.now())
             .build();
     }
 

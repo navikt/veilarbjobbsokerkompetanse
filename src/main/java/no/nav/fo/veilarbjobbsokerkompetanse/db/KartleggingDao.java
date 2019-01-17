@@ -51,13 +51,12 @@ public class KartleggingDao {
                 "oppsummering, " +
                 "oppsummering_key, " +
                 "kartlegging_dato) " +
-                "VALUES (?, ?, ?, ?, ?, ?)",
+                "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
             kartleggingId,
             aktorId,
             true,
             kartlegging.getOppsummering(),
-            kartlegging.getOppsummeringKey(),
-            Timestamp.from(kartlegging.getKartleggingDato())
+            kartlegging.getOppsummeringKey()
         );
         kartlegging.getBesvarelse().forEach(s -> besvarelseDao.create(s, kartleggingId));
         kartlegging.getRaad().forEach(r -> raadDao.create(r, kartleggingId));
@@ -71,9 +70,7 @@ public class KartleggingDao {
         return db.query("SELECT * FROM KARTLEGGING WHERE aktor_id = ?",
             this::map,
             aktorId
-        ).stream()
-            .sorted(comparing(Kartlegging::getKartleggingDato).reversed())
-            .findFirst()
+        ).stream().max(comparing(Kartlegging::getKartleggingTidspunkt))
             .map(k -> k.toBuilder()
                 .besvarelse(besvarelseDao.fetchByKartleggingId(k.getKartleggingId()))
                 .raad(raadDao.fetchByKartleggingId(k.getKartleggingId()))
@@ -97,7 +94,7 @@ public class KartleggingDao {
             .underOppfolging(rs.getBoolean("under_oppfolging"))
             .oppsummering(rs.getString("oppsummering"))
             .oppsummeringKey(rs.getString("oppsummering_key"))
-            .kartleggingDato(rs.getTimestamp("kartlegging_dato").toInstant())
+            .kartleggingTidspunkt(rs.getTimestamp("kartlegging_dato"))
             .build();
     }
 

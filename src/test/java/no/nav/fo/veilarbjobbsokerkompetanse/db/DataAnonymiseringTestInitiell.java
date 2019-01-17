@@ -49,13 +49,12 @@ public class DataAnonymiseringTestInitiell extends IntegrasjonsTest {
                         "oppsummering, " +
                         "oppsummering_key, " +
                         "kartlegging_dato) " +
-                        "VALUES (?, ?, ?, ?, ?, ?)",
+                        "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
                 kartleggingId,
                 aktorId,
                 oppfolgingStatus,
                 kartlegging.getOppsummering(),
-                kartlegging.getOppsummeringKey(),
-                Timestamp.from(kartlegging.getKartleggingDato())
+                kartlegging.getOppsummeringKey()
         );
     }
 }

@@ -26,6 +26,15 @@ public abstract class IntegrasjonsTest {
     private static AnnotationConfigApplicationContext annotationConfigApplicationContext;
     private static PlatformTransactionManager platformTransactionManager;
     private TransactionStatus transactionStatus;
+    private final boolean useTransactions;
+
+    public IntegrasjonsTest(boolean useTransactions) {
+        this.useTransactions = useTransactions;
+    }
+
+    public IntegrasjonsTest() {
+        this(true);
+    }
 
     @BeforeAll
     @BeforeClass
@@ -33,7 +42,7 @@ public abstract class IntegrasjonsTest {
         ApiAppTest.setupTestContext(ApiAppTest.Config.builder().applicationName(APPLICATION_NAME).build());
         TestContext.setup();
         setupContext(
-                ApplicationConfig.class
+            ApplicationConfig.class
         );
     }
 
@@ -57,7 +66,9 @@ public abstract class IntegrasjonsTest {
     @BeforeEach
     @Before
     public void startTransaksjon() {
-        transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+        if (useTransactions) {
+            transactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+        }
     }
 
     @AfterEach
