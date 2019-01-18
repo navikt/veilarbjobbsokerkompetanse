@@ -1,10 +1,10 @@
-package no.nav.fo.veilarbjobbsokerkompetanse.service;
+package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import no.nav.apiapp.feil.Feil;
 
 import javax.ws.rs.core.Response;
 
-class BrukerIkkeUnderOppfolging implements Feil.Type {
+public class BrukerIkkeUnderOppfolging implements Feil.Type {
 
     @Override
     public String getName() {

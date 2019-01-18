@@ -8,6 +8,7 @@ import no.nav.dialogarena.config.util.Util;
 import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import no.nav.sbl.dialogarena.common.abac.pep.CredentialConstants;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
+import no.nav.sbl.util.EnvironmentUtils;
 
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CConfig.AZUREAD_B2C_DISCOVERY_URL_PROPERTY_NAME;
@@ -18,12 +19,15 @@ import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILA
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.RUN_WITH_MOCKS;
 import static no.nav.sbl.dialogarena.common.abac.pep.service.AbacServiceConfig.ABAC_ENDPOINT_URL_PROPERTY_NAME;
+import static no.nav.sbl.util.EnvironmentUtils.Type.PUBLIC;
 
 public class TestContext {
 
     public static final String APPLICATION_NAME = "veilarbjobbsokerkompetanse";
 
     public static void setup() {
+        EnvironmentUtils.setProperty(ApplicationConfig.RUN_WITH_MOCKS, "true", PUBLIC);
+
         String securityTokenService = FasitUtils.getBaseUrl("securityTokenService", FSS);
         ServiceUser srvveilarbjobbsokerkompetanse = FasitUtils.getServiceUser("srvveilarbjobbsokerkompetanse", APPLICATION_NAME);
 
