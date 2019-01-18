@@ -11,6 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,6 @@ public class DataAnonymiseringTestKontinuerlig extends IntegrasjonsTest {
     @Test
     public void testAnonymiserByAktorId() {
 
-
         Date date1 = new Date();
         Date date2 = new Date(date1.getTime() + 1000);
         kartleggingDao.anonymiserByAktorId("0001", date1);
@@ -55,18 +55,20 @@ public class DataAnonymiseringTestKontinuerlig extends IntegrasjonsTest {
     @Test
     public void testEldreFeedElement() {
 
-        Date current = new Date();
-        Date earlier = new Date(current.getTime() - 1);
-        opprettKartlegging(4, "0004", 0);
-        kartleggingDao.anonymiserByAktorId("0004", earlier);
+        long id = opprettKartlegging(4, "0004", 0);
+        Kartlegging k = kartleggingDao.fetchById(id);
+        Timestamp thresholdTimestamp = new Timestamp(k.getKartleggingTidspunkt().getTime() - 1);
+
+        kartleggingDao.anonymiserByAktorId("0004", thresholdTimestamp);
         List<Kartlegging> kartleggingList1 = db.query("SELECT * FROM KARTLEGGING", kartleggingDao::map);
+
         assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 1).findFirst().get().getAktorId()).isEqualTo("0001");
         assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 2).findFirst().get().getAktorId()).isEqualTo("0002");
         assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 3).findFirst().get().getAktorId()).isEqualTo("anonym");
         assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 4).findFirst().get().getAktorId()).isEqualTo("0004");
     }
 
-    private void opprettKartlegging(long kartleggingId, String aktorId, int oppfolgingStatus) {
+    private long opprettKartlegging(long kartleggingId, String aktorId, int oppfolgingStatus) {
         Kartlegging kartlegging = TestData.kartlegging();
         db.update("INSERT INTO KARTLEGGING (" +
                 "kartlegging_id, " +
@@ -82,5 +84,7 @@ public class DataAnonymiseringTestKontinuerlig extends IntegrasjonsTest {
             kartlegging.getOppsummering(),
             kartlegging.getOppsummeringKey()
         );
+
+        return kartleggingId;
     }
 }
