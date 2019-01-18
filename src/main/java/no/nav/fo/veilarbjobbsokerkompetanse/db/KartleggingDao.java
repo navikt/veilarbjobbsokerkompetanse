@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
 import static java.util.Comparator.comparing;
+import static java.util.Optional.of;
 
 @Component
 @Import({
@@ -67,16 +67,18 @@ public class KartleggingDao {
     }
 
     public Optional<Kartlegging> fetchMostRecentByAktorId(String aktorId) {
-        return db.query("SELECT * FROM KARTLEGGING WHERE aktor_id = ?",
-            this::map,
-            aktorId
-        ).stream().max(comparing(Kartlegging::getKartleggingTidspunkt))
-            .map(k -> k.toBuilder()
-                .besvarelse(besvarelseDao.fetchByKartleggingId(k.getKartleggingId()))
-                .raad(raadDao.fetchByKartleggingId(k.getKartleggingId()))
-                .kulepunkter(kulepunktDao.fetchByKartleggingId(k.getKartleggingId()))
-                .build()
-            );
+        return db.query("SELECT * FROM KARTLEGGING WHERE aktor_id = ?", this::map, aktorId)
+            .stream()
+            .max(comparing(Kartlegging::getKartleggingTidspunkt))
+            .map(this::populate);
+    }
+
+    private Kartlegging populate(Kartlegging kartlegging) {
+        return kartlegging.toBuilder()
+            .besvarelse(besvarelseDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
+            .raad(raadDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
+            .kulepunkter(kulepunktDao.fetchByKartleggingId(kartlegging.getKartleggingId()))
+            .build();
     }
 
     public int anonymiserByAktorId(String aktorId, Date sluttDato) {
@@ -99,10 +101,12 @@ public class KartleggingDao {
     }
 
     public Kartlegging fetchById(long id) {
-        return db.queryForObject("SELECT * FROM KARTLEGGING WHERE kartlegging_id = ?",
+        return of(db.queryForObject("SELECT * FROM KARTLEGGING WHERE kartlegging_id = ?",
             this::map,
             id
-        );
+        ))
+            .map(this::populate)
+            .get();
     }
 
 }
