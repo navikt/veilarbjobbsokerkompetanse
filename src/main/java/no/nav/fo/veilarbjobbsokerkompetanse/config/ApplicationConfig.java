@@ -1,6 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.config;
 
-import no.nav.apiapp.ApiApplication.NaisApiApplication;
+import no.nav.apiapp.ApiApplication;
 import no.nav.apiapp.config.ApiAppConfigurator;
 import no.nav.fo.veilarbjobbsokerkompetanse.MigrationUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
@@ -32,7 +32,7 @@ import static no.nav.sbl.util.EnvironmentUtils.getOptionalProperty;
     OppfolgingClientHelseSjekk.class,
     FeatureToggleConfig.class
 })
-public class ApplicationConfig implements NaisApiApplication {
+public class ApplicationConfig implements ApiApplication {
 
     public static final String AKTOER_V2_ENDPOINTURL = "AKTOER_V2_ENDPOINTURL";
     public static final String RUN_WITH_MOCKS = "RUN_WITH_MOCKS";
