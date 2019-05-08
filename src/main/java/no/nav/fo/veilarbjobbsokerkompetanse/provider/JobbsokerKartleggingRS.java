@@ -1,7 +1,8 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import no.nav.apiapp.feil.Feil;
-import no.nav.apiapp.security.PepClient;
+import no.nav.apiapp.security.veilarbabac.Bruker;
+import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
 import no.nav.common.auth.SubjectHandler;
 import no.nav.dialogarena.aktor.AktorService;
 import no.nav.fo.veilarbjobbsokerkompetanse.Mapper;
@@ -42,7 +43,7 @@ public class JobbsokerKartleggingRS {
     private OppfolgingClient oppfolgingClient;
 
     @Inject
-    private PepClient pepClient;
+    private VeilarbAbacPepClient pepClient;
 
     @Inject
     Provider<HttpServletRequest> requestProvider;
@@ -50,19 +51,20 @@ public class JobbsokerKartleggingRS {
     @GET
     @Path("oppfolging")
     public OppfolgingDto aboutMe() {
-        String fnr = getFnr();
-        pepClient.sjekkLeseTilgangTilFnr(fnr);
-        return new OppfolgingDto().setUnderOppfolging(oppfolgingClient.underOppfolging(fnr));
+        Bruker bruker = getBruker();
+
+        pepClient.sjekkLesetilgangTilBruker(bruker);
+        return new OppfolgingDto().setUnderOppfolging(oppfolgingClient.underOppfolging(bruker.getFoedselsnummer()));
     }
 
     @GET
     @Path("hent")
     public KartleggingDto hentNyesteBesvarelseForAktor() {
-        String fnr = getFnr();
-        pepClient.sjekkLeseTilgangTilFnr(fnr);
-        sjekkAtBrukerErUnderOppfolging(fnr);
+        Bruker bruker = getBruker();
+        pepClient.sjekkLesetilgangTilBruker(bruker);
+        sjekkAtBrukerErUnderOppfolging(bruker.getFoedselsnummer());
 
-        return kartleggingDao.fetchMostRecentByAktorId(getAktorId(fnr))
+        return kartleggingDao.fetchMostRecentByAktorId(bruker.getAktoerId())
             .map(Mapper::map)
             .orElse(null); // 204
     }
@@ -70,11 +72,11 @@ public class JobbsokerKartleggingRS {
     @POST
     @Path("opprett")
     public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
-        String fnr = getFnr();
-        pepClient.sjekkSkriveTilgangTilFnr(fnr);
-        sjekkAtBrukerErUnderOppfolging(fnr);
+        Bruker bruker = getBruker();
+        pepClient.sjekkSkrivetilgangTilBruker(bruker);
+        sjekkAtBrukerErUnderOppfolging(bruker.getFoedselsnummer());
 
-        long id = kartleggingDao.create(getAktorId(fnr), map(kartleggingDto));
+        long id = kartleggingDao.create(bruker.getAktoerId(), map(kartleggingDto));
         Kartlegging kartlegging = kartleggingDao.fetchById(id);
         opprettKartleggingMetrikk(kartlegging);
         return map(kartlegging);
@@ -86,19 +88,12 @@ public class JobbsokerKartleggingRS {
         }
     }
 
-    private String getFnr() {
-        String fnr = requestProvider.get().getParameter(FNR_QUERY_PARAM);
-        return ofNullable(fnr).orElseGet(() ->
-            SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new)
-        );
-    }
+    private Bruker getBruker() {
+        String fnr = ofNullable(requestProvider.get().getParameter(FNR_QUERY_PARAM))
+                .orElseGet(() -> SubjectHandler.getIdent().orElseThrow(IllegalArgumentException::new));
 
-    private String getAktorId(String fnr) {
-        return aktorService.getAktorId(fnr).orElseThrow(this::fantIkkeAktor);
+        return Bruker.fraFnr(fnr)
+                .medAktoerIdSupplier(()->aktorService.getAktorId(fnr)
+                        .orElseThrow(() -> new Feil(FINNES_IKKE, "Finner ikke aktørId for gitt Fnr")));
     }
-
-    private Feil fantIkkeAktor() {
-        return new Feil(FINNES_IKKE, "Finner ikke aktørId for gitt Fnr");
-    }
-
 }

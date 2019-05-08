@@ -1,7 +1,7 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.provider;
 
 import no.nav.apiapp.feil.Feil;
-import no.nav.apiapp.security.PepClient;
+import no.nav.apiapp.security.veilarbabac.VeilarbAbacPepClient;
 import no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class JobbsokerKartleggingRSTest {
     Provider<HttpServletRequest> httpServletRequestProvider;
 
     @Mock
-    PepClient pepClient;
+    VeilarbAbacPepClient pepClient;
 
     @InjectMocks
     JobbsokerKartleggingRS kartleggingService;
