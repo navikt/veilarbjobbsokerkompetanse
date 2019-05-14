@@ -2,19 +2,19 @@ package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import no.nav.brukerdialog.security.Constants;
 import no.nav.brukerdialog.tools.SecurityConstants;
-import no.nav.dialogarena.config.fasit.FasitUtils;
-import no.nav.dialogarena.config.fasit.ServiceUser;
-import no.nav.dialogarena.config.util.Util;
+import no.nav.fasit.FasitUtils;
+import no.nav.fasit.ServiceUser;
 import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
 import no.nav.sbl.dialogarena.common.abac.pep.CredentialConstants;
 import no.nav.sbl.dialogarena.common.cxf.StsSecurityConstants;
 import no.nav.sbl.util.EnvironmentUtils;
+import no.nav.testconfig.util.Util;
 
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CConfig.AZUREAD_B2C_DISCOVERY_URL_PROPERTY_NAME;
 import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CConfig.AZUREAD_B2C_EXPECTED_AUDIENCE_PROPERTY_NAME;
-import static no.nav.dialogarena.config.fasit.FasitUtils.Zone.FSS;
-import static no.nav.dialogarena.config.fasit.FasitUtils.getDefaultEnvironment;
+import static no.nav.fasit.FasitUtils.Zone.FSS;
+import static no.nav.fasit.FasitUtils.getDefaultEnvironment;
 import static no.nav.fo.veilarbjobbsokerkompetanse.client.OppfolgingClient.VEILARBOPPFOLGINGAPI_URL_PROPERTY_NAME;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.RUN_WITH_MOCKS;
