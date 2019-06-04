@@ -5,8 +5,6 @@ import no.nav.sbl.rest.RestUtils;
 import org.springframework.stereotype.Component;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
-import static javax.ws.rs.core.HttpHeaders.COOKIE;
-import static no.nav.brukerdialog.security.oidc.provider.AzureADB2CProvider.AZUREADB2C_OIDC_COOKIE_NAME;
 import static no.nav.common.auth.SsoToken.Type.OIDC;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
