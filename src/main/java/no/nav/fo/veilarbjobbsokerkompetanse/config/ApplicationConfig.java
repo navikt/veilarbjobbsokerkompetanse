@@ -51,7 +51,7 @@ public class ApplicationConfig implements ApiApplication {
     public void configure(ApiAppConfigurator apiAppConfigurator) {
         apiAppConfigurator
             .sts()
-            .azureADB2CLogin()
+            .validateAzureAdExternalUserTokens()
             .issoLogin()
         ;
     }
