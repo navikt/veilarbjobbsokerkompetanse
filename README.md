@@ -9,7 +9,7 @@ Applikasjonen eksponerer REST-endepunkt for å sende inn- og hente ut besvarelse
 Spørsmål knyttet til koden kan rettes mot:
  
 * Johan Rusvik, Johan.Rusvik@nav.no
-* Terese Haug, Terese.Haug@nav.no
+* Terje Heen, Terje.Heen@nav.no
 
-For NAV-interne henvendelser kan Slack-kanalen #fo-warp benyttes.
+For NAV-interne henvendelser kan Slack-kanalen #område-arbeid-pilot benyttes.
 
