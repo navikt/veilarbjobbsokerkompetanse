@@ -5,11 +5,10 @@ Dette er backend-applikasjonen for [jobbsøkerkompetanse](https://github.com/nav
 En tilknyttet database lagrer brukeres jobbsøkerkartlegginger.
 Applikasjonen eksponerer REST-endepunkt for å sende inn- og hente ut besvarelser.
 
-### Henvendelser
-Spørsmål knyttet til koden kan rettes mot:
- 
-* Johan Rusvik, Johan.Rusvik@nav.no
-* Terese Haug, Terese.Haug@nav.no
+# Henvendelser
 
-For NAV-interne henvendelser kan Slack-kanalen #fo-warp benyttes.
+Spørsmål knyttet til koden eller prosjektet kan stilles via issues her på github.
 
+# For NAV-ansatte
+
+Interne henvendelser kan sendes via Slack i kanalen #område-arbeid-pilot
