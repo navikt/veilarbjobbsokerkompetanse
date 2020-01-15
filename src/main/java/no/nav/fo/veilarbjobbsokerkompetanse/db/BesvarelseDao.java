@@ -3,22 +3,21 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Besvarelse;
 import no.nav.sbl.jdbc.Database;
-import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-@Component
 class BesvarelseDao {
 
-    @Inject
-    private Database db;
+    private final Database db;
+    private final SvarAlternativDao svarAlternativDao;
 
-    @Inject
-    private SvarAlternativDao svarAlternativDao;
+    BesvarelseDao(Database db) {
+        this.db = db;
+        this.svarAlternativDao = new SvarAlternativDao(db);
+    }
 
     void create(Besvarelse besvarelse, long kartleggingId) {
         long besvarelseId = db.nesteFraSekvens("BESVARELSE_SEQ");

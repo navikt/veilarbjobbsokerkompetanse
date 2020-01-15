@@ -1,6 +1,6 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
-import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
+import no.nav.fo.veilarbjobbsokerkompetanse.DbIntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.TestData;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.sbl.jdbc.Database;
@@ -17,17 +17,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DataAnonymiseringTestKontinuerlig extends IntegrasjonsTest {
+public class DataAnonymiseringTestKontinuerlig extends DbIntegrasjonsTest {
 
     @Inject
     private Database db;
 
-    @Inject
     private KartleggingDao kartleggingDao;
 
     @Before
-    public void setUp() {
+    public void setup() {
+        kartleggingDao = new KartleggingDao(db);
+
         opprettKartlegging(1, "0001", 0);
         opprettKartlegging(2, "0002", 0);
         opprettKartlegging(3, "anonym", 0);

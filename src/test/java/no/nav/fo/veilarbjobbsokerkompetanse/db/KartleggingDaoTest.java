@@ -1,7 +1,9 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
-import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
+import no.nav.fo.veilarbjobbsokerkompetanse.DbIntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.*;
+import no.nav.sbl.jdbc.Database;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,14 +14,21 @@ import java.util.UUID;
 import static no.nav.fo.veilarbjobbsokerkompetanse.TestData.kartlegging;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KartleggingDaoTest extends IntegrasjonsTest {
+public class KartleggingDaoTest extends DbIntegrasjonsTest {
 
     private static final String AKTOR_ID = "123456";
     private static final String OPPSUMMERING = "Dette er en oppsummering";
     private static final String OPPSUMMERING_KEY = "oppsummering-key1";
 
     @Inject
+    private Database db;
+
     private KartleggingDao kartleggingDao;
+
+    @Before
+    public void setup() {
+        kartleggingDao = new KartleggingDao(db);
+    }
 
     public KartleggingDaoTest() {
         super(false);

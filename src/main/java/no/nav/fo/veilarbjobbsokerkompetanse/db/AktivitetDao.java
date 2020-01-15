@@ -4,14 +4,16 @@ import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Aktivitet;
 import no.nav.sbl.jdbc.Database;
 
-import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.util.List;
 
-public class AktivitetDao {
+class AktivitetDao {
 
-    @Inject
-    private Database db;
+    private final Database db;
+
+    AktivitetDao(Database db) {
+        this.db = db;
+    }
 
     void create(Aktivitet aktivitet, long raadId) {
         long aktivitetId = db.nesteFraSekvens("AKTIVITET_SEQ");

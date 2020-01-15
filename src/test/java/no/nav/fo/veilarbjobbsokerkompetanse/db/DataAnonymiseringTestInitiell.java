@@ -1,25 +1,30 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
 
-import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
+import no.nav.fo.veilarbjobbsokerkompetanse.DbIntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.TestData;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.sbl.jdbc.Database;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.sql.Timestamp;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DataAnonymiseringTestInitiell extends IntegrasjonsTest {
+public class DataAnonymiseringTestInitiell extends DbIntegrasjonsTest {
 
     @Inject
     private Database db;
 
-    @Inject
     private KartleggingDao kartleggingDao;
+
+    @Before
+    public void setup() {
+        kartleggingDao = new KartleggingDao(db);
+    }
 
     @Transactional
     @Test

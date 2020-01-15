@@ -3,17 +3,17 @@ package no.nav.fo.veilarbjobbsokerkompetanse.db;
 import lombok.SneakyThrows;
 import no.nav.fo.veilarbjobbsokerkompetanse.domain.SvarAlternativ;
 import no.nav.sbl.jdbc.Database;
-import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.util.List;
 
-@Component
 class SvarAlternativDao {
 
-    @Inject
-    private Database db;
+    private final Database db;
+
+    SvarAlternativDao(Database db) {
+        this.db = db;
+    }
 
     void create(SvarAlternativ svarAlternativ, long besvarelseId) {
         long svarAlternativId = db.nesteFraSekvens("SVARALTERNATIV_SEQ");

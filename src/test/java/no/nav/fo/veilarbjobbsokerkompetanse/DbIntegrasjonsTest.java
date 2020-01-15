@@ -1,9 +1,8 @@
 package no.nav.fo.veilarbjobbsokerkompetanse;
 
 import lombok.SneakyThrows;
-import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
+import no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig;
 import no.nav.fo.veilarbjobbsokerkompetanse.db.DatabaseTestContext;
-import no.nav.testconfig.ApiAppTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,31 +18,25 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.sql.DataSource;
 
-import static no.nav.fo.veilarbjobbsokerkompetanse.TestContext.APPLICATION_NAME;
-
-public abstract class IntegrasjonsTest {
+public abstract class DbIntegrasjonsTest {
 
     private static AnnotationConfigApplicationContext annotationConfigApplicationContext;
     private static PlatformTransactionManager platformTransactionManager;
     private TransactionStatus transactionStatus;
     private final boolean useTransactions;
 
-    public IntegrasjonsTest(boolean useTransactions) {
+    public DbIntegrasjonsTest(boolean useTransactions) {
         this.useTransactions = useTransactions;
     }
 
-    public IntegrasjonsTest() {
+    public DbIntegrasjonsTest() {
         this(true);
     }
 
     @BeforeAll
     @BeforeClass
     public static void setupContext() {
-        ApiAppTest.setupTestContext(ApiAppTest.Config.builder().applicationName(APPLICATION_NAME).build());
-        TestContext.setup();
-        setupContext(
-            ApplicationConfig.class
-        );
+        setupContext(DataSourceConfig.class);
     }
 
     @SneakyThrows

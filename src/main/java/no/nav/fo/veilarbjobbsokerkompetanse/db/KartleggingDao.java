@@ -5,7 +5,6 @@ import no.nav.fo.veilarbjobbsokerkompetanse.domain.Kartlegging;
 import no.nav.sbl.jdbc.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,28 +17,25 @@ import static java.util.Comparator.comparing;
 import static java.util.Optional.of;
 
 @Component
-@Import({
-    RaadDao.class,
-    AktivitetDao.class,
-    BesvarelseDao.class,
-    SvarAlternativDao.class,
-    KulepunktDao.class,
-})
 public class KartleggingDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KartleggingDao.class);
 
-    @Inject
-    private Database db;
+    private final Database db;
+
+    private final BesvarelseDao besvarelseDao;
+
+    private final RaadDao raadDao;
+
+    private final KulepunktDao kulepunktDao;
 
     @Inject
-    private BesvarelseDao besvarelseDao;
-
-    @Inject
-    private RaadDao raadDao;
-
-    @Inject
-    private KulepunktDao kulepunktDao;
+    public KartleggingDao(Database db) {
+        this.db = db;
+        this.besvarelseDao = new BesvarelseDao(db);
+        this.raadDao = new RaadDao(db);
+        this.kulepunktDao = new KulepunktDao(db);
+    }
 
     @Transactional
     public long create(String aktorId, Kartlegging kartlegging) {

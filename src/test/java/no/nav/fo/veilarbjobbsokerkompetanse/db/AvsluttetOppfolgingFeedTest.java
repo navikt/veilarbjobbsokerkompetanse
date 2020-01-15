@@ -1,5 +1,5 @@
 package no.nav.fo.veilarbjobbsokerkompetanse.db;
-import no.nav.fo.veilarbjobbsokerkompetanse.IntegrasjonsTest;
+import no.nav.fo.veilarbjobbsokerkompetanse.DbIntegrasjonsTest;
 import no.nav.fo.veilarbjobbsokerkompetanse.feed.AvsluttetOppfolgingFeedService;
 import no.nav.fo.veilarbjobbsokerkompetanse.provider.domain.AvsluttetOppfolgingFeedDto;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import static java.util.Arrays.asList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class AvsluttetOppfolgingFeedTest extends IntegrasjonsTest {
+public class AvsluttetOppfolgingFeedTest extends DbIntegrasjonsTest {
 
     private FeedMetaDataDao feedMetaDataDao = mock(FeedMetaDataDao.class);
     private KartleggingDao kartleggingDao = mock(KartleggingDao.class);
