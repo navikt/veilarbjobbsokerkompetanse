@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,24 +31,27 @@ public class DataAnonymiseringTestInitiell extends DbIntegrasjonsTest {
     @Transactional
     @Test
     public void testAnonymisering() {
-        opprettKartlegging(1,"0001", false);
-        opprettKartlegging(2,"0001", true);
-        opprettKartlegging(3, "0002", true);
-        opprettKartlegging(4,"0002", true);
-        opprettKartlegging(5,"0002", false);
+        Map<Integer, Long> map = new HashMap<>(5);
+        map.put(1, opprettKartlegging("0001", false));
+        map.put(2, opprettKartlegging("0001", true));
+        map.put(3, opprettKartlegging("0002", true));
+        map.put(4, opprettKartlegging("0002", true));
+        map.put(5, opprettKartlegging("0002", false));
 
         db.update("UPDATE KARTLEGGING SET aktor_id = 'anonym' WHERE under_oppfolging = false");
 
         List<Kartlegging> kartleggingList = db.query("SELECT * FROM KARTLEGGING", kartleggingDao::map);
 
-        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 1).findFirst().get().getAktorId()).isEqualTo("anonym");
-        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 2).findFirst().get().getAktorId()).isEqualTo("0001");
-        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 5).findFirst().get().getAktorId()).isEqualTo("anonym");
-        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 3).findFirst().get().getAktorId()).isEqualTo("0002");
+        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(1)).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(2)).findFirst().get().getAktorId()).isEqualTo("0001");
+        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(5)).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(3)).findFirst().get().getAktorId()).isEqualTo("0002");
     }
 
-    private void opprettKartlegging(long kartleggingId, String aktorId, boolean oppfolgingStatus) {
+    private Long opprettKartlegging(String aktorId, boolean oppfolgingStatus) {
         Kartlegging kartlegging = TestData.kartlegging();
+        long _kartleggingId = db.nesteFraSekvens("KARTLEGGING_SEQ");
+
         db.update("INSERT INTO KARTLEGGING (" +
                         "kartlegging_id, " +
                         "aktor_id, " +
@@ -55,11 +60,13 @@ public class DataAnonymiseringTestInitiell extends DbIntegrasjonsTest {
                         "oppsummering_key, " +
                         "kartlegging_dato) " +
                         "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
-                kartleggingId,
+                _kartleggingId,
                 aktorId,
                 oppfolgingStatus,
                 kartlegging.getOppsummering(),
                 kartlegging.getOppsummeringKey()
         );
+
+        return _kartleggingId;
     }
 }

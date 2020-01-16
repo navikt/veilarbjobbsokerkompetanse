@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,13 +26,18 @@ public class DataAnonymiseringTestKontinuerlig extends DbIntegrasjonsTest {
 
     private KartleggingDao kartleggingDao;
 
+    private Map<Integer, Long> map = new HashMap<>(3);
+
     @Before
     public void setup() {
         kartleggingDao = new KartleggingDao(db);
 
-        opprettKartlegging(1, "0001", 0);
-        opprettKartlegging(2, "0002", 0);
-        opprettKartlegging(3, "anonym", 0);
+        long id1 = opprettKartlegging("0001", 0);
+        map.put(1, id1);
+        long id2 = opprettKartlegging("0002", 0);
+        map.put(2, id2);
+        long id3 = opprettKartlegging("anonym", 0);
+        map.put(3, id3);
     }
 
     @Transactional
@@ -41,35 +48,38 @@ public class DataAnonymiseringTestKontinuerlig extends DbIntegrasjonsTest {
         Date date2 = new Date(date1.getTime() + 1000);
         kartleggingDao.anonymiserByAktorId("0001", date1);
         List<Kartlegging> kartleggingList1 = db.query("SELECT * FROM KARTLEGGING", kartleggingDao::map);
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 1).findFirst().get().getAktorId()).isEqualTo("anonym");
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 2).findFirst().get().getAktorId()).isEqualTo("0002");
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 3).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(1)).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(2)).findFirst().get().getAktorId()).isEqualTo("0002");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(3)).findFirst().get().getAktorId()).isEqualTo("anonym");
 
         kartleggingDao.anonymiserByAktorId("0002", date2);
         List<Kartlegging> kartleggingList2 = db.query("SELECT * FROM KARTLEGGING", kartleggingDao::map);
-        assertThat(kartleggingList2.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 1).findFirst().get().getAktorId()).isEqualTo("anonym");
-        assertThat(kartleggingList2.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 2).findFirst().get().getAktorId()).isEqualTo("anonym");
-        assertThat(kartleggingList2.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 3).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList2.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(1)).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList2.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(2)).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList2.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(3)).findFirst().get().getAktorId()).isEqualTo("anonym");
     }
 
     @Test
     public void testEldreFeedElement() {
 
-        long id = opprettKartlegging(4, "0004", 0);
+        long id = opprettKartlegging("0004", 0);
+        map.put(4, id);
         Kartlegging k = kartleggingDao.fetchById(id);
         Timestamp thresholdTimestamp = new Timestamp(k.getKartleggingTidspunkt().getTime() - 1);
 
         kartleggingDao.anonymiserByAktorId("0004", thresholdTimestamp);
         List<Kartlegging> kartleggingList1 = db.query("SELECT * FROM KARTLEGGING", kartleggingDao::map);
 
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 1).findFirst().get().getAktorId()).isEqualTo("0001");
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 2).findFirst().get().getAktorId()).isEqualTo("0002");
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 3).findFirst().get().getAktorId()).isEqualTo("anonym");
-        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == 4).findFirst().get().getAktorId()).isEqualTo("0004");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(1)).findFirst().get().getAktorId()).isEqualTo("0001");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(2)).findFirst().get().getAktorId()).isEqualTo("0002");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(3)).findFirst().get().getAktorId()).isEqualTo("anonym");
+        assertThat(kartleggingList1.stream().filter(kartlegging -> kartlegging.getKartleggingId() == map.get(4)).findFirst().get().getAktorId()).isEqualTo("0004");
     }
 
-    private long opprettKartlegging(long kartleggingId, String aktorId, int oppfolgingStatus) {
+    private long opprettKartlegging(String aktorId, int oppfolgingStatus) {
         Kartlegging kartlegging = TestData.kartlegging();
+        long _kartleggingId = db.nesteFraSekvens("KARTLEGGING_SEQ");
+
         db.update("INSERT INTO KARTLEGGING (" +
                 "kartlegging_id, " +
                 "aktor_id, " +
@@ -78,13 +88,13 @@ public class DataAnonymiseringTestKontinuerlig extends DbIntegrasjonsTest {
                 "oppsummering_key, " +
                 "kartlegging_dato) " +
                 "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
-            kartleggingId,
+            _kartleggingId,
             aktorId,
             oppfolgingStatus,
             kartlegging.getOppsummering(),
             kartlegging.getOppsummeringKey()
         );
 
-        return kartleggingId;
+        return _kartleggingId;
     }
 }
