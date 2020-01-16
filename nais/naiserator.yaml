@@ -1,0 +1,61 @@
+---
+kind: Application
+apiVersion: nais.io/v1alpha1
+metadata:
+  name: veilarbjobbsokerkompetanse
+  namespace: {{ namespace }}
+  labels:
+    team: paw
+spec:
+  image: {{image}}
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
+  env:
+  - name: APP_ENVIRONMENT_NAME
+    value: {{ app_environment_name }}
+  - name: SECURITYTOKENSERVICE_URL
+    value: {{ securitytokenservice_url }}
+  - name: AKTOER_V2_ENDPOINTURL
+    value: {{ aktoer_url }}
+  - name: VEILARBOPPFOLGINGAPI_URL
+    value: {{ veilarboppfolgingapi_url }}
+  - name: ABAC_PDP_ENDPOINT_URL
+    value: {{ abac_pdp_endpoint_url }}
+  - name: ISSO_ISALIVE_URL
+    value: {{ isso_isalive_url }}
+  - name: VEILARBLOGIN_REDIRECT_URL_URL
+    value: {{ veilarblogin_redirect_url }}
+  liveness:
+    path: veilarbjobbsokerkompetanse/internal/isAlive
+    port: 8080
+    initialDelay: 60
+  port: 8080
+  prometheus:
+    enabled: true
+    path: veilarbjobbsokerkompetanse/internal/metrics
+  readiness:
+    path: veilarbjobbsokerkompetanse/internal/isReady
+    port: 8080
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: "3"
+      memory: 1024Mi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+  vault:
+    enabled: true
+    paths:
+    - kvPath: {{ oracleuser_path }}
+      mountPath: /var/run/secrets/nais.io/veilarbjobbsokerkompetanseDB
+    - kvPath: {{ serviceuser_path }}
+      mountPath: /var/run/secrets/nais.io/srvveilarbjobbsokerkompetanse
+    - kvPath: {{ secrets_path }}
+      mountPath: /var/run/secrets/nais.io/vault
+  webproxy: true

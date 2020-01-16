@@ -1,0 +1,14 @@
+namespace: default
+app_environment_name: p
+aktoer_url: https://app.adeo.no/aktoerregister/ws/Aktoer/v2
+securitytokenservice_url: https://sts.adeo.no/SecurityTokenServiceProvider/
+veilarboppfolgingapi_url: https://veilarboppfolging.nais.adeo.no/veilarboppfolging/api
+abac_pdp_endpoint_url: https://wasapp.adeo.no/asm-pdp/authorize
+isso_isalive_url: https://isso.adeo.no/isso/isAlive.jsp
+veilarblogin_redirect_url: https://app.adeo.no/veilarblogin/api/login
+ingresses:
+  - https://veilarbjobbsokerkompetanse.nais.adeo.no
+  - https://app.adeo.no/veilarbjobbsokerkompetanse
+oracleuser_path: /oracle/data/prod/creds/veilarbjobbsokerkompetanse-user
+serviceuser_path: /serviceuser/data/prod/srvveilarbjobbsokerkompetanse
+secrets_path: /kv/prod/fss/veilarbjobbsokerkompetanse/default
