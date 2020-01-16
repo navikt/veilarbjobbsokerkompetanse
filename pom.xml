@@ -86,11 +86,6 @@
             <artifactId>oidc-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.nav.fo</groupId>
-            <artifactId>veilarboppfolging-api</artifactId>
-            <version>1587.20181030.2339</version>
-        </dependency>
-        <dependency>
             <groupId>org.glassfish.hk2.external</groupId>
             <artifactId>javax.inject</artifactId>
             <scope>compile</scope>
@@ -139,8 +134,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
