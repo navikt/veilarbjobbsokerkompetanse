@@ -7,7 +7,7 @@ abac_pdp_endpoint_url: https://wasapp-q1.adeo.no/asm-pdp/authorize
 isso_isalive_url: https://isso-q.adeo.no/isso/isAlive.jsp
 veilarblogin_redirect_url: https://app-q1.adeo.no/veilarblogin/api/login
 ingresses:
-  - https://veilarbjobbsokerkompetanse.nais.preprod.local
+  - https://veilarbjobbsokerkompetanse-q1.nais.preprod.local
   - https://app-q1.adeo.no/veilarbjobbsokerkompetanse
 oracleuser_path: /oracle/data/dev/creds/veilarbdemo_q1-user
 serviceuser_path: /serviceuser/data/dev/srvveilarbjobbsokerkompetanse
