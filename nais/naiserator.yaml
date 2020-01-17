@@ -53,9 +53,9 @@ spec:
     enabled: true
     paths:
     - kvPath: {{ oracleuser_path }}
-      mountPath: /var/run/secrets/nais.io/veilarbjobbsokerkompetanseDB
+      mountPath: /var/run/secrets/nais.io/oracle_creds
     - kvPath: {{ serviceuser_path }}
-      mountPath: /var/run/secrets/nais.io/srvveilarbjobbsokerkompetanse
+      mountPath: /var/run/secrets/nais.io/serviceuser_creds
     - kvPath: {{ secrets_path }}
       mountPath: /var/run/secrets/nais.io/vault
   webproxy: true
