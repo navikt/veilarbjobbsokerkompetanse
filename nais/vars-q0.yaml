@@ -11,4 +11,4 @@ ingresses:
   - https://app-q0.adeo.no/veilarbjobbsokerkompetanse
 oracleuser_path: /oracle/data/dev/creds/veilarbjobbsokerkompetanse_q0-user
 serviceuser_path: /serviceuser/data/dev/srvveilarbjobbsokerkompetanse
-secrets_path: /kv/preprod/fss/veilarbjobbsokerkompetanse/default
+secrets_path: /kv/preprod/fss/veilarbjobbsokerkompetanse/q0
