@@ -17,6 +17,6 @@ import org.springframework.context.annotation.Import;
 public class MockConfiguration {
 
     public MockConfiguration() {
-        log.warn("Running with mocks. YOU SHOULD NOT SEE THIS IN PRODUCTION");
+        log.warn("Running with mocks. YOU SHOULD NOT SEE THIS IN PRODUCTION!");
     }
 }
