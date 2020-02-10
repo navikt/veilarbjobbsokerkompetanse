@@ -67,27 +67,6 @@ jobs:
         RESOURCE: nais/naiserator.yaml
         VARS: nais/vars-q0.yaml
 
-  deploy-q1:
-    name: Deploy to q1 FSS
-    needs: test-build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Lag tag for image
-        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad_%h' --date=format:'%Y%m%d%H%M%S')"
-
-      - name: Lag full image referanse
-        run: echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
-
-      - name: Deploy to Q1
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
-          RESOURCE: nais/naiserator.yaml
-          VARS: nais/vars-q1.yaml
-
   deploy-prod:
     name: Deploy to Prod FSS
     needs: deploy-q0
