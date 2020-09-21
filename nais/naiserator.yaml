@@ -27,6 +27,10 @@ spec:
     value: {{ isso_isalive_url }}
   - name: VEILARBLOGIN_REDIRECT_URL_URL
     value: {{ veilarblogin_redirect_url }}
+  - name: AAD_DISCOVERY_URL
+    value: {{ aad_discovery_url }}
+  - name: VEILARBLOGIN_AAD_CLIENT_ID
+    value: {{ veilarblogin_aad_client_id }}
   liveness:
     path: veilarbjobbsokerkompetanse/internal/isAlive
     port: 8080
