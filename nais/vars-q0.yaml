@@ -6,6 +6,8 @@ veilarboppfolgingapi_url: https://veilarboppfolging-q0.nais.preprod.local/veilar
 abac_pdp_endpoint_url: https://wasapp-q0.adeo.no/asm-pdp/authorize
 isso_isalive_url: https://isso-q.adeo.no/isso/isAlive.jsp
 veilarblogin_redirect_url: https://app-q0.adeo.no/veilarblogin/api/login
+aad_discovery_url: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration
+veilarblogin_aad_client_id: 2edd96a2-fb5a-4dfa-8f36-848ae306f9b1
 ingresses:
   - https://veilarbjobbsokerkompetanse-q0.nais.preprod.local
   - https://app-q0.adeo.no/veilarbjobbsokerkompetanse
