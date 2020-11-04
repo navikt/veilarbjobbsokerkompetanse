@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FeatureToggleConfig {
 
-    private final static String UNLEASH_API_URL = "https://unleash.nais.adeo.no/api/";
+    private final static String UNLEASH_API_URL = "https://unleash.nais.io/api/";
 
     @Bean
     public UnleashService unleashService() {
