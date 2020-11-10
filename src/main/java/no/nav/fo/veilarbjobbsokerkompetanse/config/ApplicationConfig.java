@@ -53,11 +53,14 @@ public class ApplicationConfig implements ApiApplication {
 
     @Override
     public void configure(ApiAppConfigurator apiAppConfigurator) {
+        String discoveryUrl = EnvironmentUtils.getRequiredProperty("LOGINSERVICE_IDPORTEN_DISCOVERY_URL");
+        String clientId = EnvironmentUtils.getRequiredProperty("LOGINSERVICE_IDPORTEN_AUDIENCE");
+        
         AzureADB2CConfig veilarbloginAADConfig = AzureADB2CConfig
                 .builder()
                 .identType(IdentType.InternBruker)
-                .discoveryUrl(EnvironmentUtils.getRequiredProperty("AAD_DISCOVERY_URL"))
-                .expectedAudience(EnvironmentUtils.getRequiredProperty("VEILARBLOGIN_AAD_CLIENT_ID"))
+                .discoveryUrl(discoveryUrl)
+                .expectedAudience(clientId)
                 .tokenName(AZUREADB2C_OIDC_COOKIE_NAME_FSS)
                 .build();
 

@@ -7,6 +7,8 @@ metadata:
   labels:
     team: paw
 spec:
+  envFrom:
+    - configmap: loginservice-idporten
   image: {{image}}
   ingresses:
   {{#each ingresses as |url|}}

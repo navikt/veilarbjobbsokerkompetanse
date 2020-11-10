@@ -42,8 +42,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        docker build --tag ${IMAGE} .
         echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
+        docker build --tag ${IMAGE} .
         docker push ${IMAGE}
 
   deploy-q0:
@@ -64,7 +64,7 @@ jobs:
       env:
         APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
         CLUSTER: dev-fss
-        RESOURCE: nais/naiserator.yaml
+        RESOURCE: nais/nais.yaml
         VARS: nais/vars-q0.yaml
 
   deploy-prod:
@@ -85,7 +85,8 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-fss
-          RESOURCE: nais/naiserator.yaml
+          DRY_RUN: true
+          RESOURCE: nais/nais.yaml
           VARS: nais/vars-p.yaml
 
   release:
