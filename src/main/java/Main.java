@@ -1,14 +1,13 @@
 import no.nav.apiapp.ApiApp;
 import no.nav.common.utils.NaisUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
-import no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig;
+
 
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.Constants.OIDC_REDIRECT_URL_PROPERTY_NAME;
 import static no.nav.dialogarena.aktor.AktorConfig.AKTOER_ENDPOINT_URL;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig.VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig.VEILARBJOBBSOKERKOMPETANSEDB_USERNAME;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig.*;
 import static no.nav.metrics.MetricsConfig.SENSU_BATCHES_PER_SECOND_PROPERTY_NAME;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
@@ -24,12 +23,20 @@ public class Main {
         setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, oracle_creds_creds.username);
         setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, oracle_creds_creds.password);
 
+        String v = getVaultSecret("/var/run/secrets/nais.io/jdbc_url");
+        System.out.println("READ oracle connection string from vault: " + v);
+        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL, v);
+
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
         setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(VEILARBLOGIN_REDIRECT_URL_URL));
 
         setProperty(SENSU_BATCHES_PER_SECOND_PROPERTY_NAME, "1");
 
         ApiApp.runApp(ApplicationConfig.class, args);
+    }
+
+    private static String getVaultSecret(String path) {
+        return NaisUtils.getFileContent(path);
     }
 
 }
