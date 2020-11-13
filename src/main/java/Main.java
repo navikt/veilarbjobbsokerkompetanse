@@ -5,12 +5,13 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.Constants.OIDC_REDIRECT_URL_PROPERTY_NAME;
 import static no.nav.dialogarena.aktor.AktorConfig.AKTOER_ENDPOINT_URL;
-import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.*;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.AKTOER_V2_ENDPOINTURL;
+import static no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig.VEILARBLOGIN_REDIRECT_URL_URL;
 import static no.nav.fo.veilarbjobbsokerkompetanse.config.DataSourceConfig.*;
 import static no.nav.metrics.MetricsConfig.SENSU_BATCHES_PER_SECOND_PROPERTY_NAME;
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
@@ -42,7 +43,7 @@ public class Main {
 
     private static String getVaultSecret(String path) {
         try {
-            return Files.readString(Path.of(path), StandardCharsets.UTF_8);
+            return Files.readString(Paths.get(path), StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new IllegalStateException(String.format("Klarte ikke laste property fra vault for path: %s", path), e);
         }
