@@ -43,7 +43,7 @@ public class Main {
 
     private static String getVaultSecret(String path) {
         try {
-            return Files.readString(Paths.get(path), StandardCharsets.UTF_8);
+            return new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new IllegalStateException(String.format("Klarte ikke laste property fra vault for path: %s", path), e);
         }
