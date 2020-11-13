@@ -12,5 +12,6 @@ ingresses:
   - https://veilarbjobbsokerkompetanse.nais.adeo.no
   - https://app.adeo.no/veilarbjobbsokerkompetanse
 oracleuser_path: /oracle/data/prod/creds/veilarbjobbsokerkompetanse-user
+jdbc_url: /oracle/data/prod/config/veilarbjobbsokerkompetanse
 serviceuser_path: /serviceuser/data/prod/srvveilarbjobbsokerkompetanse
 secrets_path: /kv/prod/fss/veilarbjobbsokerkompetanse/default
