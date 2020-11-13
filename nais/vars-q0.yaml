@@ -14,5 +14,6 @@ ingresses:
   - https://veilarbjobbsokerkompetanse-q1.nais.preprod.local
   - https://app-q1.adeo.no/veilarbjobbsokerkompetanse
 oracleuser_path: /oracle/data/dev/creds/veilarbjobbsokerkompetanse_q0-user
+jdbc_url: /oracle/data/dev/config/veilarbjobbsokerkompetanse_q0
 serviceuser_path: /serviceuser/data/dev/srvveilarbjobbsokerkompetanse
 secrets_path: /kv/preprod/fss/veilarbjobbsokerkompetanse/q0
