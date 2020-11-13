@@ -1,7 +1,11 @@
 import no.nav.apiapp.ApiApp;
-import no.nav.common.utils.NaisUtils;
 import no.nav.fo.veilarbjobbsokerkompetanse.config.ApplicationConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static java.lang.System.setProperty;
 import static no.nav.brukerdialog.security.Constants.OIDC_REDIRECT_URL_PROPERTY_NAME;
@@ -12,20 +16,21 @@ import static no.nav.metrics.MetricsConfig.SENSU_BATCHES_PER_SECOND_PROPERTY_NAM
 import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
 
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String... args) throws Exception {
+        String serviceUserUsername = getVaultSecret("/var/run/secrets/nais.io/serviceuser_creds/username");
+        String serviceUserPassword = getVaultSecret("/var/run/secrets/nais.io/serviceuser_creds/password");
+        setProperty("SRVVEILARBJOBBSOKERKOMPETANSE_USERNAME", serviceUserUsername);
+        setProperty("SRVVEILARBJOBBSOKERKOMPETANSE_PASSWORD", serviceUserPassword);
 
-        NaisUtils.Credentials serviceuser_creds = NaisUtils.getCredentials("serviceuser_creds");
-        setProperty("SRVVEILARBJOBBSOKERKOMPETANSE_USERNAME", serviceuser_creds.username);
-        setProperty("SRVVEILARBJOBBSOKERKOMPETANSE_PASSWORD", serviceuser_creds.password);
+        String oracleUsername = getVaultSecret("/var/run/secrets/nais.io/oracle_creds/username");
+        String oraclePassword = getVaultSecret("/var/run/secrets/nais.io/oracle_creds/password");
+        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, oracleUsername);
+        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, oraclePassword);
 
-        NaisUtils.Credentials oracle_creds_creds = NaisUtils.getCredentials("oracle_creds");
-        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_USERNAME, oracle_creds_creds.username);
-        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_PASSWORD, oracle_creds_creds.password);
-
-        String v = getVaultSecret("/var/run/secrets/nais.io/jdbc_url");
-        System.out.println("READ oracle connection string from vault: " + v);
-        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL, v);
+        String jdbc_url = getVaultSecret("/var/run/secrets/nais.io/oracle_config/jdbc_url");
+        setProperty(VEILARBJOBBSOKERKOMPETANSEDB_URL, jdbc_url);
 
         setProperty(AKTOER_ENDPOINT_URL, getRequiredProperty(AKTOER_V2_ENDPOINTURL));
         setProperty(OIDC_REDIRECT_URL_PROPERTY_NAME, getRequiredProperty(VEILARBLOGIN_REDIRECT_URL_URL));
@@ -36,7 +41,11 @@ public class Main {
     }
 
     private static String getVaultSecret(String path) {
-        return NaisUtils.getFileContent(path);
+        try {
+            return Files.readString(Path.of(path), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new IllegalStateException(String.format("Klarte ikke laste property fra vault for path: %s", path), e);
+        }
     }
 
 }
