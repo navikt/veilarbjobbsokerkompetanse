@@ -46,7 +46,7 @@ public class AvsluttetOppfolgingFeedService {
             LOGGER.info("Anonymisering for bruker: oppdatert = {}, rader endret = {}", element.getOppdatert(), rader);
         }
 
-        // Håndterer ikke exceptions her. Dersom en exception oppstår i løkkeprosesseringen over, vil
+        // Appen håndterer ikke exceptions her. Dersom en exception oppstår i løkkeprosesseringen over, vil
         // vi altså IKKE få oppdatert siste id. Dermed vil vi lese feeden på nytt fra siste kjente id og potensielt
         // prosessere noen elementer flere ganger. Dette skal gå bra, siden koden som setter dialoger til historisk
         // er idempotent
