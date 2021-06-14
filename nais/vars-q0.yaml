@@ -3,7 +3,7 @@ app_environment_name: q0
 aktoer_url: https://app-q0.adeo.no/aktoerregister/ws/Aktoer/v2
 securitytokenservice_url: https://sts-q0.preprod.local/SecurityTokenServiceProvider/
 veilarboppfolgingapi_url: https://veilarboppfolging-q0.nais.preprod.local/veilarboppfolging/api
-abac_pdp_endpoint_url: https://wasapp-q0.adeo.no/asm-pdp/authorize
+abac_pdp_endpoint_url: https://abac-veilarb-q0.dev.intern.nav.no/application/asm-pdp/authorize
 isso_isalive_url: https://isso-q.adeo.no/isso/isAlive.jsp
 veilarblogin_redirect_url: https://app-q0.adeo.no/veilarblogin/api/login
 aad_discovery_url: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration
