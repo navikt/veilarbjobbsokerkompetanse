@@ -42,12 +42,6 @@ public class JobbsokerKartleggingRSTest {
     }
 
     @Test(expected = Feil.class)
-    public void testCreateNarIkkeUnderOppfolging() {
-        when(oppfolgingClient.underOppfolging(FNR)).thenReturn(false);
-        kartleggingService.opprettBesvarelse(null);
-    }
-
-    @Test(expected = Feil.class)
     public void testFetchNarIkkeUnderOppfolging() {
         when(oppfolgingClient.underOppfolging(FNR)).thenReturn(false);
         kartleggingService.hentNyesteBesvarelseForAktor();

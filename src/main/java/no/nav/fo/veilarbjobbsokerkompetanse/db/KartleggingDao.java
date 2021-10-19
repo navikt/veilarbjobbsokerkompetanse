@@ -37,30 +37,30 @@ public class KartleggingDao {
         this.kulepunktDao = new KulepunktDao(db);
     }
 
-    @Transactional
-    public long create(String aktorId, Kartlegging kartlegging) {
-        long kartleggingId = db.nesteFraSekvens("KARTLEGGING_SEQ");
-        db.update("INSERT INTO KARTLEGGING (" +
-                "kartlegging_id, " +
-                "aktor_id, " +
-                "under_oppfolging, " +
-                "oppsummering, " +
-                "oppsummering_key, " +
-                "kartlegging_dato) " +
-                "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
-            kartleggingId,
-            aktorId,
-            true,
-            kartlegging.getOppsummering(),
-            kartlegging.getOppsummeringKey()
-        );
-        kartlegging.getBesvarelse().forEach(s -> besvarelseDao.create(s, kartleggingId));
-        kartlegging.getRaad().forEach(r -> raadDao.create(r, kartleggingId));
-        kartlegging.getKulepunkter().forEach(k -> kulepunktDao.create(k, kartleggingId));
-
-        LOGGER.info("lagret kartlegging med id={}", kartleggingId);
-        return kartleggingId;
-    }
+//    @Transactional
+//    public long create(String aktorId, Kartlegging kartlegging) {
+//        long kartleggingId = db.nesteFraSekvens("KARTLEGGING_SEQ");
+//        db.update("INSERT INTO KARTLEGGING (" +
+//                "kartlegging_id, " +
+//                "aktor_id, " +
+//                "under_oppfolging, " +
+//                "oppsummering, " +
+//                "oppsummering_key, " +
+//                "kartlegging_dato) " +
+//                "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
+//            kartleggingId,
+//            aktorId,
+//            true,
+//            kartlegging.getOppsummering(),
+//            kartlegging.getOppsummeringKey()
+//        );
+//        kartlegging.getBesvarelse().forEach(s -> besvarelseDao.create(s, kartleggingId));
+//        kartlegging.getRaad().forEach(r -> raadDao.create(r, kartleggingId));
+//        kartlegging.getKulepunkter().forEach(k -> kulepunktDao.create(k, kartleggingId));
+//
+//        LOGGER.info("lagret kartlegging med id={}", kartleggingId);
+//        return kartleggingId;
+//    }
 
     public Optional<Kartlegging> fetchMostRecentByAktorId(String aktorId) {
         return db.query("SELECT * FROM KARTLEGGING WHERE aktor_id = ?", this::map, aktorId)

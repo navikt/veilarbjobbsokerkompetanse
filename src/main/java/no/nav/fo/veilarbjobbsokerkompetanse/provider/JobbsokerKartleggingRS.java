@@ -69,19 +69,6 @@ public class JobbsokerKartleggingRS {
             .orElse(null); // 204
     }
 
-    @POST
-    @Path("opprett")
-    public KartleggingDto opprettBesvarelse(KartleggingDto kartleggingDto) {
-        Bruker bruker = getBruker();
-        pepClient.sjekkSkrivetilgangTilBruker(bruker);
-        sjekkAtBrukerErUnderOppfolging(bruker.getFoedselsnummer());
-
-        long id = kartleggingDao.create(bruker.getAktoerId(), map(kartleggingDto));
-        Kartlegging kartlegging = kartleggingDao.fetchById(id);
-        opprettKartleggingMetrikk(kartlegging);
-        return map(kartlegging);
-    }
-
     private void sjekkAtBrukerErUnderOppfolging(String fnr) {
         if (!oppfolgingClient.underOppfolging(fnr)) {
             throw new Feil(new BrukerIkkeUnderOppfolging());

@@ -34,46 +34,46 @@ public class KartleggingDaoTest extends DbIntegrasjonsTest {
         super(false);
     }
 
-    @Transactional
-    @Test
-    public void testCreateAndFetch() {
-        kartleggingDao.create(AKTOR_ID, kartlegging());
-        Kartlegging result = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID).get();
-
-        assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
-        assertThat(result.getKartleggingTidspunkt()).isNotNull();
-        assertThat(result.getRaad()).hasAtLeastOneElementOfType(Raad.class);
-        assertThat(result.getRaad().get(0).getRaadAktiviteter()).hasAtLeastOneElementOfType(Aktivitet.class);
-        assertThat(result.getRaad().get(0).getRaadAktiviteter().get(0).getTittel()).isEqualTo("AktivitetTittel");
-        assertThat(result.getBesvarelse()).hasAtLeastOneElementOfType(Besvarelse.class);
-        assertThat(result.getBesvarelse().get(0).getTips()).isEqualTo("TIPS");
-        assertThat(result.getBesvarelse().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
-        assertThat(result.getKulepunkter()).hasAtLeastOneElementOfType(Kulepunkt.class);
-        assertThat(result.getKulepunkter().get(0).getKulepunktKey()).isEqualTo("KULEPUNKT-KEY");
-        assertThat(result.getOppsummering()).isEqualTo(OPPSUMMERING);
-        assertThat(result.getOppsummeringKey()).isEqualTo(OPPSUMMERING_KEY);
-    }
-
-    @Transactional
-    @Test
-    public void testMostRecentBesvarelse() throws InterruptedException {
-
-        kartleggingDao.create(AKTOR_ID, kartlegging());
-        Thread.sleep(1);
-        long id = kartleggingDao.create(AKTOR_ID, kartlegging());
-
-        Kartlegging kartlegging = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID).get();
-
-        assertThat(kartlegging.getKartleggingId()).isEqualTo(id);
-    }
-
-    @Transactional
-    @Test
-    public void testFetchById() {
-        long id = kartleggingDao.create(AKTOR_ID, kartlegging());
-        Kartlegging kartlegging = kartleggingDao.fetchById(id);
-        assertThat(kartlegging.getKartleggingId()).isEqualTo(id);
-    }
+//    @Transactional
+//    @Test
+//    public void testCreateAndFetch() {
+//        kartleggingDao.create(AKTOR_ID, kartlegging());
+//        Kartlegging result = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID).get();
+//
+//        assertThat(result.getAktorId()).isEqualTo(AKTOR_ID);
+//        assertThat(result.getKartleggingTidspunkt()).isNotNull();
+//        assertThat(result.getRaad()).hasAtLeastOneElementOfType(Raad.class);
+//        assertThat(result.getRaad().get(0).getRaadAktiviteter()).hasAtLeastOneElementOfType(Aktivitet.class);
+//        assertThat(result.getRaad().get(0).getRaadAktiviteter().get(0).getTittel()).isEqualTo("AktivitetTittel");
+//        assertThat(result.getBesvarelse()).hasAtLeastOneElementOfType(Besvarelse.class);
+//        assertThat(result.getBesvarelse().get(0).getTips()).isEqualTo("TIPS");
+//        assertThat(result.getBesvarelse().get(0).getSvarAlternativ()).hasAtLeastOneElementOfType(SvarAlternativ.class);
+//        assertThat(result.getKulepunkter()).hasAtLeastOneElementOfType(Kulepunkt.class);
+//        assertThat(result.getKulepunkter().get(0).getKulepunktKey()).isEqualTo("KULEPUNKT-KEY");
+//        assertThat(result.getOppsummering()).isEqualTo(OPPSUMMERING);
+//        assertThat(result.getOppsummeringKey()).isEqualTo(OPPSUMMERING_KEY);
+//    }
+//
+//    @Transactional
+//    @Test
+//    public void testMostRecentBesvarelse() throws InterruptedException {
+//
+//        kartleggingDao.create(AKTOR_ID, kartlegging());
+//        Thread.sleep(1);
+//        long id = kartleggingDao.create(AKTOR_ID, kartlegging());
+//
+//        Kartlegging kartlegging = kartleggingDao.fetchMostRecentByAktorId(AKTOR_ID).get();
+//
+//        assertThat(kartlegging.getKartleggingId()).isEqualTo(id);
+//    }
+//
+//    @Transactional
+//    @Test
+//    public void testFetchById() {
+//        long id = kartleggingDao.create(AKTOR_ID, kartlegging());
+//        Kartlegging kartlegging = kartleggingDao.fetchById(id);
+//        assertThat(kartlegging.getKartleggingId()).isEqualTo(id);
+//    }
 
     @Transactional
     @Test
