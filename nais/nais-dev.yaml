@@ -1,0 +1,70 @@
+---
+kind: Application
+apiVersion: nais.io/v1alpha1
+metadata:
+  name: veilarbjobbsokerkompetanse
+  namespace: q0
+  labels:
+    team: paw
+spec:
+  envFrom:
+    - configmap: loginservice-idporten
+  image: {{image}}
+  ingresses:
+    - https://veilarbjobbsokerkompetanse-q0.nais.preprod.local
+    - https://app-q0.adeo.no/veilarbjobbsokerkompetanse
+    - https://veilarbjobbsokerkompetanse-q1.nais.preprod.local
+    - https://app-q1.adeo.no/veilarbjobbsokerkompetanse
+  env:
+  - name: APP_ENVIRONMENT_NAME
+    value: q0
+  - name: SECURITYTOKENSERVICE_URL
+    value: https://sts-q0.preprod.local/SecurityTokenServiceProvider/
+  - name: AKTOER_V2_ENDPOINTURL
+    value: https://app-q0.adeo.no/aktoerregister/ws/Aktoer/v2
+  - name: VEILARBOPPFOLGINGAPI_URL
+    value: https://veilarboppfolging-q0.nais.preprod.local/veilarboppfolging/api
+  - name: ABAC_PDP_ENDPOINT_URL
+    value: https://abac-veilarb-q0.dev.intern.nav.no/application/asm-pdp/authorize
+  - name: ISSO_ISALIVE_URL
+    value: https://isso-q.adeo.no/isso/isAlive.jsp
+  - name: VEILARBLOGIN_REDIRECT_URL_URL
+    value: https://app-q0.adeo.no/veilarblogin/api/login
+  - name: AAD_DISCOVERY_URL
+    value: https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration
+  - name: VEILARBLOGIN_AAD_CLIENT_ID
+    value: 2edd96a2-fb5a-4dfa-8f36-848ae306f9b1
+  liveness:
+    path: veilarbjobbsokerkompetanse/internal/isAlive
+    port: 8080
+    initialDelay: 60
+  port: 8080
+  prometheus:
+    enabled: true
+    path: veilarbjobbsokerkompetanse/internal/metrics
+  readiness:
+    path: veilarbjobbsokerkompetanse/internal/isReady
+    port: 8080
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: "3"
+      memory: 1024Mi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+  vault:
+    enabled: true
+    paths:
+    - kvPath: /oracle/data/dev/creds/veilarbjobbsokerkompetanse_q0-user
+      mountPath: /var/run/secrets/nais.io/oracle_creds
+    - kvPath: /oracle/data/dev/config/veilarbjobbsokerkompetanse_q0
+      mountPath: /var/run/secrets/nais.io/oracle_config
+    - kvPath: /serviceuser/data/dev/srvveilarbjobbsokerkompetanse
+      mountPath: /var/run/secrets/nais.io/serviceuser_creds
+    - kvPath: /kv/preprod/fss/veilarbjobbsokerkompetanse/q0
+      mountPath: /var/run/secrets/nais.io/vault
+  webproxy: true
