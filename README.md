@@ -1,3 +1,6 @@
+# Arkivert
+Arkivert og slettet fra nais/k8 17.11.2021
+
 # veilarbjobbsokerkompetanse
 
 Dette er backend-applikasjonen for [jobbsøkerkompetanse](https://github.com/navikt/jobbsokerkompetanse)
